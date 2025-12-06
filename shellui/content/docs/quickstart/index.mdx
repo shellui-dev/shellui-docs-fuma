@@ -42,20 +42,20 @@ Let's create a simple button and card combination:
 @page "/"
 
 <Card>
-  <CardHeader>
-    <CardTitle>Welcome to ShellUI</CardTitle>
-    <CardDescription>Your first ShellUI components</CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Header>
+    <h3 class="text-lg font-semibold">Welcome to ShellUI</h3>
+    <p class="text-sm text-muted-foreground">Your first ShellUI components</p>
+  </Header>
+  <ChildContent>
     <div class="space-y-4">
       <Input Placeholder="Enter your name" />
-      <Button @onclick="HandleClick">Get Started</Button>
+      <Button OnClick="HandleClick">Get Started</Button>
     </div>
-  </CardContent>
+  </ChildContent>
 </Card>
 
 @code {
-    private void HandleClick()
+    private void HandleClick(MouseEventArgs args)
     {
         // Your logic here
     }
