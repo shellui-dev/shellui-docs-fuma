@@ -32,14 +32,14 @@ dotnet add package ShellUI.Components
 
 ```razor
 <Card>
-  <CardHeader>
-    <CardTitle>Welcome to ShellUI</CardTitle>
-    <CardDescription>Build beautiful Blazor apps</CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Header>
+    <h3 class="text-lg font-semibold">Welcome to ShellUI</h3>
+    <p class="text-sm text-muted-foreground">Build beautiful Blazor apps</p>
+  </Header>
+  <ChildContent>
     <Input Placeholder="Enter your email" Type="email" />
     <Button Class="mt-4">Subscribe</Button>
-  </CardContent>
+  </ChildContent>
 </Card>
 ```
 
