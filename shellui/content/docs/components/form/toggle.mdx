@@ -1,0 +1,149 @@
+---
+title: Toggle
+description: Pressable toggle button component
+---
+
+The Toggle component provides a pressable button that can be toggled on or off, useful for toolbar buttons, filter toggles, and similar interactions.
+
+## Basic Usage
+
+```razor
+<Toggle Pressed="@isPressed" PressedChanged="@HandlePressedChanged">
+  Toggle Me
+</Toggle>
+
+@code {
+    private bool isPressed = false;
+
+    private void HandlePressedChanged(bool value)
+    {
+        isPressed = value;
+    }
+}
+```
+
+## With Two-way Binding
+
+```razor
+<Toggle @bind-Pressed="isToggled">
+  @(isToggled ? "On" : "Off")
+</Toggle>
+
+@code {
+    private bool isToggled = false;
+}
+```
+
+## Variants
+
+### Default
+```razor
+<Toggle @bind-Pressed="pressed">Default Toggle</Toggle>
+```
+
+### Outline
+```razor
+<Toggle @bind-Pressed="pressed" Variant="outline">Outline Toggle</Toggle>
+```
+
+## Sizes
+
+```razor
+<div class="flex items-center gap-4">
+  <Toggle @bind-Pressed="pressed" Size="sm">Small</Toggle>
+  <Toggle @bind-Pressed="pressed" Size="default">Default</Toggle>
+  <Toggle @bind-Pressed="pressed" Size="lg">Large</Toggle>
+</div>
+
+@code {
+    private bool pressed = false;
+}
+```
+
+## With Icons
+
+```razor
+<Toggle @bind-Pressed="boldEnabled">
+  <span class="flex items-center gap-2">
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z" />
+    </svg>
+    Bold
+  </span>
+</Toggle>
+
+@code {
+    private bool boldEnabled = false;
+}
+```
+
+## Toolbar Example
+
+```razor
+<div class="flex items-center gap-2 p-2 border rounded-lg">
+  <Toggle @bind-Pressed="bold" Size="sm">
+    <span class="font-bold">B</span>
+  </Toggle>
+  <Toggle @bind-Pressed="italic" Size="sm">
+    <span class="italic">I</span>
+  </Toggle>
+  <Toggle @bind-Pressed="underline" Size="sm">
+    <span class="underline">U</span>
+  </Toggle>
+  <Separator Orientation="vertical" />
+  <Toggle @bind-Pressed="list" Size="sm">
+    <span>• List</span>
+  </Toggle>
+</div>
+
+@code {
+    private bool bold = false;
+    private bool italic = false;
+    private bool underline = false;
+    private bool list = false;
+}
+```
+
+## Disabled State
+
+```razor
+<Toggle Pressed="true" Disabled>Disabled Toggle</Toggle>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Pressed` | `bool` | `false` | Pressed/toggled state |
+| `Variant` | `string` | `default` | Toggle variant style |
+| `Size` | `string` | `default` | Toggle size |
+| `Disabled` | `bool` | `false` | Disables the toggle |
+| `ChildContent` | `RenderFragment` | `null` | Toggle content |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Variant Options
+- `default`
+- `outline`
+
+### Size Options
+- `sm`
+- `default`
+- `lg`
+
+### Events
+- `@bind-Pressed` - Two-way binding for pressed state
+- `PressedChanged` - `EventCallback<bool>` for pressed state changes
+
+## Accessibility
+
+The Toggle component includes:
+- Proper semantic HTML (`<button>`)
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add toggle
+```

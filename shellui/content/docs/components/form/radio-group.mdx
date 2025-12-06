@@ -1,0 +1,155 @@
+---
+title: Radio Group
+description: Radio button group for single selection
+---
+
+The RadioGroup component provides a group of radio buttons for selecting a single option from multiple choices.
+
+## Basic Usage
+
+```razor
+<CascadingValue Value="@radioGroup">
+  <RadioGroup @ref="radioGroup" Value="@selectedOption" ValueChanged="@HandleOptionChanged">
+    <RadioGroupItem Value="option1">Option 1</RadioGroupItem>
+    <RadioGroupItem Value="option2">Option 2</RadioGroupItem>
+    <RadioGroupItem Value="option3">Option 3</RadioGroupItem>
+  </RadioGroup>
+</CascadingValue>
+
+@code {
+    private RadioGroup? radioGroup;
+    private string? selectedOption;
+
+    private void HandleOptionChanged(string value)
+    {
+        selectedOption = value;
+    }
+}
+```
+
+## With Two-way Binding
+
+```razor
+<CascadingValue Value="@radioGroup">
+  <RadioGroup @ref="radioGroup" @bind-Value="selectedOption">
+    <RadioGroupItem Value="small">Small</RadioGroupItem>
+    <RadioGroupItem Value="medium">Medium</RadioGroupItem>
+    <RadioGroupItem Value="large">Large</RadioGroupItem>
+  </RadioGroup>
+</CascadingValue>
+
+@code {
+    private RadioGroup? radioGroup;
+    private string? selectedOption;
+}
+```
+
+## With Label
+
+```razor
+<div class="space-y-4">
+  <Label>Select Size</Label>
+  <CascadingValue Value="@radioGroup">
+    <RadioGroup @ref="radioGroup" @bind-Value="selectedSize" ClassName="space-y-3">
+      <RadioGroupItem Value="xs">Extra Small</RadioGroupItem>
+      <RadioGroupItem Value="sm">Small</RadioGroupItem>
+      <RadioGroupItem Value="md">Medium</RadioGroupItem>
+      <RadioGroupItem Value="lg">Large</RadioGroupItem>
+      <RadioGroupItem Value="xl">Extra Large</RadioGroupItem>
+    </RadioGroup>
+  </CascadingValue>
+</div>
+
+@code {
+    private RadioGroup? radioGroup;
+    private string? selectedSize;
+}
+```
+
+## Form Integration
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+  <div class="space-y-4">
+    <div>
+      <Label>Payment Method</Label>
+      <CascadingValue Value="@paymentGroup">
+        <RadioGroup @ref="paymentGroup" @bind-Value="model.PaymentMethod" ClassName="space-y-3 mt-2">
+          <RadioGroupItem Value="credit">Credit Card</RadioGroupItem>
+          <RadioGroupItem Value="debit">Debit Card</RadioGroupItem>
+          <RadioGroupItem Value="paypal">PayPal</RadioGroupItem>
+          <RadioGroupItem Value="bank">Bank Transfer</RadioGroupItem>
+        </RadioGroup>
+      </CascadingValue>
+    </div>
+    <Button Type="submit">Continue</Button>
+  </div>
+</EditForm>
+
+@code {
+    private RadioGroup? paymentGroup;
+    private FormModel model = new();
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+    }
+
+    private class FormModel
+    {
+        public string PaymentMethod { get; set; } = "";
+    }
+}
+```
+
+## Horizontal Layout
+
+```razor
+<CascadingValue Value="@radioGroup">
+  <RadioGroup @ref="radioGroup" @bind-Value="selectedOption" ClassName="flex gap-4">
+    <RadioGroupItem Value="left">Left</RadioGroupItem>
+    <RadioGroupItem Value="center">Center</RadioGroupItem>
+    <RadioGroupItem Value="right">Right</RadioGroupItem>
+  </RadioGroup>
+</CascadingValue>
+
+@code {
+    private RadioGroup? radioGroup;
+    private string? selectedOption;
+}
+```
+
+## API Reference
+
+### RadioGroup Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string?` | `null` | Selected value |
+| `ChildContent` | `RenderFragment` | `null` | RadioGroupItem children |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### RadioGroupItem Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string` | `""` | Item value |
+| `ChildContent` | `RenderFragment` | `null` | Item label content |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Events
+- `@bind-Value` - Two-way binding for selected value
+- `ValueChanged` - `EventCallback<string>` for value changes
+
+## Accessibility
+
+The RadioGroup component includes:
+- Proper ARIA attributes (`role="radio"`, `aria-checked`)
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add radio-group
+```

@@ -1,0 +1,186 @@
+---
+title: Form
+description: Form wrapper with validation support
+---
+
+The Form component provides a styled wrapper for HTML forms with built-in support for Blazor validation and submission handling.
+
+## Basic Usage
+
+```razor
+<Form OnValidSubmit="HandleSubmit">
+  <div class="space-y-4">
+    <div>
+      <Label>Name</Label>
+      <Input @bind-Value="name" />
+    </div>
+    <div>
+      <Label>Email</Label>
+      <Input @bind-Value="email" Type="email" />
+    </div>
+    <Button Type="submit">Submit</Button>
+  </div>
+</Form>
+
+@code {
+    private string name = "";
+    private string email = "";
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+    }
+}
+```
+
+## With Blazor Validation
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+  <DataAnnotationsValidator />
+  <Form>
+    <div class="space-y-4">
+      <div>
+        <Label>Email</Label>
+        <Input @bind-Value="model.Email" />
+        <ValidationMessage For="@(() => model.Email)" />
+      </div>
+      <div>
+        <Label>Password</Label>
+        <Input @bind-Value="model.Password" Type="password" />
+        <ValidationMessage For="@(() => model.Password)" />
+      </div>
+      <Button Type="submit">Sign In</Button>
+    </div>
+  </Form>
+</EditForm>
+
+@code {
+    private FormModel model = new();
+
+    private void HandleValidSubmit()
+    {
+        // Form is valid, process submission
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        // Form has validation errors
+    }
+
+    private class FormModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [MinLength(8)]
+        public string Password { get; set; } = "";
+    }
+}
+```
+
+## Custom Styling
+
+```razor
+<Form ClassName="space-y-6 max-w-md">
+  <div class="space-y-2">
+    <Label>Username</Label>
+    <Input />
+  </div>
+  <div class="space-y-2">
+    <Label>Password</Label>
+    <Input Type="password" />
+  </div>
+  <Button Type="submit" Class="w-full">Login</Button>
+</Form>
+```
+
+## Complex Form Example
+
+```razor
+<EditForm Model="@userForm" OnValidSubmit="HandleSubmit">
+  <DataAnnotationsValidator />
+  <Form>
+    <div class="space-y-6">
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+        <div class="space-y-4">
+          <div>
+            <Label>First Name</Label>
+            <Input @bind-Value="userForm.FirstName" />
+            <ValidationMessage For="@(() => userForm.FirstName)" />
+          </div>
+          <div>
+            <Label>Last Name</Label>
+            <Input @bind-Value="userForm.LastName" />
+            <ValidationMessage For="@(() => userForm.LastName)" />
+          </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Preferences</h3>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2">
+            <Checkbox @bind-Checked="userForm.SubscribeNewsletter" />
+            <Label>Subscribe to newsletter</Label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <Switch @bind-Checked="userForm.EmailNotifications" />
+            <Label>Enable email notifications</Label>
+          </div>
+        </div>
+      </div>
+
+      <Button Type="submit">Save Changes</Button>
+    </div>
+  </Form>
+</EditForm>
+
+@code {
+    private UserFormModel userForm = new();
+
+    private void HandleSubmit()
+    {
+        // Process form submission
+    }
+
+    private class UserFormModel
+    {
+        [Required]
+        public string FirstName { get; set; } = "";
+
+        [Required]
+        public string LastName { get; set; } = "";
+
+        public bool SubscribeNewsletter { get; set; }
+        public bool EmailNotifications { get; set; }
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | `null` | Form content |
+| `OnValidSubmit` | `EventCallback` | `null` | Fired when form is valid and submitted |
+| `OnInvalidSubmit` | `EventCallback` | `null` | Fired when form has validation errors |
+| `ClassName` | `string` | `space-y-6` | Additional CSS classes |
+
+## Accessibility
+
+The Form component includes:
+- Proper semantic HTML (`<form>`)
+- Form submission handling
+- Integration with Blazor validation
+
+## Installation
+
+```bash
+shellui add form
+```

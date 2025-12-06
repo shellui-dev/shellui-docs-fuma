@@ -1,0 +1,183 @@
+---
+title: Input OTP
+description: One-time password input field
+---
+
+The InputOTP component provides a multi-digit input field for one-time passwords, verification codes, and similar numeric inputs.
+
+## Basic Usage
+
+```razor
+<InputOTP Value="@otpCode" ValueChanged="@HandleOtpChanged" />
+
+@code {
+    private string otpCode = "";
+
+    private void HandleOtpChanged(string value)
+    {
+        otpCode = value;
+    }
+}
+```
+
+## With Two-way Binding
+
+```razor
+<InputOTP @bind-Value="otpCode" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+## Custom Length
+
+```razor
+<InputOTP @bind-Value="otpCode" Length="4" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+## With Grouping
+
+```razor
+<InputOTP @bind-Value="otpCode" Length="6" GroupBy="3" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+This will display: `[123] - [456]` instead of `[1][2][3][4][5][6]`
+
+## With Completion Handler
+
+```razor
+<InputOTP @bind-Value="otpCode" OnComplete="HandleOtpComplete" />
+
+@code {
+    private string otpCode = "";
+
+    private void HandleOtpComplete(string value)
+    {
+        // OTP is complete, verify it
+        VerifyOtp(value);
+    }
+
+    private void VerifyOtp(string code)
+    {
+        // Verify the OTP code
+    }
+}
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Enter verification code</Label>
+  <InputOTP @bind-Value="verificationCode" Length="6" />
+  <p class="text-sm text-muted-foreground">We sent a code to your email</p>
+</div>
+
+@code {
+    private string verificationCode = "";
+}
+```
+
+## Verification Flow Example
+
+```razor
+<div class="space-y-4">
+  <div class="space-y-2">
+    <Label>Verification Code</Label>
+    <InputOTP @bind-Value="code" Length="6" OnComplete="HandleCodeComplete" />
+  </div>
+  @if (isVerifying)
+  {
+    <div class="flex items-center gap-2">
+      <div class="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+      <span class="text-sm">Verifying...</span>
+    </div>
+  }
+  @if (!string.IsNullOrEmpty(errorMessage))
+  {
+    <Alert Variant="destructive" Title="Error">
+      @errorMessage
+    </Alert>
+  }
+</div>
+
+@code {
+    private string code = "";
+    private bool isVerifying = false;
+    private string errorMessage = "";
+
+    private async Task HandleCodeComplete(string value)
+    {
+        isVerifying = true;
+        errorMessage = "";
+        StateHasChanged();
+
+        // Simulate verification
+        await Task.Delay(1000);
+
+        if (value == "123456")
+        {
+            // Success
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = "Invalid code. Please try again.";
+            code = "";
+        }
+
+        isVerifying = false;
+        StateHasChanged();
+    }
+}
+```
+
+## Disabled State
+
+```razor
+<InputOTP Value="123456" Disabled />
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string` | `""` | OTP value |
+| `Length` | `int` | `6` | Number of input digits |
+| `GroupBy` | `int` | `3` | Group digits (0 to disable) |
+| `Disabled` | `bool` | `false` | Disables the input |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Events
+- `@bind-Value` - Two-way binding for OTP value
+- `ValueChanged` - `EventCallback<string>` for value changes
+- `OnComplete` - `EventCallback<string>` fired when all digits are entered
+
+## Features
+
+- **Auto-focus**: Automatically moves to next input on digit entry
+- **Keyboard navigation**: Arrow keys to move between inputs
+- **Backspace handling**: Clears current and moves to previous
+- **Paste support**: Can paste full code (implementation dependent)
+
+## Accessibility
+
+The InputOTP component includes:
+- Proper input attributes (`inputmode="numeric"`, `pattern="[0-9]*"`)
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add input-otp
+```
