@@ -1,0 +1,220 @@
+---
+title: Dropdown
+description: Dropdown menu component for actions and navigation
+---
+
+The Dropdown component provides a menu that appears when triggered, commonly used for actions, navigation, and contextual options.
+
+## Basic Usage
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button Variant="outline">Options</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">Edit</button>
+    <button @onclick="HandleDuplicate" class="w-full text-left px-2 py-1.5 hover:bg-accent">Duplicate</button>
+    <div class="my-1 h-px bg-border"></div>
+    <button @onclick="HandleDelete" class="w-full text-left px-2 py-1.5 text-destructive hover:bg-destructive/10">Delete</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleOpenChanged(bool value)
+    {
+        isOpen = value;
+    }
+
+    private void HandleEdit() { /* ... */ }
+    private void HandleDuplicate() { /* ... */ }
+    private void HandleDelete() { /* ... */ }
+}
+```
+
+## Dropdown Structure
+
+Dropdowns use RenderFragment parameters:
+
+### Trigger
+The element that opens the dropdown when clicked.
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button>Menu</Button>
+  </Trigger>
+  <ChildContent>
+    <!-- Menu items -->
+  </ChildContent>
+</Dropdown>
+```
+
+### ChildContent
+The container for dropdown items (buttons, links, etc.).
+
+```razor
+<ChildContent>
+  <button @onclick="HandleAction">Action</button>
+  <button @onclick="HandleAnother">Another Action</button>
+</ChildContent>
+```
+
+## With Icons
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button Variant="outline">Actions</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">
+      <span class="mr-2">✏️</span>
+      Edit
+    </button>
+    <button @onclick="HandleCopy" class="w-full text-left px-2 py-1.5 hover:bg-accent">
+      <span class="mr-2">📋</span>
+      Copy
+    </button>
+    <div class="my-1 h-px bg-border"></div>
+    <button @onclick="HandleDelete" class="w-full text-left px-2 py-1.5 text-destructive hover:bg-destructive/10">
+      <span class="mr-2">🗑️</span>
+      Delete
+    </button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleOpenChanged(bool value) => isOpen = value;
+    private void HandleEdit() { /* ... */ }
+    private void HandleCopy() { /* ... */ }
+    private void HandleDelete() { /* ... */ }
+}
+```
+
+## With Event Handlers
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button Variant="outline">Actions</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">Edit</button>
+    <button @onclick="HandleDuplicate" class="w-full text-left px-2 py-1.5 hover:bg-accent">Duplicate</button>
+    <div class="my-1 h-px bg-border"></div>
+    <button @onclick="HandleDelete" class="w-full text-left px-2 py-1.5 text-destructive hover:bg-destructive/10">Delete</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleOpenChanged(bool value) => isOpen = value;
+
+    private void HandleEdit()
+    {
+        // Handle edit action
+        isOpen = false;
+    }
+
+    private void HandleDuplicate()
+    {
+        // Handle duplicate action
+        isOpen = false;
+    }
+
+    private void HandleDelete()
+    {
+        // Handle delete action
+        isOpen = false;
+    }
+}
+```
+
+## Controlled Dropdown
+
+Control the dropdown's open state:
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button>Menu</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="() => isOpen = false" class="w-full text-left px-2 py-1.5 hover:bg-accent">Close</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleOpenChanged(bool value)
+    {
+        isOpen = value;
+    }
+}
+```
+
+## User Menu Example
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@HandleOpenChanged">
+  <Trigger>
+    <Button Variant="ghost" Class="flex items-center gap-2">
+      <Avatar>
+        <AvatarImage src="@user.AvatarUrl" />
+        <AvatarFallback>@user.Initials</AvatarFallback>
+      </Avatar>
+      <span>@user.Name</span>
+    </Button>
+  </Trigger>
+  <ChildContent>
+    <div class="px-2 py-1.5 text-sm font-semibold">My Account</div>
+    <div class="my-1 h-px bg-border"></div>
+    <button @onclick="NavigateToProfile" class="w-full text-left px-2 py-1.5 hover:bg-accent">Profile</button>
+    <button @onclick="NavigateToSettings" class="w-full text-left px-2 py-1.5 hover:bg-accent">Settings</button>
+    <div class="my-1 h-px bg-border"></div>
+    <button @onclick="HandleLogout" class="w-full text-left px-2 py-1.5 hover:bg-accent">Logout</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleOpenChanged(bool value) => isOpen = value;
+    private void NavigateToProfile() { /* ... */ }
+    private void NavigateToSettings() { /* ... */ }
+    private void HandleLogout() { /* ... */ }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls dropdown open state |
+| `Trigger` | `RenderFragment` | `null` | Trigger element (button, etc.) |
+| `ChildContent` | `RenderFragment` | `null` | Dropdown menu content |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Events
+- `IsOpenChanged` - `EventCallback<bool>` fired when open state changes
+
+## Accessibility
+
+The Dropdown component includes:
+- Keyboard navigation (Arrow keys, Enter, Escape)
+- Focus management
+- Proper ARIA attributes
+- Screen reader support
+
+## Installation
+
+```bash
+shellui add dropdown
+```

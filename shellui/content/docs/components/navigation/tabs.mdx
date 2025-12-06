@@ -1,0 +1,201 @@
+---
+title: Tabs
+description: Tabbed content navigation component
+---
+
+The Tabs component provides a way to organize content into multiple panels that can be switched between, keeping the interface clean and organized.
+
+## Basic Usage
+
+```razor
+<Tabs>
+  <TabHeaders>
+    <button @onclick="() => activeTab = 'account'" class="@(activeTab == 'account' ? 'bg-background text-foreground shadow-sm' : '')">Account</button>
+    <button @onclick="() => activeTab = 'password'" class="@(activeTab == 'password' ? 'bg-background text-foreground shadow-sm' : '')">Password</button>
+  </TabHeaders>
+  <TabContent>
+    @if (activeTab == "account")
+    {
+      <p>Account settings content goes here.</p>
+    }
+    @if (activeTab == "password")
+    {
+      <p>Password settings content goes here.</p>
+    }
+  </TabContent>
+</Tabs>
+
+@code {
+    private string activeTab = "account";
+}
+```
+
+## Controlled Tabs
+
+Control the active tab programmatically:
+
+```razor
+<Tabs>
+  <TabHeaders>
+    <button @onclick="() => activeTab = 'overview'" class="@GetTabClass('overview')">Overview</button>
+    <button @onclick="() => activeTab = 'analytics'" class="@GetTabClass('analytics')">Analytics</button>
+    <button @onclick="() => activeTab = 'reports'" class="@GetTabClass('reports')">Reports</button>
+  </TabHeaders>
+  <TabContent>
+    @if (activeTab == "overview") { <p>Overview content</p> }
+    @if (activeTab == "analytics") { <p>Analytics content</p> }
+    @if (activeTab == "reports") { <p>Reports content</p> }
+  </TabContent>
+</Tabs>
+
+@code {
+    private string activeTab = "overview";
+
+    private string GetTabClass(string tab) => 
+        activeTab == tab ? "bg-background text-foreground shadow-sm" : "";
+}
+```
+
+## Vertical Tabs
+
+Display tabs vertically:
+
+```razor
+<div class="flex gap-4">
+  <Tabs ClassName="flex flex-col">
+    <TabHeaders>
+      <button @onclick="() => activeTab = 'general'" class="@GetTabClass('general')">General</button>
+      <button @onclick="() => activeTab = 'security'" class="@GetTabClass('security')">Security</button>
+      <button @onclick="() => activeTab = 'notifications'" class="@GetTabClass('notifications')">Notifications</button>
+    </TabHeaders>
+  </Tabs>
+  <div>
+    <Tabs>
+      <TabContent>
+        @if (activeTab == "general") { <p>General settings</p> }
+        @if (activeTab == "security") { <p>Security settings</p> }
+        @if (activeTab == "notifications") { <p>Notifications settings</p> }
+      </TabContent>
+    </Tabs>
+  </div>
+</div>
+
+@code {
+    private string activeTab = "general";
+
+    private string GetTabClass(string tab) => 
+        activeTab == tab ? "bg-background text-foreground shadow-sm" : "";
+}
+```
+
+## Tabs with Forms
+
+Use tabs to organize form sections:
+
+```razor
+<Tabs>
+  <TabHeaders>
+    <button @onclick="() => activeTab = 'personal'" class="@GetTabClass('personal')">Personal</button>
+    <button @onclick="() => activeTab = 'contact'" class="@GetTabClass('contact')">Contact</button>
+    <button @onclick="() => activeTab = 'preferences'" class="@GetTabClass('preferences')">Preferences</button>
+  </TabHeaders>
+  <TabContent>
+    @if (activeTab == "personal")
+    {
+      <div class="space-y-4">
+        <div>
+          <Label>First Name</Label>
+          <Input />
+        </div>
+        <div>
+          <Label>Last Name</Label>
+          <Input />
+        </div>
+      </div>
+    }
+    @if (activeTab == "contact")
+    {
+      <div class="space-y-4">
+        <div>
+          <Label>Email</Label>
+          <Input Type="email" />
+        </div>
+        <div>
+          <Label>Phone</Label>
+          <Input Type="tel" />
+        </div>
+      </div>
+    }
+    @if (activeTab == "preferences")
+    {
+      <div class="space-y-4">
+        <div>
+          <Label>Theme</Label>
+          <Select>
+            <option>Light</option>
+            <option>Dark</option>
+          </Select>
+        </div>
+      </div>
+    }
+  </TabContent>
+</Tabs>
+
+@code {
+    private string activeTab = "personal";
+
+    private string GetTabClass(string tab) => 
+        activeTab == tab ? "bg-background text-foreground shadow-sm" : "";
+}
+```
+
+## Tabs Structure
+
+Tabs use RenderFragment parameters:
+
+### TabHeaders
+Container for tab triggers (buttons, links, etc.).
+
+```razor
+<Tabs>
+  <TabHeaders>
+    <button @onclick="() => activeTab = 'tab1'">Tab 1</button>
+    <button @onclick="() => activeTab = 'tab2'">Tab 2</button>
+  </TabHeaders>
+  <TabContent>
+    <!-- Content based on activeTab -->
+  </TabContent>
+</Tabs>
+```
+
+### TabContent
+Content panel that changes based on your state management.
+
+```razor
+<TabContent>
+  @if (activeTab == "tab1") { <p>Tab 1 content</p> }
+  @if (activeTab == "tab2") { <p>Tab 2 content</p> }
+</TabContent>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TabHeaders` | `RenderFragment` | `null` | Header content (tab buttons) |
+| `TabContent` | `RenderFragment` | `null` | Tab content panel |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+## Accessibility
+
+The Tabs component includes:
+- Keyboard navigation (Arrow keys, Home, End)
+- Proper ARIA attributes
+- Focus management
+- Screen reader support
+
+## Installation
+
+```bash
+shellui add tabs
+```

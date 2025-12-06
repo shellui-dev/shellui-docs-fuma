@@ -9,51 +9,63 @@ The Card component provides a flexible container for organizing content with cle
 
 ```razor
 <Card>
-  <CardHeader>
-    <CardTitle>Welcome to ShellUI</CardTitle>
-    <CardDescription>Build beautiful Blazor applications</CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Header>
+    <h3 class="text-lg font-semibold">Welcome to ShellUI</h3>
+    <p class="text-sm text-muted-foreground">Build beautiful Blazor applications</p>
+  </Header>
+  <ChildContent>
     <p>Your content goes here</p>
-  </CardContent>
-  <CardFooter>
+  </ChildContent>
+  <Footer>
     <Button>Learn More</Button>
-  </CardFooter>
+  </Footer>
 </Card>
 ```
 
 ## Card Structure
 
-Cards are composed of several sub-components that work together:
+Cards use RenderFragment parameters for flexible content:
 
-### CardHeader
+### Header
 Contains the title and description at the top of the card.
 
 ```razor
-<CardHeader>
-  <CardTitle>Card Title</CardTitle>
-  <CardDescription>This is a description of the card content</CardDescription>
-</CardHeader>
+<Card>
+  <Header>
+    <h3 class="text-lg font-semibold">Card Title</h3>
+    <p class="text-sm text-muted-foreground">This is a description of the card content</p>
+  </Header>
+  <ChildContent>
+    <p>Main content goes here</p>
+  </ChildContent>
+</Card>
 ```
 
-### CardContent
+### ChildContent
 The main content area of the card.
 
 ```razor
-<CardContent>
-  <p>Main content goes here</p>
-  <Input Placeholder="Enter something" />
-</CardContent>
+<Card>
+  <ChildContent>
+    <p>Main content goes here</p>
+    <Input Placeholder="Enter something" />
+  </ChildContent>
+</Card>
 ```
 
-### CardFooter
+### Footer
 Actions or secondary content at the bottom of the card.
 
 ```razor
-<CardFooter>
-  <Button Variant="outline">Cancel</Button>
-  <Button>Save</Button>
-</CardFooter>
+<Card>
+  <ChildContent>
+    <p>Content</p>
+  </ChildContent>
+  <Footer>
+    <Button Variant="outline">Cancel</Button>
+    <Button>Save</Button>
+  </Footer>
+</Card>
 ```
 
 ## Variants
@@ -61,23 +73,23 @@ Actions or secondary content at the bottom of the card.
 ### Default Card
 ```razor
 <Card>
-  <CardHeader>
-    <CardTitle>Default Card</CardTitle>
-  </CardHeader>
-  <CardContent>
+  <Header>
+    <h3 class="text-lg font-semibold">Default Card</h3>
+  </Header>
+  <ChildContent>
     <p>This is a standard card with default styling.</p>
-  </CardContent>
+  </ChildContent>
 </Card>
 ```
 
 ### Card with Footer
 ```razor
 <Card>
-  <CardHeader>
-    <CardTitle>Settings</CardTitle>
-    <CardDescription>Manage your account preferences</CardDescription>
-  </CardHeader>
-  <CardContent>
+  <Header>
+    <h3 class="text-lg font-semibold">Settings</h3>
+    <p class="text-sm text-muted-foreground">Manage your account preferences</p>
+  </Header>
+  <ChildContent>
     <div class="space-y-4">
       <div>
         <Label>Email Notifications</Label>
@@ -88,11 +100,11 @@ Actions or secondary content at the bottom of the card.
         <Switch />
       </div>
     </div>
-  </CardContent>
-  <CardFooter>
+  </ChildContent>
+  <Footer>
     <Button Variant="outline">Cancel</Button>
     <Button>Save Changes</Button>
-  </CardFooter>
+  </Footer>
 </Card>
 ```
 
@@ -100,58 +112,55 @@ Actions or secondary content at the bottom of the card.
 
 ### Product Card
 ```razor
-<Card Class="w-80">
-  <CardHeader>
+<Card>
+  <Header>
     <div class="flex items-center space-x-4">
       <Avatar>
         <AvatarImage src="/product.jpg" />
         <AvatarFallback>PR</AvatarFallback>
       </Avatar>
       <div>
-        <CardTitle>Premium Plan</CardTitle>
-        <CardDescription>$29/month</CardDescription>
+        <h3 class="text-lg font-semibold">Premium Plan</h3>
+        <p class="text-sm text-muted-foreground">$29/month</p>
       </div>
     </div>
-  </CardHeader>
-  <CardContent>
+  </Header>
+  <ChildContent>
     <ul class="space-y-2 text-sm">
       <li>✓ Unlimited projects</li>
       <li>✓ Priority support</li>
       <li>✓ Advanced analytics</li>
     </ul>
-  </CardContent>
-  <CardFooter>
+  </ChildContent>
+  <Footer>
     <Button Class="w-full">Upgrade Now</Button>
-  </CardFooter>
+  </Footer>
 </Card>
 ```
 
 ### Stats Card
 ```razor
 <Card>
-  <CardHeader Class="flex flex-row items-center justify-between space-y-0 pb-2">
-    <CardTitle Class="text-sm font-medium">Total Revenue</CardTitle>
-    <span Class="text-muted-foreground">$</span>
-  </CardHeader>
-  <CardContent>
-    <div Class="text-2xl font-bold">$45,231.89</div>
-    <p Class="text-xs text-muted-foreground">+20.1% from last month</p>
-  </CardContent>
+  <Header>
+    <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+      <h3 class="text-sm font-medium">Total Revenue</h3>
+      <span class="text-muted-foreground">$</span>
+    </div>
+  </Header>
+  <ChildContent>
+    <div class="text-2xl font-bold">$45,231.89</div>
+    <p class="text-xs text-muted-foreground">+20.1% from last month</p>
+  </ChildContent>
 </Card>
 ```
 
 ## API Reference
 
-All Card sub-components share the same API:
-
-| Component | Property | Type | Default | Description |
-|-----------|----------|------|---------|-------------|
-| `Card` | `Class` | `string` | `null` | Additional CSS classes |
-| `CardHeader` | `Class` | `string` | `null` | Additional CSS classes |
-| `CardTitle` | `Class` | `string` | `null` | Additional CSS classes |
-| `CardDescription` | `Class` | `string` | `null` | Additional CSS classes |
-| `CardContent` | `Class` | `string` | `null` | Additional CSS classes |
-| `CardFooter` | `Class` | `string` | `null` | Additional CSS classes |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Header` | `RenderFragment` | `null` | Header content (title, description, etc.) |
+| `Footer` | `RenderFragment` | `null` | Footer content (actions, buttons, etc.) |
+| `ChildContent` | `RenderFragment` | `null` | Main card content |
 
 ## Styling
 

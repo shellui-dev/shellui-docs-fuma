@@ -68,12 +68,12 @@ Choose from different button sizes:
 
 ### Loading State
 ```razor
-<Button Loading>Loading...</Button>
+<Button IsLoading="true">Loading...</Button>
 ```
 
 ### Disabled State
 ```razor
-<Button Disabled>Disabled Button</Button>
+<Button Disabled="true">Disabled Button</Button>
 ```
 
 ## With Icons
@@ -90,10 +90,10 @@ Buttons can include icons for better visual hierarchy:
 ## Event Handling
 
 ```razor
-<Button @onclick="HandleClick">Click me</Button>
+<Button OnClick="HandleClick">Click me</Button>
 
 @code {
-    private void HandleClick()
+    private void HandleClick(MouseEventArgs args)
     {
         // Handle button click
     }
@@ -106,14 +106,14 @@ Buttons can include icons for better visual hierarchy:
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `Variant` | `ButtonVariant` | `default` | Visual style variant |
-| `Size` | `ButtonSize` | `default` | Button size |
-| `Loading` | `bool` | `false` | Shows loading spinner |
+| `Variant` | `string` | `default` | Visual style variant |
+| `Size` | `string` | `md` | Button size |
+| `IsLoading` | `bool` | `false` | Shows loading spinner |
 | `Disabled` | `bool` | `false` | Disables the button |
 | `Type` | `string` | `button` | HTML button type |
-| `Class` | `string` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | `null` | Button content |
 
-### ButtonVariant Options
+### Variant Options
 - `default`
 - `secondary`
 - `destructive`
@@ -121,15 +121,14 @@ Buttons can include icons for better visual hierarchy:
 - `ghost`
 - `link`
 
-### ButtonSize Options
+### Size Options
 - `sm`
-- `default`
+- `md`
 - `lg`
+- `icon`
 
 ### Events
-- `@onclick` - Standard Blazor click event
-- `@onfocus` - Focus event
-- `@onblur` - Blur event
+- `OnClick` - `EventCallback<MouseEventArgs>` for click events
 
 ## Accessibility
 

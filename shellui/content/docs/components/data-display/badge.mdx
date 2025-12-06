@@ -1,0 +1,127 @@
+---
+title: Badge
+description: Status indicators and labels component
+---
+
+The Badge component displays status indicators, labels, and tags with various visual styles to convey information at a glance.
+
+## Basic Usage
+
+```razor
+<Badge>New</Badge>
+```
+
+## Variants
+
+Badges come in several variants for different use cases:
+
+### Default
+```razor
+<Badge>Default</Badge>
+```
+
+### Secondary
+```razor
+<Badge Variant="secondary">Secondary</Badge>
+```
+
+### Destructive
+```razor
+<Badge Variant="destructive">Error</Badge>
+```
+
+### Outline
+```razor
+<Badge Variant="outline">Outline</Badge>
+```
+
+## Common Use Cases
+
+### Status Badges
+```razor
+<div class="flex items-center gap-2">
+  <Badge Variant="@(user.IsActive ? "default" : "secondary")">
+    @(user.IsActive ? "Active" : "Inactive")
+  </Badge>
+  <Badge Variant="@GetStatusVariant(user.Status)">
+    @user.Status
+  </Badge>
+</div>
+
+@code {
+    private string GetStatusVariant(string status) => status.ToLower() switch
+    {
+        "pending" => "outline",
+        "approved" => "default",
+        "rejected" => "destructive",
+        _ => "secondary"
+    };
+}
+```
+
+### Notification Count
+```razor
+<div class="relative">
+  <Button>Notifications</Button>
+  <Badge Class="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0">
+    3
+  </Badge>
+</div>
+```
+
+### Tags
+```razor
+<div class="flex flex-wrap gap-2">
+  <Badge Variant="outline">React</Badge>
+  <Badge Variant="outline">TypeScript</Badge>
+  <Badge Variant="outline">Tailwind</Badge>
+</div>
+```
+
+### User Roles
+```razor
+<Badge Variant="@(user.Role == "Admin" ? "destructive" : "secondary")">
+  @user.Role
+</Badge>
+```
+
+## With Icons
+
+```razor
+<div class="flex items-center gap-2">
+  <Badge>
+    <span class="mr-1">✓</span>
+    Verified
+  </Badge>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Variant` | `string` | `default` | Visual style variant |
+| `Class` | `string` | `""` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | `null` | Badge content |
+
+### Variant Options
+- `default`
+- `secondary`
+- `destructive`
+- `outline`
+- `success`
+- `warning`
+- `info`
+
+## Accessibility
+
+The Badge component includes:
+- Proper semantic HTML
+- Screen reader compatibility
+- High contrast colors for readability
+
+## Installation
+
+```bash
+shellui add badge
+```

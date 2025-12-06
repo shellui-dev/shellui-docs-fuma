@@ -1,0 +1,183 @@
+---
+title: Dialog
+description: Modal dialog overlay component for displaying content
+---
+
+The Dialog component provides a modal overlay for displaying important content, forms, or confirmations that require user attention.
+
+## Basic Usage
+
+```razor
+<Button OnClick="() => isOpen = true">Open Dialog</Button>
+
+<Dialog IsOpen="@isOpen" Title="Dialog Title" Description="Dialog description goes here." OnClose="() => isOpen = false">
+  <ChildContent>
+    <p>Your content goes here.</p>
+  </ChildContent>
+  <Footer>
+    <Button Variant="outline" OnClick="() => isOpen = false">Cancel</Button>
+    <Button OnClick="HandleSave">Save Changes</Button>
+  </Footer>
+</Dialog>
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleSave()
+    {
+        // Handle save
+        isOpen = false;
+    }
+}
+```
+
+## Dialog Structure
+
+Dialogs use parameters and RenderFragments:
+
+### Title and Description
+Set via parameters:
+
+```razor
+<Dialog IsOpen="@isOpen" Title="My Dialog" Description="Dialog description" OnClose="() => isOpen = false">
+  <ChildContent>
+    <!-- Content -->
+  </ChildContent>
+</Dialog>
+```
+
+### Footer
+Use the Footer RenderFragment for actions:
+
+```razor
+<Dialog IsOpen="@isOpen" Title="Confirm" OnClose="() => isOpen = false">
+  <ChildContent>
+    <p>Are you sure?</p>
+  </ChildContent>
+  <Footer>
+    <Button Variant="outline" OnClick="() => isOpen = false">Cancel</Button>
+    <Button OnClick="HandleConfirm">Confirm</Button>
+  </Footer>
+</Dialog>
+```
+
+## Controlled Dialog
+
+Control the dialog's open state programmatically:
+
+```razor
+<Button OnClick="() => isOpen = true">Open Dialog</Button>
+
+<Dialog IsOpen="@isOpen" Title="Controlled Dialog" Description="This dialog is controlled by a boolean state." OnClose="() => isOpen = false">
+  <ChildContent>
+    <p>Dialog content</p>
+  </ChildContent>
+  <Footer>
+    <Button OnClick="() => isOpen = false">Close</Button>
+  </Footer>
+</Dialog>
+
+@code {
+    private bool isOpen = false;
+}
+```
+
+## Form Dialog
+
+Use dialogs for forms:
+
+```razor
+<Button OnClick="() => isOpen = true">Add User</Button>
+
+<Dialog IsOpen="@isOpen" Title="Add New User" Description="Enter user information below." OnClose="() => isOpen = false">
+  <ChildContent>
+    <EditForm Model="@user" OnValidSubmit="HandleSubmit">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <Label>Name</Label>
+          <Input @bind-Value="user.Name" />
+        </div>
+        <div class="space-y-2">
+          <Label>Email</Label>
+          <Input @bind-Value="user.Email" Type="email" />
+        </div>
+      </div>
+      <Footer>
+        <Button Type="button" Variant="outline" OnClick="() => isOpen = false">Cancel</Button>
+        <Button Type="submit">Add User</Button>
+      </Footer>
+    </EditForm>
+  </ChildContent>
+</Dialog>
+
+@code {
+    private bool isOpen = false;
+    private UserModel user = new();
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+        isOpen = false;
+    }
+
+    private class UserModel
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+    }
+}
+```
+
+## Confirmation Dialog
+
+Use dialogs for confirmations:
+
+```razor
+<Button Variant="destructive" OnClick="() => showDeleteDialog = true">Delete</Button>
+
+<Dialog IsOpen="@showDeleteDialog" Title="Are you sure?" Description="This action cannot be undone. This will permanently delete the item." OnClose="() => showDeleteDialog = false">
+  <Footer>
+    <Button Variant="outline" OnClick="() => showDeleteDialog = false">Cancel</Button>
+    <Button Variant="destructive" OnClick="HandleDelete">Delete</Button>
+  </Footer>
+</Dialog>
+
+@code {
+    private bool showDeleteDialog = false;
+
+    private void HandleDelete()
+    {
+        // Perform delete operation
+        showDeleteDialog = false;
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls dialog open state |
+| `Title` | `string` | `null` | Dialog title text |
+| `Description` | `string` | `null` | Dialog description text |
+| `Footer` | `RenderFragment` | `null` | Footer content (buttons, actions) |
+| `ChildContent` | `RenderFragment` | `null` | Main dialog content |
+
+### Events
+- `OnClose` - EventCallback fired when dialog closes
+
+## Accessibility
+
+The Dialog component includes:
+- Focus trap when open
+- Escape key to close
+- Click outside to close (optional)
+- Proper ARIA attributes
+- Focus management
+- Screen reader announcements
+
+## Installation
+
+```bash
+shellui add dialog
+```

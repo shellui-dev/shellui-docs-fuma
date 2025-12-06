@@ -1,0 +1,168 @@
+---
+title: Input
+description: Text input field component with validation support
+---
+
+The Input component provides a flexible and accessible text input field with built-in validation support and styling options.
+
+## Basic Usage
+
+```razor
+<Input Placeholder="Enter your email" Type="email" />
+```
+
+## Input Types
+
+ShellUI inputs support all standard HTML input types:
+
+### Text
+```razor
+<Input Placeholder="Enter your name" />
+```
+
+### Email
+```razor
+<Input Placeholder="email@example.com" Type="email" />
+```
+
+### Password
+```razor
+<Input Placeholder="Enter password" Type="password" />
+```
+
+### Number
+```razor
+<Input Placeholder="Enter amount" Type="number" />
+```
+
+### Search
+```razor
+<Input Placeholder="Search..." Type="search" />
+```
+
+### Tel
+```razor
+<Input Placeholder="(555) 123-4567" Type="tel" />
+```
+
+### URL
+```razor
+<Input Placeholder="https://example.com" Type="url" />
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <Label For="email">Email</Label>
+  <Input Id="email" Placeholder="email@example.com" Type="email" />
+</div>
+```
+
+## With Icon
+
+```razor
+<div class="relative">
+  <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">@</span>
+  <Input Class="pl-10" Placeholder="Email" Type="email" />
+</div>
+```
+
+## Disabled State
+
+```razor
+<Input Placeholder="Disabled input" Disabled />
+```
+
+## Read-only State
+
+```razor
+<Input Value="Read-only value" ReadOnly />
+```
+
+## Validation
+
+Inputs work seamlessly with Blazor's validation system:
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+  <DataAnnotationsValidator />
+  <div class="space-y-2">
+    <Label For="email">Email</Label>
+    <Input @bind-Value="model.Email" Id="email" Type="email" />
+    <ValidationMessage For="@(() => model.Email)" />
+  </div>
+  <Button Type="submit">Submit</Button>
+</EditForm>
+
+@code {
+    private FormModel model = new();
+
+    private void HandleSubmit()
+    {
+        // Handle form submission
+    }
+
+    private class FormModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+    }
+}
+```
+
+## Two-way Binding
+
+```razor
+<Input @bind-Value="email" Placeholder="Enter email" Type="email" />
+
+@code {
+    private string email = "";
+}
+```
+
+Or using ValueChanged callback:
+
+```razor
+<Input Value="@email" ValueChanged="@HandleEmailChanged" Placeholder="Enter email" Type="email" />
+
+@code {
+    private string email = "";
+
+    private void HandleEmailChanged(string value)
+    {
+        email = value;
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Type` | `string` | `text` | HTML input type |
+| `Placeholder` | `string` | `""` | Placeholder text |
+| `Value` | `string` | `""` | Input value |
+| `Disabled` | `bool` | `false` | Disables the input |
+| `ReadOnly` | `bool` | `false` | Makes input read-only |
+
+### Events
+- `@bind-Value` - Two-way binding for input value
+- `ValueChanged` - `EventCallback<string>` for value changes
+- `OnFocus` - `EventCallback<FocusEventArgs>` for focus events
+- `OnBlur` - `EventCallback<FocusEventArgs>` for blur events
+
+## Accessibility
+
+The Input component includes:
+- Proper label association via `For` and `Id` attributes
+- ARIA attributes for validation states
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add input
+```
