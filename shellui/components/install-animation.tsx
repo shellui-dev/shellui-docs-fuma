@@ -36,9 +36,9 @@ export function InstallAnimation() {
 
   const lines: ReactElement[] = [];
 
-  // Always show the command
+  // Always show the command (colored)
   lines.push(
-    <span key="command_type">
+    <span key="command_type" className="text-green-400">
       {installCmd.substring(0, tick)}
       {tick < timeCommandEnter && (
         <div className="inline-block h-3 w-1 animate-pulse bg-white" />
@@ -56,13 +56,13 @@ export function InstallAnimation() {
     if (tick <= timeStage1 || tick > timeFinal) {
       lines.push(
         <Fragment key="logo">
-          <span>  ____    _              _   _   _   _   ___ </span>
-          <span> / ___|  | |__     ___  | | | | | | | | |_ _|</span>
-          <span> \___ \  | '_ \   / _ \ | | | | | | | |  | |</span>
-          <span>  ___) | | | | | |  __/ | | | | | |_| |  | |</span>
-          <span> |____/  |_| |_|  \___/ |_| |_|  \___/  |___|</span>
+          <span className="text-cyan-400">  ____    _              _   _   _   _   ___ </span>
+          <span className="text-cyan-400"> / ___|  | |__     ___  | | | | | | | | |_ _|</span>
+          <span className="text-cyan-400"> \___ \  | '_ \   / _ \ | | | | | | | |  | |</span>
+          <span className="text-cyan-400">  ___) | | | | | |  __/ | | | | | |_| |  | |</span>
+          <span className="text-cyan-400"> |____/  |_| |_|  \___/ |_| |_|  \___/  |___|</span>
           <span></span>
-          <span>Initializing ShellUI...</span>
+          <span className="text-yellow-400">Initializing ShellUI...</span>
         </Fragment>,
       );
     }
@@ -71,10 +71,10 @@ export function InstallAnimation() {
     if (tick > timeLogo && tick <= timeStage2) {
       lines.push(
         <Fragment key="detected">
-          <span>Detected: BlazorServer</span>
-          <span>Project: TestApp</span>
-          <span>Setting up Tailwind CSS...</span>
-          <span>Selected: standalone</span>
+          <span className="text-blue-400">Detected: <span className="text-white">BlazorServer</span></span>
+          <span className="text-blue-400">Project: <span className="text-white">TestApp</span></span>
+          <span className="text-yellow-400">Setting up Tailwind CSS...</span>
+          <span className="text-green-400">Selected: <span className="text-white">standalone</span></span>
         </Fragment>,
       );
     }
@@ -83,10 +83,10 @@ export function InstallAnimation() {
     if (tick > timeStage1 && tick <= timeStage3) {
       lines.push(
         <Fragment key="creating">
-          <span>Creating component folders...</span>
-          <span>Created: Components/UI/</span>
-          <span>Creating configuration...</span>
-          <span>Created: shellui.json</span>
+          <span className="text-yellow-400">Creating component folders...</span>
+          <span className="text-green-400">Created: <span className="text-white">Components/UI/</span></span>
+          <span className="text-yellow-400">Creating configuration...</span>
+          <span className="text-green-400">Created: <span className="text-white">shellui.json</span></span>
         </Fragment>,
       );
     }
@@ -95,9 +95,9 @@ export function InstallAnimation() {
     if (tick > timeStage2 && tick <= timeStage4) {
       lines.push(
         <Fragment key="downloading">
-          <span>Downloading Tailwind CSS standalone CLI...</span>
-          <span>Downloading Tailwind CLI v4.1.14...</span>
-          <span>Tailwind CLI downloaded successfully!</span>
+          <span className="text-yellow-400">Downloading Tailwind CSS standalone CLI...</span>
+          <span className="text-blue-400">Downloading Tailwind CLI <span className="text-white">v4.1.14</span>...</span>
+          <span className="text-green-400">Tailwind CLI downloaded successfully!</span>
         </Fragment>,
       );
     }
@@ -106,12 +106,12 @@ export function InstallAnimation() {
     if (tick > timeStage3 && tick <= timeFinal) {
       lines.push(
         <Fragment key="building">
-          <span>Creating CSS files...</span>
-          <span>Created: wwwroot/input.css</span>
-          <span>Created: wwwroot/app.css</span>
-          <span>Created: tailwind.config.js</span>
-          <span>Building Tailwind CSS...</span>
-          <span>Built: Tailwind CSS</span>
+          <span className="text-yellow-400">Creating CSS files...</span>
+          <span className="text-green-400">Created: <span className="text-white">wwwroot/input.css</span></span>
+          <span className="text-green-400">Created: <span className="text-white">wwwroot/app.css</span></span>
+          <span className="text-green-400">Created: <span className="text-white">tailwind.config.js</span></span>
+          <span className="text-yellow-400">Building Tailwind CSS...</span>
+          <span className="text-green-400">Built: <span className="text-white">Tailwind CSS</span></span>
         </Fragment>,
       );
     }
@@ -121,11 +121,11 @@ export function InstallAnimation() {
       lines.push(
         <Fragment key="success">
           <span></span>
-          <span className="font-bold">ShellUI initialized successfully!</span>
+          <span className="font-bold text-green-400">ShellUI initialized successfully!</span>
           <span></span>
-          <span>Next steps:</span>
-          <span>  1. Add components: dotnet shellui add button</span>
-          <span>  2. Browse all: dotnet shellui list</span>
+          <span className="text-yellow-400">Next steps:</span>
+          <span className="text-white">  1. Add components: <span className="text-green-400">dotnet shellui add button</span></span>
+          <span className="text-white">  2. Browse all: <span className="text-green-400">dotnet shellui list</span></span>
         </Fragment>,
       );
     }
