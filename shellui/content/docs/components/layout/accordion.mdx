@@ -1,0 +1,112 @@
+---
+title: Accordion
+description: Expandable content sections
+---
+
+The Accordion component provides collapsible content sections that can be expanded or collapsed.
+
+## Basic Usage
+
+```razor
+<Accordion>
+  <AccordionItem Title="Section 1" IsOpen="false">
+    <p>Content for section 1 goes here.</p>
+  </AccordionItem>
+  <AccordionItem Title="Section 2" IsOpen="false">
+    <p>Content for section 2 goes here.</p>
+  </AccordionItem>
+  <AccordionItem Title="Section 3" IsOpen="false">
+    <p>Content for section 3 goes here.</p>
+  </AccordionItem>
+</Accordion>
+```
+
+## Controlled Accordion
+
+```razor
+<Accordion>
+  <AccordionItem Title="Item 1" IsOpen="@item1Open">
+    <p>Content 1</p>
+  </AccordionItem>
+  <AccordionItem Title="Item 2" IsOpen="@item2Open">
+    <p>Content 2</p>
+  </AccordionItem>
+</Accordion>
+
+@code {
+    private bool item1Open = false;
+    private bool item2Open = false;
+}
+```
+
+## FAQ Example
+
+```razor
+<Accordion>
+  <AccordionItem Title="What is ShellUI?" IsOpen="false">
+    <p>ShellUI is a CLI-first Blazor component library inspired by shadcn/ui.</p>
+  </AccordionItem>
+  <AccordionItem Title="How do I install ShellUI?" IsOpen="false">
+    <p>You can install ShellUI via CLI or NuGet package. See the installation guide for details.</p>
+  </AccordionItem>
+  <AccordionItem Title="Is ShellUI free?" IsOpen="false">
+    <p>Yes, ShellUI is completely free and open source under the MIT license.</p>
+  </AccordionItem>
+</Accordion>
+```
+
+## With Rich Content
+
+```razor
+<Accordion>
+  <AccordionItem Title="Features" IsOpen="false">
+    <ul class="list-disc list-inside space-y-2">
+      <li>69+ production-ready components</li>
+      <li>CLI-first installation</li>
+      <li>Tailwind CSS integration</li>
+      <li>Full accessibility support</li>
+    </ul>
+  </AccordionItem>
+  <AccordionItem Title="Getting Started" IsOpen="false">
+    <div class="space-y-4">
+      <p>Follow these steps to get started:</p>
+      <ol class="list-decimal list-inside space-y-2">
+        <li>Install the CLI tool</li>
+        <li>Initialize your project</li>
+        <li>Add components</li>
+      </ol>
+    </div>
+  </AccordionItem>
+</Accordion>
+```
+
+## API Reference
+
+### Accordion Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | `null` | Accordion items |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### AccordionItem Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Title` | `string` | `""` | Item title |
+| `IsOpen` | `bool` | `false` | Open state |
+| `ChildContent` | `RenderFragment` | `null` | Item content |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+## Accessibility
+
+The Accordion component includes:
+- Keyboard navigation support
+- Proper ARIA attributes
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add accordion
+```

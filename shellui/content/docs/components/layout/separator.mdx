@@ -1,0 +1,81 @@
+---
+title: Separator
+description: Visual content divider
+---
+
+The Separator component provides a visual divider to separate content sections.
+
+## Basic Usage
+
+```razor
+<div>
+  <p>Content above</p>
+  <Separator />
+  <p>Content below</p>
+</div>
+```
+
+## Horizontal Separator
+
+```razor
+<div class="space-y-4">
+  <div>Section 1</div>
+  <Separator />
+  <div>Section 2</div>
+  <Separator />
+  <div>Section 3</div>
+</div>
+```
+
+## Vertical Separator
+
+```razor
+<div class="flex items-center gap-4">
+  <span>Left</span>
+  <Separator Orientation="vertical" />
+  <span>Center</span>
+  <Separator Orientation="vertical" />
+  <span>Right</span>
+</div>
+```
+
+## In Navigation
+
+```razor
+<nav class="flex items-center gap-4">
+  <a href="/">Home</a>
+  <Separator Orientation="vertical" />
+  <a href="/docs">Docs</a>
+  <Separator Orientation="vertical" />
+  <a href="/about">About</a>
+</nav>
+```
+
+## In Lists
+
+```razor
+<div class="space-y-2">
+  <div class="p-4">Item 1</div>
+  <Separator />
+  <div class="p-4">Item 2</div>
+  <Separator />
+  <div class="p-4">Item 3</div>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Orientation` | `string` | `horizontal` | Separator orientation |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Orientation Options
+- `horizontal` - Horizontal divider
+- `vertical` - Vertical divider
+
+## Installation
+
+```bash
+shellui add separator
+```
