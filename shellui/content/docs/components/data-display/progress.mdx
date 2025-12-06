@@ -1,0 +1,113 @@
+---
+title: Progress
+description: Progress indicators and bars
+---
+
+The Progress component displays the progress of an operation or task with a visual progress bar.
+
+## Basic Usage
+
+```razor
+<Progress Value="50" />
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <div class="flex justify-between text-sm">
+    <span>Upload Progress</span>
+    <span>@progress%</span>
+  </div>
+  <Progress Value="@progress" />
+</div>
+
+@code {
+    private int progress = 45;
+}
+```
+
+## Custom Height
+
+```razor
+<Progress Value="75" Height="1rem" />
+```
+
+## Loading State Example
+
+```razor
+@if (isLoading)
+{
+  <div class="space-y-2">
+    <div class="flex justify-between text-sm">
+      <span>Processing...</span>
+      <span>@progress%</span>
+    </div>
+    <Progress Value="@progress" />
+  </div>
+}
+
+@code {
+    private bool isLoading = true;
+    private int progress = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate progress
+        for (int i = 0; i <= 100; i += 10)
+        {
+            progress = i;
+            await Task.Delay(500);
+            StateHasChanged();
+        }
+        isLoading = false;
+    }
+}
+```
+
+## Multiple Progress Bars
+
+```razor
+<div class="space-y-4">
+  <div class="space-y-2">
+    <div class="flex justify-between text-sm">
+      <span>Storage Used</span>
+      <span>@storageUsed%</span>
+    </div>
+    <Progress Value="@storageUsed" />
+  </div>
+  <div class="space-y-2">
+    <div class="flex justify-between text-sm">
+      <span>Bandwidth Used</span>
+      <span>@bandwidthUsed%</span>
+    </div>
+    <Progress Value="@bandwidthUsed" />
+  </div>
+</div>
+
+@code {
+    private int storageUsed = 65;
+    private int bandwidthUsed = 30;
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `int` | `0` | Progress value (0-100) |
+| `Height` | `string` | `0.5rem` | Progress bar height |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+## Accessibility
+
+The Progress component includes:
+- Proper ARIA attributes
+- Screen reader support
+- Visual progress indication
+
+## Installation
+
+```bash
+shellui add progress
+```

@@ -1,0 +1,101 @@
+---
+title: Alert
+description: Status messages and notifications
+---
+
+The Alert component displays important messages, notifications, and status information to users.
+
+## Basic Usage
+
+```razor
+<Alert Title="Information">
+  This is an informational alert message.
+</Alert>
+```
+
+## Variants
+
+### Default
+```razor
+<Alert Title="Info">
+  This is a default alert message.
+</Alert>
+```
+
+### Destructive
+```razor
+<Alert Variant="destructive" Title="Error">
+  This action cannot be undone.
+</Alert>
+```
+
+### Success
+```razor
+<Alert Variant="success" Title="Success">
+  Your changes have been saved successfully!
+</Alert>
+```
+
+### Warning
+```razor
+<Alert Variant="warning" Title="Warning">
+  Please check your input before submitting.
+</Alert>
+```
+
+### Info
+```razor
+<Alert Variant="info" Title="Information">
+  New features are available in this update.
+</Alert>
+```
+
+## Without Title
+
+```razor
+<Alert>
+  This is an alert without a title.
+</Alert>
+```
+
+## With Icon
+
+```razor
+<Alert Variant="success" Title="Success">
+  <Icon>
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+  </Icon>
+  Operation completed successfully!
+</Alert>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Variant` | `string` | `default` | Alert variant style |
+| `Title` | `string` | `""` | Alert title text |
+| `Icon` | `RenderFragment` | `null` | Optional icon content |
+| `ChildContent` | `RenderFragment` | `null` | Alert message content |
+
+### Variant Options
+- `default`
+- `destructive`
+- `success`
+- `warning`
+- `info`
+
+## Accessibility
+
+The Alert component includes:
+- Proper ARIA role (`role="alert"`)
+- Screen reader announcements
+- Keyboard accessible
+
+## Installation
+
+```bash
+shellui add alert
+```

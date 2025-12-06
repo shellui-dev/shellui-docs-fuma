@@ -1,0 +1,86 @@
+---
+title: Avatar
+description: User profile images and initials
+---
+
+The Avatar component displays user profile pictures or initials in a circular container.
+
+## Basic Usage
+
+```razor
+<Avatar Src="/avatar.jpg" Alt="User avatar" />
+```
+
+## With Fallback Text
+
+```razor
+<Avatar Fallback="JD" />
+```
+
+## With Image and Fallback
+
+```razor
+<Avatar Src="@user.AvatarUrl" Alt="@user.Name" Fallback="@GetInitials(user.Name)" />
+
+@code {
+    private string GetInitials(string name)
+    {
+        var parts = name.Split(' ');
+        if (parts.Length >= 2)
+            return $"{parts[0][0]}{parts[1][0]}";
+        return name.Length > 0 ? name[0].ToString() : "";
+    }
+}
+```
+
+## Sizes
+
+```razor
+<div class="flex items-center gap-4">
+  <Avatar Size="sm" Fallback="SM" />
+  <Avatar Size="default" Fallback="MD" />
+  <Avatar Size="lg" Fallback="LG" />
+  <Avatar Size="xl" Fallback="XL" />
+</div>
+```
+
+## User Profile Example
+
+```razor
+<div class="flex items-center space-x-4">
+  <Avatar Src="@user.AvatarUrl" Alt="@user.Name" Fallback="@GetInitials(user.Name)" />
+  <div>
+    <h3 class="font-medium">@user.Name</h3>
+    <p class="text-sm text-muted-foreground">@user.Email</p>
+  </div>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Src` | `string?` | `null` | Image source URL |
+| `Alt` | `string?` | `null` | Image alt text |
+| `Fallback` | `string?` | `null` | Fallback text (initials) |
+| `Size` | `string` | `default` | Avatar size |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Size Options
+- `sm` - Small (32px)
+- `default` - Default (40px)
+- `lg` - Large (48px)
+- `xl` - Extra Large (64px)
+
+## Accessibility
+
+The Avatar component includes:
+- Proper alt text support
+- Fallback content for missing images
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add avatar
+```
