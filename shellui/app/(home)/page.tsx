@@ -8,47 +8,65 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
-        <div className="flex flex-col items-center text-center space-y-8">
-          {/* Announcement Banner */}
-          <Link
-            href="/docs/components"
-            className="group inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      <section className="container mx-auto px-4 py-4 md:py-6 max-w-[1400px]">
+        <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden bg-origin-border">
+          {/* Video Background - Light Theme */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover dark:hidden"
           >
-            <span>New components: Calendar, Combobox, and more...</span>
-            <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-
-          {/* Main Heading */}
-          <div className="space-y-4 max-w-3xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+            <source src="/hero-bg-light.webm" type="video/webm" />
+          </video>
+          
+          {/* Video Background - Dark Theme */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover hidden dark:block"
+          >
+            <source src="/hero-bg-dark.webm" type="video/webm" />
+          </video>
+          
+          {/* Overlay for text readability */}
+          <div className="absolute inset-0 bg-linear-to-br from-background/40 via-background/20 to-transparent dark:from-background/60 dark:via-background/30" />
+          
+          {/* Content overlay */}
+          <div className="relative flex flex-col justify-center z-10 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
+            {/* Main Heading */}
+            <h1 className="text-4xl leading-tighter font-medium xl:text-5xl max-md:text-center mb-4">
               Build production-ready{' '}
               <span className="text-primary">Blazor components</span>{' '}
               with a few clicks
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              CLI-first Blazor component library, validation, accessible with ARIA and well-styled Tailwind components
+            
+            {/* Description */}
+            <p className="text-lg text-muted-foreground max-w-2xl mb-8 max-md:mx-auto">
+              CLI-first Blazor component library inspired by shadcn/ui. Copy components directly into your project, customize everything, and build beautiful applications with Tailwind CSS.
             </p>
-          </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link
-              href="/docs/quickstart"
-              className="group inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
-            >
-              Get Started
-              <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="https://github.com/Shelltechlabs/shellui"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-md border border-input bg-background px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              <GithubIcon className="h-4 w-4" />
-              Star on GitHub
-            </Link>
+            {/* CTA Buttons */}
+            <div className="flex flex-row items-center justify-center gap-4 flex-wrap w-fit max-md:w-full max-md:justify-center">
+              <Link
+                href="/docs/quickstart"
+                className="inline-flex justify-center px-5 py-3 rounded-full font-medium tracking-tight transition-colors bg-primary text-primary-foreground hover:bg-primary/90 max-sm:text-sm"
+              >
+                Getting Started
+              </Link>
+              <Link
+                href="https://github.com/Shelltechlabs/shellui"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-medium tracking-tight transition-colors border bg-background text-foreground hover:bg-accent max-sm:text-sm"
+              >
+                <GithubIcon className="h-4 w-4" />
+                Star on GitHub
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -188,42 +206,88 @@ shellui add button card input
                 code={`@page "/"
 @using YourProject.Components.UI
 
-<Card>
-  <Header>
-    <h3 class="text-lg font-semibold">Welcome</h3>
-  </Header>
-  <ChildContent>
-    <Button @onclick="HandleClick">Click Me</Button>
-  </ChildContent>
-</Card>
+<Form OnValidSubmit="HandleSubmit">
+  <div class="space-y-4">
+    <div>
+      <Label>Name</Label>
+      <Input @bind-Value="name" />
+    </div>
+    <div>
+      <Label>Email</Label>
+      <Input @bind-Value="email" Type="email" />
+    </div>
+    <Button Type="submit">Submit</Button>
+  </div>
+</Form>
 
 @code {
-    private void HandleClick()
+    private string name = "";
+    private string email = "";
+
+    private void HandleSubmit()
     {
-        // Your logic here
+        // Handle form submission
     }
 }`}
                 lang="razor"
                 wrapper={{
-                  title: 'Button.razor',
+                  title: 'Form.razor',
                 }}
               />
             </div>
 
             {/* Right: Content */}
-            <div className="max-lg:row-start-1">
-              <h3 className="text-xl lg:text-2xl font-medium tracking-tight my-4">
-                Use Components Like Native Blazor
-              </h3>
-              <p className="mb-4">
-                ShellUI components work seamlessly with Blazor's component model. Use RenderFragments, event handlers, and all the features you're familiar with.
-              </p>
-              <ul className="text-xs list-disc list-inside mt-8 space-y-2">
-                <li>Familiar Razor syntax with RenderFragments</li>
-                <li>Full IntelliSense support and compile-time type checking</li>
-                <li>Modify component code directly since it's in your project</li>
-                <li>Event handlers and all standard Blazor features</li>
-              </ul>
+            <div className="max-lg:row-start-1 space-y-6">
+              <div className="space-y-4">
+                <h3 className="text-3xl md:text-4xl font-bold">
+                  Use Components Like Native Blazor
+                </h3>
+                <p className="text-lg text-muted-foreground">
+                  ShellUI components work seamlessly with Blazor's component model. Use RenderFragments, event handlers, and all the features you're familiar with.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
+                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-muted-foreground pt-0.5">
+                    Familiar Razor syntax with RenderFragments
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
+                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-muted-foreground pt-0.5">
+                    Full IntelliSense support and compile-time type checking
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
+                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-muted-foreground pt-0.5">
+                    Modify component code directly since it's in your project
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
+                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-muted-foreground pt-0.5">
+                    Event handlers and all standard Blazor features
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -300,7 +364,7 @@ shellui add button card input
                       Theme with CSS variables or use{' '}
                       <Link href="https://tweakcn.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                         tweakcn
-                      </Link>{' '}
+        </Link>{' '}
                       for instant theme generation
                     </p>
                   </div>
