@@ -1,0 +1,99 @@
+---
+title: Textarea
+description: Multi-line text input component
+---
+
+The Textarea component provides a multi-line text input field for longer text content like descriptions, comments, or messages.
+
+## Basic Usage
+
+```razor
+<Textarea Placeholder="Enter your message..." />
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Message</Label>
+  <Textarea Placeholder="Enter your message..." />
+</div>
+```
+
+## Two-way Binding
+
+```razor
+<Textarea @bind-Value="message" Placeholder="Enter your message..." />
+
+@code {
+    private string message = "";
+}
+```
+
+Or using ValueChanged callback:
+
+```razor
+<Textarea Value="@message" ValueChanged="@HandleMessageChanged" Placeholder="Enter your message..." />
+
+@code {
+    private string message = "";
+
+    private void HandleMessageChanged(string value)
+    {
+        message = value;
+    }
+}
+```
+
+## Disabled State
+
+```razor
+<Textarea Placeholder="Disabled textarea" Disabled />
+```
+
+## Read-only State
+
+```razor
+<Textarea Value="This is read-only content" ReadOnly />
+```
+
+## With Character Count
+
+```razor
+<div class="space-y-2">
+  <Textarea @bind-Value="message" Placeholder="Enter your message..." />
+  <p class="text-sm text-muted-foreground">@message.Length / 500 characters</p>
+</div>
+
+@code {
+    private string message = "";
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string` | `""` | Textarea value |
+| `Placeholder` | `string` | `""` | Placeholder text |
+| `Disabled` | `bool` | `false` | Disables the textarea |
+| `ReadOnly` | `bool` | `false` | Makes textarea read-only |
+
+### Events
+- `@bind-Value` - Two-way binding for textarea value
+- `ValueChanged` - `EventCallback<string>` for value changes
+- `OnFocus` - `EventCallback<FocusEventArgs>` for focus events
+- `OnBlur` - `EventCallback<FocusEventArgs>` for blur events
+
+## Accessibility
+
+The Textarea component includes:
+- Proper label association via `For` and `Id` attributes
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add textarea
+```

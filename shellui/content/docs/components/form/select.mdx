@@ -1,0 +1,132 @@
+---
+title: Select
+description: Dropdown selection component
+---
+
+The Select component provides a dropdown menu for selecting from a list of options.
+
+## Basic Usage
+
+```razor
+<Select Value="@selectedValue" ValueChanged="@HandleValueChanged">
+  <option value="">Choose an option...</option>
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</Select>
+
+@code {
+    private string? selectedValue;
+
+    private void HandleValueChanged(string value)
+    {
+        selectedValue = value;
+    }
+}
+```
+
+## With Two-way Binding
+
+```razor
+<Select @bind-Value="selectedFruit">
+  <option value="">Select a fruit...</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="orange">Orange</option>
+</Select>
+
+@code {
+    private string? selectedFruit;
+}
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Choose a fruit</Label>
+  <Select Value="@selectedFruit" ValueChanged="@HandleFruitChanged">
+    <option value="">Select...</option>
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="orange">Orange</option>
+  </Select>
+</div>
+
+@code {
+    private string? selectedFruit;
+
+    private void HandleFruitChanged(string value)
+    {
+        selectedFruit = value;
+    }
+}
+```
+
+## Dynamic Options
+
+```razor
+<Select Value="@selectedCountry" ValueChanged="@HandleCountryChanged">
+  <option value="">Select a country...</option>
+  @foreach (var country in countries)
+  {
+    <option value="@country.Code">@country.Name</option>
+  }
+</Select>
+
+@code {
+    private string? selectedCountry;
+    private List<Country> countries = new()
+    {
+        new Country { Code = "us", Name = "United States" },
+        new Country { Code = "uk", Name = "United Kingdom" },
+        new Country { Code = "ca", Name = "Canada" }
+    };
+
+    private void HandleCountryChanged(string value)
+    {
+        selectedCountry = value;
+    }
+
+    private class Country
+    {
+        public string Code { get; set; } = "";
+        public string Name { get; set; } = "";
+    }
+}
+```
+
+## Disabled State
+
+```razor
+<Select Disabled>
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+</Select>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string?` | `null` | Selected value |
+| `Disabled` | `bool` | `false` | Disables the select |
+| `ChildContent` | `RenderFragment` | `null` | Option elements |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Events
+- `@bind-Value` - Two-way binding for selected value
+- `ValueChanged` - `EventCallback<string>` for value changes
+
+## Accessibility
+
+The Select component includes:
+- Proper label association
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add select
+```

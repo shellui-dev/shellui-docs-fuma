@@ -1,0 +1,104 @@
+---
+title: Switch
+description: Toggle switch component
+---
+
+The Switch component provides a toggle switch for boolean selections with a modern, animated design.
+
+## Basic Usage
+
+```razor
+<Switch Checked="@isEnabled" CheckedChanged="@HandleCheckedChanged" />
+
+@code {
+    private bool isEnabled = false;
+
+    private void HandleCheckedChanged(bool value)
+    {
+        isEnabled = value;
+    }
+}
+```
+
+## With Two-way Binding
+
+```razor
+<Switch @bind-Checked="notificationsEnabled" />
+
+@code {
+    private bool notificationsEnabled = false;
+}
+```
+
+## With Label
+
+```razor
+<div class="flex items-center space-x-2">
+  <Switch @bind-Checked="notificationsEnabled" />
+  <Label>Enable notifications</Label>
+</div>
+
+@code {
+    private bool notificationsEnabled = false;
+}
+```
+
+## Settings Example
+
+```razor
+<div class="space-y-4">
+  <div class="flex items-center justify-between">
+    <div class="space-y-0.5">
+      <Label>Email Notifications</Label>
+      <p class="text-sm text-muted-foreground">Receive email updates</p>
+    </div>
+    <Switch @bind-Checked="emailNotifications" />
+  </div>
+  <div class="flex items-center justify-between">
+    <div class="space-y-0.5">
+      <Label>Push Notifications</Label>
+      <p class="text-sm text-muted-foreground">Receive push updates</p>
+    </div>
+    <Switch @bind-Checked="pushNotifications" />
+  </div>
+</div>
+
+@code {
+    private bool emailNotifications = false;
+    private bool pushNotifications = false;
+}
+```
+
+## Disabled State
+
+```razor
+<div class="flex items-center space-x-2">
+  <Switch Checked="true" Disabled />
+  <Label>Disabled switch</Label>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Checked` | `bool` | `false` | Checked state |
+| `Disabled` | `bool` | `false` | Disables the switch |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### Events
+- `@bind-Checked` - Two-way binding for checked state
+- `CheckedChanged` - `EventCallback<bool>` for checked state changes
+
+## Accessibility
+
+The Switch component includes:
+- Proper ARIA attributes (`role="switch"`, `aria-checked`)
+- Keyboard navigation support
+- Screen reader compatibility
+
+## Installation
+
+```bash
+shellui add switch
+```

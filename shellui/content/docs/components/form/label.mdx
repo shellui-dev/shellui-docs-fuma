@@ -1,0 +1,83 @@
+---
+title: Label
+description: Accessible form labels
+---
+
+The Label component provides accessible labels for form inputs with proper association and styling.
+
+## Basic Usage
+
+```razor
+<div class="space-y-2">
+  <Label>Email</Label>
+  <Input Type="email" Placeholder="email@example.com" />
+</div>
+```
+
+## With Input Association
+
+```razor
+<div class="space-y-2">
+  <Label For="email">Email</Label>
+  <Input Id="email" Type="email" Placeholder="email@example.com" />
+</div>
+```
+
+## With Checkbox
+
+```razor
+<div class="flex items-center space-x-2">
+  <Checkbox @bind-Checked="acceptTerms" />
+  <Label>I accept the terms and conditions</Label>
+</div>
+
+@code {
+    private bool acceptTerms = false;
+}
+```
+
+## With Switch
+
+```razor
+<div class="flex items-center space-x-2">
+  <Switch @bind-Checked="notificationsEnabled" />
+  <Label>Enable notifications</Label>
+</div>
+
+@code {
+    private bool notificationsEnabled = false;
+}
+```
+
+## Required Field Indicator
+
+```razor
+<div class="space-y-2">
+  <Label>
+    Email
+    <span class="text-destructive">*</span>
+  </Label>
+  <Input Type="email" Required />
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `For` | `string` | `""` | Associates label with input via `id` |
+| `ChildContent` | `RenderFragment` | `null` | Label text content |
+
+## Accessibility
+
+The Label component includes:
+- Proper semantic HTML (`<label>`)
+- Association with inputs via `For` and `Id` attributes
+- Screen reader compatibility
+- Proper styling for disabled states
+
+## Installation
+
+```bash
+shellui add label
+```
