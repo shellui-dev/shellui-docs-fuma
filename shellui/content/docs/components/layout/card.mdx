@@ -1,0 +1,181 @@
+---
+title: Card
+description: Container component for organizing and displaying content
+---
+
+The Card component provides a flexible container for organizing content with clear visual hierarchy and structure.
+
+## Basic Usage
+
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Welcome to ShellUI</CardTitle>
+    <CardDescription>Build beautiful Blazor applications</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Your content goes here</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Learn More</Button>
+  </CardFooter>
+</Card>
+```
+
+## Card Structure
+
+Cards are composed of several sub-components that work together:
+
+### CardHeader
+Contains the title and description at the top of the card.
+
+```razor
+<CardHeader>
+  <CardTitle>Card Title</CardTitle>
+  <CardDescription>This is a description of the card content</CardDescription>
+</CardHeader>
+```
+
+### CardContent
+The main content area of the card.
+
+```razor
+<CardContent>
+  <p>Main content goes here</p>
+  <Input Placeholder="Enter something" />
+</CardContent>
+```
+
+### CardFooter
+Actions or secondary content at the bottom of the card.
+
+```razor
+<CardFooter>
+  <Button Variant="outline">Cancel</Button>
+  <Button>Save</Button>
+</CardFooter>
+```
+
+## Variants
+
+### Default Card
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Default Card</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p>This is a standard card with default styling.</p>
+  </CardContent>
+</Card>
+```
+
+### Card with Footer
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Settings</CardTitle>
+    <CardDescription>Manage your account preferences</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <div class="space-y-4">
+      <div>
+        <Label>Email Notifications</Label>
+        <Switch />
+      </div>
+      <div>
+        <Label>Dark Mode</Label>
+        <Switch />
+      </div>
+    </div>
+  </CardContent>
+  <CardFooter>
+    <Button Variant="outline">Cancel</Button>
+    <Button>Save Changes</Button>
+  </CardFooter>
+</Card>
+```
+
+## Layout Examples
+
+### Product Card
+```razor
+<Card Class="w-80">
+  <CardHeader>
+    <div class="flex items-center space-x-4">
+      <Avatar>
+        <AvatarImage src="/product.jpg" />
+        <AvatarFallback>PR</AvatarFallback>
+      </Avatar>
+      <div>
+        <CardTitle>Premium Plan</CardTitle>
+        <CardDescription>$29/month</CardDescription>
+      </div>
+    </div>
+  </CardHeader>
+  <CardContent>
+    <ul class="space-y-2 text-sm">
+      <li>✓ Unlimited projects</li>
+      <li>✓ Priority support</li>
+      <li>✓ Advanced analytics</li>
+    </ul>
+  </CardContent>
+  <CardFooter>
+    <Button Class="w-full">Upgrade Now</Button>
+  </CardFooter>
+</Card>
+```
+
+### Stats Card
+```razor
+<Card>
+  <CardHeader Class="flex flex-row items-center justify-between space-y-0 pb-2">
+    <CardTitle Class="text-sm font-medium">Total Revenue</CardTitle>
+    <span Class="text-muted-foreground">$</span>
+  </CardHeader>
+  <CardContent>
+    <div Class="text-2xl font-bold">$45,231.89</div>
+    <p Class="text-xs text-muted-foreground">+20.1% from last month</p>
+  </CardContent>
+</Card>
+```
+
+## API Reference
+
+All Card sub-components share the same API:
+
+| Component | Property | Type | Default | Description |
+|-----------|----------|------|---------|-------------|
+| `Card` | `Class` | `string` | `null` | Additional CSS classes |
+| `CardHeader` | `Class` | `string` | `null` | Additional CSS classes |
+| `CardTitle` | `Class` | `string` | `null` | Additional CSS classes |
+| `CardDescription` | `Class` | `string` | `null` | Additional CSS classes |
+| `CardContent` | `Class` | `string` | `null` | Additional CSS classes |
+| `CardFooter` | `Class` | `string` | `null` | Additional CSS classes |
+
+## Styling
+
+Cards use Tailwind CSS classes and can be customized using CSS variables:
+
+```css
+/* Custom card styling */
+.card {
+  --card-background: #ffffff;
+  --card-border: #e5e7eb;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+```
+
+## Accessibility
+
+The Card component includes:
+- Proper semantic HTML structure
+- Screen reader compatibility
+- Keyboard navigation support
+- Focus management
+
+## Installation
+
+```bash
+shellui add card
+```

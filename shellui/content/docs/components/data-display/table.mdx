@@ -1,0 +1,250 @@
+---
+title: Table
+description: Structured data presentation component with customizable styling
+---
+
+The Table component provides a flexible and accessible way to display tabular data with proper semantic HTML structure and responsive design.
+
+## Basic Usage
+
+```razor
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>John Doe</TableCell>
+      <TableCell>john@example.com</TableCell>
+      <TableCell>Admin</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Jane Smith</TableCell>
+      <TableCell>jane@example.com</TableCell>
+      <TableCell>User</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+## Table Structure
+
+Tables are composed of several sub-components:
+
+### TableHeader
+Contains the column headers at the top of the table.
+
+```razor
+<TableHeader>
+  <TableRow>
+    <TableHead>Name</TableHead>
+    <TableHead>Email</TableHead>
+    <TableHead>Actions</TableHead>
+  </TableRow>
+</TableHeader>
+```
+
+### TableBody
+Contains the data rows of the table.
+
+```razor
+<TableBody>
+  @foreach (var item in items)
+  {
+    <TableRow>
+      <TableCell>@item.Name</TableCell>
+      <TableCell>@item.Email</TableCell>
+      <TableCell>
+        <Button Size="sm">Edit</Button>
+      </TableCell>
+    </TableRow>
+  }
+</TableBody>
+```
+
+### TableRow
+Represents a single row in the table.
+
+### TableHead
+Represents a header cell in the table.
+
+### TableCell
+Represents a data cell in the table.
+
+## Dynamic Data
+
+```razor
+@code {
+    private List<User> users = new()
+    {
+        new User { Name = "Alice Johnson", Email = "alice@example.com", Role = "Admin" },
+        new User { Name = "Bob Wilson", Email = "bob@example.com", Role = "User" },
+        new User { Name = "Carol Brown", Email = "carol@example.com", Role = "Moderator" }
+    };
+}
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    @foreach (var user in users)
+    {
+      <TableRow>
+        <TableCell>@user.Name</TableCell>
+        <TableCell>@user.Email</TableCell>
+        <TableCell>
+          <Badge Variant="@GetRoleVariant(user.Role)">@user.Role</Badge>
+        </TableCell>
+      </TableRow>
+    }
+  </TableBody>
+</Table>
+
+@code {
+    private string GetRoleVariant(string role) => role.ToLower() switch
+    {
+        "admin" => "destructive",
+        "moderator" => "secondary",
+        _ => "default"
+    };
+
+    private class User
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Role { get; set; } = "";
+    }
+}
+```
+
+## Table with Actions
+
+```razor
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead>Actions</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    @foreach (var user in users)
+    {
+      <TableRow>
+        <TableCell>@user.Name</TableCell>
+        <TableCell>@user.Email</TableCell>
+        <TableCell>
+          <Badge Variant="@(user.IsActive ? "default" : "secondary")">
+            @(user.IsActive ? "Active" : "Inactive")
+          </Badge>
+        </TableCell>
+        <TableCell>
+          <div class="flex space-x-2">
+            <Button Size="sm" Variant="outline">Edit</Button>
+            <Button Size="sm" Variant="destructive">Delete</Button>
+          </div>
+        </TableCell>
+      </TableRow>
+    }
+  </TableBody>
+</Table>
+```
+
+## Responsive Tables
+
+For mobile devices, tables automatically adapt. You can also use custom responsive classes:
+
+```razor
+<div class="overflow-x-auto">
+  <Table>
+    <!-- Table content -->
+  </Table>
+</div>
+```
+
+## API Reference
+
+### Table Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### TableHeader Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### TableBody Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### TableRow Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### TableHead Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### TableCell Component
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Class` | `string` | `null` | Additional CSS classes |
+
+## Styling
+
+Tables use Tailwind CSS classes and can be customized:
+
+```css
+/* Custom table styling */
+.table {
+  --table-border: #e5e7eb;
+  --table-header-bg: #f9fafb;
+}
+
+.table-row:hover {
+  --table-row-hover: #f3f4f6;
+}
+```
+
+## Accessibility
+
+The Table component includes:
+- Proper semantic HTML (`<table>`, `<thead>`, `<tbody>`, etc.)
+- Screen reader compatibility
+- Keyboard navigation support
+- ARIA attributes where needed
+
+## Performance Tips
+
+For large datasets, consider:
+- Using pagination
+- Implementing virtual scrolling with the `ScrollArea` component
+- Lazy loading data
+- Optimizing re-renders with `@key` directives
+
+## Installation
+
+```bash
+shellui add table
+```

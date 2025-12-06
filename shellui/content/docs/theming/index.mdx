@@ -1,0 +1,121 @@
+---
+title: Theming
+description: Customize ShellUI's appearance with themes and CSS variables
+---
+
+ShellUI uses CSS variables for theming, making it easy to customize colors, spacing, typography, and other design tokens to match your brand.
+
+## Overview
+
+All ShellUI components use CSS variables for styling, which means you can customize the entire design system by modifying a few variables. This approach provides flexibility while maintaining consistency.
+
+## Quick Theme Setup
+
+### Using tweakcn
+
+The easiest way to customize your theme is using [tweakcn](https://tweakcn.com):
+
+1. Visit [tweakcn.com](https://tweakcn.com)
+2. Design your perfect theme
+3. Copy the generated CSS variables
+4. Paste into your `wwwroot/input.css` or `wwwroot/app.css`
+
+### Manual Customization
+
+You can also customize themes manually by modifying CSS variables:
+
+```css
+@import "tailwindcss";
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  
+  --radius: 0.5rem;
+}
+```
+
+## Dark Mode
+
+ShellUI supports dark mode out of the box. Define your dark mode variables:
+
+```css
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 48%;
+}
+```
+
+Use the `ThemeToggle` component to switch between light and dark modes:
+
+```razor
+<ThemeToggle />
+```
+
+## Custom Fonts
+
+Add custom fonts by including Google Fonts or custom font files:
+
+```html
+<!-- In your index.html or _Host.cshtml -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+Then update your CSS:
+
+```css
+:root {
+  --font-sans: 'Inter', sans-serif;
+}
+```
+
+## Component-Specific Theming
+
+You can also customize individual components by overriding their CSS classes or modifying component source files (when using CLI installation).
+
+## Best Practices
+
+- Use CSS variables for all color values
+- Test your theme in both light and dark modes
+- Ensure sufficient contrast ratios for accessibility
+- Keep your theme consistent across all components

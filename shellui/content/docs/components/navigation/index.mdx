@@ -1,0 +1,69 @@
+---
+title: Navigation Components
+description: Components for navigation, menus, and routing
+---
+
+Navigation components help users move through your application and access different sections. These components provide intuitive ways to organize and present navigation structures.
+
+## Overview
+
+ShellUI's navigation components are designed to work seamlessly with Blazor routing, providing accessible and responsive navigation patterns that work across all device sizes.
+
+## Available Components
+
+<Cards>
+  <Card title="Navbar" href="/docs/components/navigation/navbar" description="Top navigation bar component" />
+  <Card title="Sidebar" href="/docs/components/navigation/sidebar" description="Collapsible sidebar navigation" />
+  <Card title="Navigation Menu" href="/docs/components/navigation/navigation-menu" description="Dropdown navigation menu" />
+  <Card title="Menubar" href="/docs/components/navigation/menubar" description="Horizontal menu bar" />
+  <Card title="Pagination" href="/docs/components/navigation/pagination" description="Page navigation controls" />
+  <Card title="Tabs" href="/docs/components/navigation/tabs" description="Tabbed content navigation" />
+  <Card title="Stepper" href="/docs/components/navigation/stepper" description="Multi-step form navigation" />
+  <Card title="Breadcrumb" href="/docs/components/navigation/breadcrumb" description="Breadcrumb trail navigation" />
+</Cards>
+
+## Navigation Principles
+
+### Accessibility
+All navigation components include proper ARIA attributes, keyboard navigation, and screen reader support.
+
+### Responsive Design
+Navigation components adapt to different screen sizes, with mobile-friendly patterns built-in.
+
+### Routing Integration
+Components work seamlessly with Blazor's routing system and `NavLink` components.
+
+## Getting Started
+
+```bash
+# Add navigation components
+shellui add navbar sidebar tabs pagination breadcrumb
+```
+
+## Common Patterns
+
+### Top Navigation
+```razor
+<Navbar>
+  <NavbarBrand href="/">My App</NavbarBrand>
+  <NavbarMenu>
+    <NavbarItem href="/docs">Docs</NavbarItem>
+    <NavbarItem href="/examples">Examples</NavbarItem>
+    <NavbarItem href="/about">About</NavbarItem>
+  </NavbarMenu>
+</Navbar>
+```
+
+### Sidebar Navigation
+```razor
+<Sidebar>
+  <SidebarHeader>
+    <SidebarTitle>Navigation</SidebarTitle>
+  </SidebarHeader>
+  <SidebarContent>
+    <SidebarItem href="/dashboard">Dashboard</SidebarItem>
+    <SidebarItem href="/settings">Settings</SidebarItem>
+    <SidebarItem href="/profile">Profile</SidebarItem>
+  </SidebarContent>
+</Sidebar>
+```

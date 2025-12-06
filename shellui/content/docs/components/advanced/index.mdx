@@ -1,0 +1,78 @@
+---
+title: Advanced Components
+description: Complex components for advanced use cases
+---
+
+Advanced components provide sophisticated functionality for complex user interfaces, including date selection, data visualization, and rich interactions.
+
+## Overview
+
+ShellUI's advanced components handle complex scenarios like date/time selection, data tables with sorting and filtering, and rich content display. These components are production-ready and fully customizable.
+
+## Available Components
+
+<Cards>
+  <Card title="Calendar" href="/docs/components/advanced/calendar" description="Date selection calendar" />
+  <Card title="Date Picker" href="/docs/components/advanced/date-picker" description="Date input with calendar popup" />
+  <Card title="Date Range Picker" href="/docs/components/advanced/date-range-picker" description="Date range selection" />
+  <Card title="Time Picker" href="/docs/components/advanced/time-picker" description="Time selection component" />
+  <Card title="Combobox" href="/docs/components/advanced/combobox" description="Autocomplete input with dropdown" />
+  <Card title="Alert Dialog" href="/docs/components/advanced/alert-dialog" description="Confirmation dialog component" />
+  <Card title="Carousel" href="/docs/components/advanced/carousel" description="Image/content carousel" />
+  <Card title="DataTable" href="/docs/components/advanced/data-table" description="Advanced table with sorting and filtering" />
+</Cards>
+
+## Advanced Features
+
+### Complex State Management
+Components handle complex state internally while providing clean APIs for customization.
+
+### Performance Optimization
+Optimized for large datasets with virtualization and efficient rendering.
+
+### Accessibility
+Full keyboard navigation and screen reader support for all advanced interactions.
+
+## Getting Started
+
+```bash
+# Add advanced components
+shellui add calendar date-picker combobox data-table carousel
+```
+
+## Common Patterns
+
+### Date Picker
+```razor
+<DatePicker @bind-Value="selectedDate" />
+```
+
+### Data Table with Sorting
+```razor
+<DataTable Items="@users" Sortable="true">
+  <Column Title="Name" Field="Name" Sortable="true" />
+  <Column Title="Email" Field="Email" Sortable="true" />
+  <Column Title="Status" Field="Status" />
+</DataTable>
+```
+
+### Alert Dialog
+```razor
+<AlertDialog>
+  <AlertDialogTrigger>
+    <Button Variant="destructive">Delete</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Delete</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```

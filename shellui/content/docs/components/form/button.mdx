@@ -1,0 +1,158 @@
+---
+title: Button
+description: Interactive button component with multiple variants and states
+---
+
+The Button component provides a flexible and accessible button implementation for your Blazor applications.
+
+## Basic Usage
+
+```razor
+<Button>Click me</Button>
+```
+
+## Variants
+
+ShellUI buttons come in several variants to fit different design needs:
+
+### Default
+```razor
+<Button>Default Button</Button>
+```
+
+### Secondary
+```razor
+<Button Variant="secondary">Secondary Button</Button>
+```
+
+### Destructive
+```razor
+<Button Variant="destructive">Delete Item</Button>
+```
+
+### Outline
+```razor
+<Button Variant="outline">Outline Button</Button>
+```
+
+### Ghost
+```razor
+<Button Variant="ghost">Ghost Button</Button>
+```
+
+### Link
+```razor
+<Button Variant="link">Link Button</Button>
+```
+
+## Sizes
+
+Choose from different button sizes:
+
+### Small
+```razor
+<Button Size="sm">Small Button</Button>
+```
+
+### Default
+```razor
+<Button>Default Size</Button>
+```
+
+### Large
+```razor
+<Button Size="lg">Large Button</Button>
+```
+
+## States
+
+### Loading State
+```razor
+<Button Loading>Loading...</Button>
+```
+
+### Disabled State
+```razor
+<Button Disabled>Disabled Button</Button>
+```
+
+## With Icons
+
+Buttons can include icons for better visual hierarchy:
+
+```razor
+<Button>
+  <span class="mr-2">+</span>
+  Add Item
+</Button>
+```
+
+## Event Handling
+
+```razor
+<Button @onclick="HandleClick">Click me</Button>
+
+@code {
+    private void HandleClick()
+    {
+        // Handle button click
+    }
+}
+```
+
+## API Reference
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Variant` | `ButtonVariant` | `default` | Visual style variant |
+| `Size` | `ButtonSize` | `default` | Button size |
+| `Loading` | `bool` | `false` | Shows loading spinner |
+| `Disabled` | `bool` | `false` | Disables the button |
+| `Type` | `string` | `button` | HTML button type |
+| `Class` | `string` | `null` | Additional CSS classes |
+
+### ButtonVariant Options
+- `default`
+- `secondary`
+- `destructive`
+- `outline`
+- `ghost`
+- `link`
+
+### ButtonSize Options
+- `sm`
+- `default`
+- `lg`
+
+### Events
+- `@onclick` - Standard Blazor click event
+- `@onfocus` - Focus event
+- `@onblur` - Blur event
+
+## Accessibility
+
+The Button component includes:
+- Proper ARIA attributes
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+
+## Customization
+
+Buttons can be customized using CSS variables or by modifying the component source:
+
+```css
+/* Custom button colors */
+:root {
+  --button-primary: #your-color;
+  --button-primary-hover: #your-hover-color;
+}
+```
+
+## Installation
+
+```bash
+shellui add button
+```

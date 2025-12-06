@@ -1,0 +1,103 @@
+---
+title: Layout Components
+description: Structural components for organizing content and user interface
+---
+
+Layout components provide the structural foundation for your application's user interface. These components help organize content, create visual hierarchy, and improve the overall user experience.
+
+## Overview
+
+ShellUI's layout components are designed to work together seamlessly, providing flexible and responsive containers for your content while maintaining accessibility and performance.
+
+## Available Components
+
+<Cards>
+  <Card title="Card" href="/docs/components/layout/card" description="Container component for content organization" />
+  <Card title="Dialog" href="/docs/components/layout/dialog" description="Modal dialog overlay component" />
+  <Card title="Sheet" href="/docs/components/layout/sheet" description="Slide-out panel component" />
+  <Card title="Drawer" href="/docs/components/layout/drawer" description="Mobile-friendly slide-out drawer" />
+  <Card title="Popover" href="/docs/components/layout/popover" description="Floating content container" />
+  <Card title="Tooltip" href="/docs/components/layout/tooltip" description="Contextual information display" />
+  <Card title="Separator" href="/docs/components/layout/separator" description="Visual content divider" />
+  <Card title="Scroll Area" href="/docs/components/layout/scroll-area" description="Custom scrollable container" />
+  <Card title="Resizable" href="/docs/components/layout/resizable" description="Draggable resize panels" />
+  <Card title="Collapsible" href="/docs/components/layout/collapsible" description="Expandable/collapsible content" />
+  <Card title="Accordion" href="/docs/components/layout/accordion" description="Expandable content sections" />
+  <Card title="Breadcrumb" href="/docs/components/layout/breadcrumb" description="Navigation breadcrumb trail" />
+</Cards>
+
+## Layout Principles
+
+ShellUI layout components follow these design principles:
+
+### Responsive Design
+All layout components are mobile-first and responsive by default, adapting to different screen sizes automatically.
+
+### Accessibility
+Components include proper ARIA attributes, keyboard navigation, and screen reader support.
+
+### Performance
+Optimized for both Blazor Server and WebAssembly scenarios with efficient rendering.
+
+### Composability
+Components can be nested and combined to create complex layouts easily.
+
+## Getting Started
+
+```bash
+# Add layout components to your project
+shellui add card dialog sheet popover tooltip
+```
+
+## Common Layout Patterns
+
+### Content Cards
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <!-- Your content here -->
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+```
+
+### Modal Dialogs
+```razor
+<Dialog>
+  <DialogTrigger>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Dialog Title</DialogTitle>
+      <DialogDescription>Dialog description</DialogDescription>
+    </DialogHeader>
+    <!-- Dialog content -->
+  </DialogContent>
+</Dialog>
+```
+
+### Navigation Layout
+```razor
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Components</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
