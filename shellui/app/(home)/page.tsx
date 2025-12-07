@@ -7,23 +7,6 @@ import { InstallAnimation } from '@/components/install-animation';
 export default function HomePage() {
   return (
     <div className="relative flex flex-col min-h-screen">
-      {/* Main Background Logo */}
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none -z-10">
-        <Image
-          src="/shellui-light.svg"
-          alt="ShellUI Logo"
-          width={800}
-          height={800}
-          className="opacity-[0.03] dark:hidden"
-        />
-        <Image
-          src="/shellui-dark.svg"
-          alt="ShellUI Logo"
-          width={800}
-          height={800}
-          className="hidden opacity-[0.03] dark:block"
-        />
-      </div>
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-4 md:py-6 max-w-[1400px]">
         <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden bg-origin-border">
@@ -89,8 +72,8 @@ export default function HomePage() {
       </section>
 
       {/* Try it out Section */}
-      <section className="container mx-auto px-4 py-20 max-w-7xl">
-        <div className="relative p-8 rounded-xl border overflow-hidden">
+      <section className="container mx-auto px-4 py-20 max-w-7xl bg-background">
+        <div className="relative p-8 rounded-xl border overflow-hidden bg-card">
           <h2 className="text-xl text-center text-primary font-mono font-bold uppercase mb-2">
             Try it out.
           </h2>
@@ -108,7 +91,7 @@ export default function HomePage() {
       </section>
 
       {/* Code Example Section - Side by Side */}
-      <section className="border-t border-b">
+      <section className="border-t border-b bg-muted/30">
         <div className="container mx-auto px-4 py-20 max-w-7xl">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             {/* Left: Content */}
@@ -190,7 +173,7 @@ shellui add button card input
       </section>
 
       {/* Tech Stack Section */}
-      <section className="container mx-auto px-4 py-20 max-w-6xl">
+      <section className="container mx-auto px-4 py-20 max-w-6xl bg-background">
         <div className="flex flex-col items-center space-y-12">
           <div className="text-center space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold">Built on Technologies You Trust</h2>
@@ -216,7 +199,7 @@ shellui add button card input
       </section>
 
       {/* Usage Example Section - Side by Side */}
-      <section className="border-t">
+      <section className="border-t bg-muted/30">
         <div className="container mx-auto px-4 py-20 max-w-7xl">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             {/* Left: Code Block */}
@@ -313,7 +296,7 @@ shellui add button card input
       </section>
 
       {/* Main Feature Section */}
-      <section className="border-t">
+      <section className="border-t bg-background">
         <div className="container mx-auto px-4 py-20 max-w-6xl">
           <div className="flex flex-col items-center space-y-12">
             <div className="text-center space-y-3 max-w-2xl">
@@ -433,8 +416,25 @@ shellui add button card input
       </section>
 
       {/* Footer */}
-      <footer className="border-t mt-auto">
-        <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <footer className="border-t mt-auto relative overflow-hidden">
+        {/* Background Logo */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">
+          <Image
+            src="/shellui-light.svg"
+            alt="ShellUI Logo"
+            width={800}
+            height={800}
+            className="opacity-[0.03] dark:hidden"
+          />
+          <Image
+            src="/shellui-dark.svg"
+            alt="ShellUI Logo"
+            width={800}
+            height={800}
+            className="hidden opacity-[0.03] dark:block"
+          />
+        </div>
+        <div className="container mx-auto px-4 py-12 max-w-6xl relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Brand Section */}
             <div className="space-y-4">
