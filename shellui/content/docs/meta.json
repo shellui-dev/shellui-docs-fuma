@@ -1,9 +1,17 @@
 {
+  "title": "ShellUI",
+  "description": "CLI-first Blazor component library",
+  "icon": "Building",
+  "root": true,
   "pages": [
+    "---Introduction---",
+    "index",
     "quickstart",
     "comparison",
     "installation",
+    "---Components---",
     "components",
+    "---Customization---",
     "theming",
     "contributing"
   ]
