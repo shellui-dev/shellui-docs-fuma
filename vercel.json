@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd shellui && bun run build",
+  "devCommand": "cd shellui && bun run dev",
+  "installCommand": "bun install",
+  "framework": "nextjs"
+}
