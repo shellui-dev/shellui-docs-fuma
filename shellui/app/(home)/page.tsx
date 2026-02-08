@@ -1,8 +1,17 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRightIcon, GithubIcon, TerminalIcon, ShieldCheckIcon, ZapIcon, PaletteIcon, Code2Icon, BoxesIcon } from 'lucide-react';
-import { CodeBlock } from '@/components/code-block';
-import { InstallAnimation } from '@/components/install-animation';
+import {
+  ArrowRightIcon,
+  BoxesIcon,
+  Code2Icon,
+  GithubIcon,
+  PaletteIcon,
+  ShieldCheckIcon,
+  TerminalIcon,
+  ZapIcon,
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { CodeBlock } from "@/components/code-block";
+import { InstallAnimation } from "@/components/install-animation";
 
 export default function HomePage() {
   return (
@@ -20,7 +29,7 @@ export default function HomePage() {
           >
             <source src="/hero-bg-light.webm" type="video/webm" />
           </video>
-          
+
           {/* Video Background - Dark Theme */}
           <video
             autoPlay
@@ -31,22 +40,35 @@ export default function HomePage() {
           >
             <source src="/hero-bg-dark.webm" type="video/webm" />
           </video>
-          
+
           {/* Overlay for text readability */}
           <div className="absolute inset-0 bg-linear-to-br from-background/40 via-background/20 to-transparent dark:from-background/60 dark:via-background/30" />
-          
+
           {/* Content overlay */}
           <div className="relative flex flex-col justify-center z-10 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
             {/* Main Heading */}
             <h1 className="text-4xl leading-tighter font-medium xl:text-5xl max-md:text-center mb-4">
-              Build production-ready{' '}
-              <span className="text-primary">Blazor components</span>{' '}
-              with a few clicks
+              Build production-ready{" "}
+              <span className="text-primary">Blazor components</span> with a few
+              clicks
             </h1>
-            
+
+            {/* Version Badge */}
+            <div className="flex items-center justify-center gap-2 mb-4 max-md:justify-center">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border">
+                v0.2.0 - Production Ready
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/10 text-green-600 border border-green-500/20">
+                80 Components
+              </span>
+            </div>
+
             {/* Description */}
             <p className="text-lg text-muted-foreground max-w-2xl mb-8 max-md:mx-auto">
-              CLI-first Blazor component library inspired by shadcn/ui. Copy components directly into your project, customize everything, and build beautiful applications with Tailwind CSS.
+              CLI-first Blazor component library inspired by shadcn/ui. Now with
+              charts &amp; data visualization, type-safe variants, and CVA patterns. Copy
+              components directly into your project, customize everything, and
+              build beautiful applications with Tailwind CSS v4.1.18.
             </p>
 
             {/* CTA Buttons */}
@@ -58,7 +80,7 @@ export default function HomePage() {
                 Getting Started
               </Link>
               <Link
-                href="https://github.com/Shelltechlabs/shellui"
+                href="https://github.com/shellui-dev/shellui"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-medium tracking-tight transition-colors border bg-background text-foreground hover:bg-accent max-sm:text-sm"
@@ -81,7 +103,7 @@ export default function HomePage() {
             code="shellui init"
             lang="bash"
             wrapper={{
-              className: 'mx-auto w-full max-w-[800px] bg-transparent',
+              className: "mx-auto w-full max-w-[800px] bg-transparent",
             }}
           />
           <div className="[&_pre]:bg-transparent [&_pre]:border-border/50">
@@ -101,13 +123,17 @@ export default function HomePage() {
                   Get Started in Minutes
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  Install ShellUI and add components to your Blazor project with just a few commands. Components are copied directly into your codebase, giving you full control.
+                  Install ShellUI and add components to your Blazor project with
+                  just a few commands. Components are copied directly into your
+                  codebase, giving you full control.
                 </p>
               </div>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 mt-0.5 shrink-0">
-                    <span className="text-xs font-semibold text-primary">1</span>
+                    <span className="text-xs font-semibold text-primary">
+                      1
+                    </span>
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Install the CLI</h3>
@@ -118,23 +144,37 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 mt-0.5 shrink-0">
-                    <span className="text-xs font-semibold text-primary">2</span>
+                    <span className="text-xs font-semibold text-primary">
+                      2
+                    </span>
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Initialize Your Project</h3>
+                    <h3 className="font-semibold mb-1">
+                      Initialize Your Project
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Run <code className="text-xs bg-muted px-1.5 py-0.5 rounded">shellui init</code> in your Blazor project directory
+                      Run{" "}
+                      <code className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                        shellui init
+                      </code>{" "}
+                      in your Blazor project directory
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 mt-0.5 shrink-0">
-                    <span className="text-xs font-semibold text-primary">3</span>
+                    <span className="text-xs font-semibold text-primary">
+                      3
+                    </span>
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Add Components</h3>
                     <p className="text-sm text-muted-foreground">
-                      Use <code className="text-xs bg-muted px-1.5 py-0.5 rounded">shellui add</code> to copy components into your project
+                      Use{" "}
+                      <code className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                        shellui add
+                      </code>{" "}
+                      to copy components into your project
                     </p>
                   </div>
                 </div>
@@ -164,9 +204,74 @@ shellui add button card input
 # Components added successfully!`}
                 lang="bash"
                 wrapper={{
-                  title: 'Terminal',
+                  title: "Terminal",
                 }}
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What's New in v0.2.0 Section */}
+      <section className="container mx-auto px-4 py-20 max-w-7xl bg-muted/30">
+        <div className="text-center space-y-8">
+          <div className="space-y-3">
+            <h2 className="text-3xl md:text-4xl font-bold">
+              What&apos;s New in v0.2.0
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Charts &amp; data visualization, theme-aware chart containers, and
+              Tailwind CSS v4.1.18 with 80 production-ready components.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* New Feature 1 */}
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <Code2Icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">7 Chart Components</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                Bar, Line, Area, Pie, and Multi-Series charts built on
+                ApexCharts.Blazor
+              </p>
+            </div>
+
+            {/* New Feature 2 */}
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <PaletteIcon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">Chart Themes</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                Three built-in themes: Default, Colorful, and Monochrome with
+                dark mode support
+              </p>
+            </div>
+
+            {/* New Feature 3 */}
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <BoxesIcon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">Theme-Aware Containers</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                Charts automatically use your CSS variables for borders,
+                shadows, and colors
+              </p>
+            </div>
+
+            {/* New Feature 4 */}
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <ZapIcon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">Custom Tooltips</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                Compact, shadcn-inspired HTML tooltips with multi-series and
+                dark mode support
+              </p>
             </div>
           </div>
         </div>
@@ -176,23 +281,50 @@ shellui add button card input
       <section className="container mx-auto px-4 py-20 max-w-6xl bg-background">
         <div className="flex flex-col items-center space-y-12">
           <div className="text-center space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold">Built on Technologies You Trust</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Built on Technologies You Trust
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Powered by industry-standard tools and frameworks for reliable, performant applications
+              Powered by industry-standard tools and frameworks for reliable,
+              performant applications
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
             <div className="transition-opacity hover:opacity-80">
-              <Image src="/blazor-logo.svg" alt="Blazor" width={64} height={64} className="h-16 w-16" />
+              <Image
+                src="/blazor-logo.svg"
+                alt="Blazor"
+                width={64}
+                height={64}
+                className="h-16 w-16"
+              />
             </div>
             <div className="transition-opacity hover:opacity-80">
-              <Image src="/dotnet-logo.svg" alt=".NET" width={64} height={64} className="h-16 w-16" />
+              <Image
+                src="/dotnet-logo.svg"
+                alt=".NET"
+                width={64}
+                height={64}
+                className="h-16 w-16"
+              />
             </div>
             <div className="transition-opacity hover:opacity-80">
-              <Image src="/tailwind-logo.svg" alt="Tailwind CSS" width={64} height={64} className="h-16 w-16" />
+              <Image
+                src="/tailwind-logo.svg"
+                alt="Tailwind CSS"
+                width={64}
+                height={64}
+                className="h-16 w-16"
+              />
             </div>
             <div className="transition-opacity hover:opacity-80">
-              <Image src="/csharp-logo.svg" alt="C#" width={64} height={64} className="h-16 w-16" />
+              <Image
+                src="/csharp-logo.svg"
+                alt="C#"
+                width={64}
+                height={64}
+                className="h-16 w-16"
+              />
             </div>
           </div>
         </div>
@@ -205,35 +337,41 @@ shellui add button card input
             {/* Left: Code Block */}
             <div className="relative order-2 lg:order-1">
               <CodeBlock
-                code={`@page "/"
-@using YourProject.Components.UI
+                code={`<MultiSeriesChart TItem="ProjectData"
+    Title="Project Overview"
+    Theme="ChartTheme.Default"
+    Height="400px">
 
-<Form OnValidSubmit="HandleSubmit">
-  <div class="space-y-4">
-    <div>
-      <Label>Name</Label>
-      <Input @bind-Value="name" />
-    </div>
-    <div>
-      <Label>Email</Label>
-      <Input @bind-Value="email" Type="email" />
-    </div>
-    <Button Type="submit">Submit</Button>
-  </div>
-</Form>
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Tasks Completed"
+        SeriesType="SeriesType.Bar"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.Completed)" />
+
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Story Points"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.StoryPoints)" />
+
+</MultiSeriesChart>
 
 @code {
-    private string name = "";
-    private string email = "";
-
-    private void HandleSubmit()
+    private List<ProjectData> projectData = new()
     {
-        // Handle form submission
-    }
+        new("Sprint 1", 12, 34),
+        new("Sprint 2", 18, 42),
+        new("Sprint 3", 15, 38),
+        new("Sprint 4", 22, 56)
+    };
+
+    record ProjectData(string Sprint, int Completed, int StoryPoints);
 }`}
                 lang="razor"
                 wrapper={{
-                  title: 'Form.razor',
+                  title: "MixedChart.razor",
                 }}
               />
             </div>
@@ -245,14 +383,29 @@ shellui add button card input
                   Use Components Like Native Blazor
                 </h3>
                 <p className="text-lg text-muted-foreground">
-                  ShellUI components work seamlessly with Blazor's component model. Use RenderFragments, event handlers, and all the features you're familiar with.
+                  ShellUI components work seamlessly with Blazor's component
+                  model. Use RenderFragments, event handlers, and all the
+                  features you're familiar with.
                 </p>
               </div>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
-                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      role="img"
+                      aria-labelledby="checkmark-icon"
+                    >
+                      <title id="checkmark-icon">Checkmark icon</title>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <p className="text-sm text-muted-foreground pt-0.5">
@@ -261,8 +414,18 @@ shellui add button card input
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
-                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <p className="text-sm text-muted-foreground pt-0.5">
@@ -271,8 +434,18 @@ shellui add button card input
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
-                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <p className="text-sm text-muted-foreground pt-0.5">
@@ -281,8 +454,18 @@ shellui add button card input
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 shrink-0 mt-0.5">
-                    <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <p className="text-sm text-muted-foreground pt-0.5">
@@ -304,10 +487,11 @@ shellui add button card input
                 Build your Blazor Apps with Confidence
               </h2>
               <p className="text-muted-foreground">
-                Everything you need to create beautiful, accessible, and performant Blazor applications
+                Everything you need to create beautiful, accessible, and
+                performant Blazor applications
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
               {/* Feature Card 1 */}
               <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors hover:bg-primary/5">
@@ -316,9 +500,13 @@ shellui add button card input
                     <TerminalIcon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">CLI-First Approach</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      CLI-First Approach
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Components are copied directly into your project, giving you complete ownership and the freedom to customize everything
+                      Components are copied directly into your project, giving
+                      you complete ownership and the freedom to customize
+                      everything
                     </p>
                   </div>
                 </div>
@@ -328,12 +516,15 @@ shellui add button card input
               <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors hover:bg-primary/5">
                 <div className="space-y-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <ShieldCheckIcon className="h-5 w-5 text-primary" />
+                    <Code2Icon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Accessible by Default</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      Type-Safe Variants ✨
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      WCAG 2.1 AA compliant components with proper ARIA attributes and keyboard navigation built-in
+                      Enum-based variants with Class Variance Authority (CVA)
+                      for compile-time safety and IntelliSense support
                     </p>
                   </div>
                 </div>
@@ -343,12 +534,15 @@ shellui add button card input
               <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors hover:bg-primary/5">
                 <div className="space-y-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <ZapIcon className="h-5 w-5 text-primary" />
+                    <ShieldCheckIcon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Optimized Performance</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      Enhanced Accessibility
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Built for both Blazor Server and WebAssembly with minimal overhead and maximum efficiency
+                      WCAG 2.1 AA compliant with improved ARIA attributes,
+                      keyboard navigation, and screen reader support
                     </p>
                   </div>
                 </div>
@@ -358,16 +552,15 @@ shellui add button card input
               <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors hover:bg-primary/5">
                 <div className="space-y-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <PaletteIcon className="h-5 w-5 text-primary" />
+                    <ZapIcon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Fully Customizable</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      shadcn/ui Patterns
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Theme with CSS variables or use{' '}
-                      <Link href="https://tweakcn.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                        tweakcn
-        </Link>{' '}
-                      for instant theme generation
+                      Built following shadcn/ui architecture with CVA, compound
+                      variants, and modern React patterns adapted for Blazor
                     </p>
                   </div>
                 </div>
@@ -377,12 +570,23 @@ shellui add button card input
               <div className="group relative overflow-hidden rounded-lg border bg-card p-6 transition-colors hover:bg-primary/5">
                 <div className="space-y-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <Code2Icon className="h-5 w-5 text-primary" />
+                    <PaletteIcon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Type-Safe C#</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      Fully Customizable
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Leverage .NET's powerful type system for compile-time safety and IntelliSense support
+                      Theme with CSS variables or use{" "}
+                      <Link
+                        href="https://tweakcn.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        tweakcn
+                      </Link>{" "}
+                      for instant theme generation
                     </p>
                   </div>
                 </div>
@@ -395,23 +599,27 @@ shellui add button card input
                     <BoxesIcon className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">69+ Components</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      80 Components
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Comprehensive library covering forms, layouts, navigation, data display, and advanced UI patterns
+                      Comprehensive library covering forms, layouts, navigation,
+                      data display, interactive elements, and advanced
+                      components
                     </p>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
 
-          <Link
-            href="/docs/quickstart"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
-          >
-            Get Started
-            <ArrowRightIcon className="h-4 w-4" />
-          </Link>
-        </div>
+            <Link
+              href="/docs/quickstart"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+            >
+              Get Started
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -460,9 +668,14 @@ shellui add button card input
               <p className="text-sm text-muted-foreground">
                 Build production-ready Blazor components with a few clicks
               </p>
+              <div className="mt-2">
+                <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                  v0.2.0 Released
+                </span>
+              </div>
               <div className="flex gap-4">
                 <Link
-                  href="https://github.com/Shelltechlabs/shellui"
+                  href="https://github.com/shellui-dev/shellui"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
@@ -475,7 +688,11 @@ shellui add button card input
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="h-5 w-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
                 </Link>
@@ -487,17 +704,26 @@ shellui add button card input
               <h3 className="text-sm font-semibold">Resources</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/docs" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link
+                    href="/docs"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link href="/showcase" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link
+                    href="/showcase"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Showcase
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link
+                    href="/blog"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Blog
                   </Link>
                 </li>
@@ -510,7 +736,7 @@ shellui add button card input
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
-                    href="https://github.com/Shelltechlabs/shellui/issues"
+                    href="https://github.com/shellui-dev/shellui/issues"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -520,7 +746,7 @@ shellui add button card input
                 </li>
                 <li>
                   <Link
-                    href="https://github.com/Shelltechlabs/shellui/issues"
+                    href="https://github.com/shellui-dev/shellui/issues"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-muted-foreground hover:text-foreground transition-colors"
@@ -529,7 +755,10 @@ shellui add button card input
                   </Link>
                 </li>
                 <li>
-                  <Link href="/sponsors" className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link
+                    href="/sponsors"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
                     Sponsor
                   </Link>
                 </li>
