@@ -1,0 +1,345 @@
+---
+title: Charts
+description: Data visualization components built on ApexCharts.Blazor with theme-aware styling
+icon: ChartBar
+---
+
+ShellUI v0.2.0 introduces 7 chart components built on **ApexCharts.Blazor**, offering beautiful, responsive, and theme-aware data visualizations for your Blazor applications.
+
+## Overview
+
+Chart components are built with:
+- **ApexCharts.Blazor**: Professional charting library with rich interactivity
+- **Generic Type System**: `TItem` type parameter for strongly-typed data binding
+- **Theme-Aware Containers**: Charts use your CSS variables (`--border`, `--card`, `--radius`, `--shadow`)
+- **Three Built-in Themes**: Default, Colorful, and Monochrome color palettes
+- **Custom Tooltips**: Compact, shadcn-inspired tooltips with dark mode support
+
+## Installation
+
+```bash
+# Via CLI
+shellui add chart bar-chart line-chart area-chart pie-chart multi-series-chart
+
+# Charts require ApexCharts.Blazor
+dotnet add package Blazor-ApexCharts
+```
+
+Or via NuGet:
+```bash
+dotnet add package ShellUI.Components
+dotnet add package Blazor-ApexCharts
+```
+
+## Chart Components
+
+### BarChart
+
+Vertical bar charts for comparing values across categories.
+
+```razor
+<BarChart TItem="SalesData"
+    Data="@salesData"
+    Title="Monthly Revenue"
+    Name="Revenue"
+    XValue="@(e => e.Month)"
+    YValue="@(e => (decimal?)e.Revenue)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<SalesData> salesData = new()
+    {
+        new("Jan", 12000), new("Feb", 19000),
+        new("Mar", 15000), new("Apr", 25000),
+        new("May", 22000), new("Jun", 30000)
+    };
+
+    record SalesData(string Month, decimal Revenue);
+}
+```
+
+### LineChart
+
+Smooth line charts for showing trends over time.
+
+```razor
+<LineChart TItem="TrafficData"
+    Data="@trafficData"
+    Title="Website Traffic"
+    Name="Visitors"
+    XValue="@(e => e.Date)"
+    YValue="@(e => (decimal?)e.Visitors)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<TrafficData> trafficData = new()
+    {
+        new("Mon", 1200), new("Tue", 1900),
+        new("Wed", 1500), new("Thu", 2100),
+        new("Fri", 1800), new("Sat", 900),
+        new("Sun", 750)
+    };
+
+    record TrafficData(string Date, int Visitors);
+}
+```
+
+### AreaChart
+
+Filled area charts for showing volume and trends.
+
+```razor
+<AreaChart TItem="MemoryUsage"
+    Data="@memoryData"
+    Title="Memory Usage Over Time"
+    Name="Usage (MB)"
+    XValue="@(e => e.Time)"
+    YValue="@(e => (decimal?)e.UsageMB)"
+    Theme="ChartTheme.Colorful"
+    Height="350px" />
+
+@code {
+    private List<MemoryUsage> memoryData = new()
+    {
+        new("10:00", 512), new("10:05", 640),
+        new("10:10", 580), new("10:15", 720),
+        new("10:20", 690), new("10:25", 810)
+    };
+
+    record MemoryUsage(string Time, int UsageMB);
+}
+```
+
+### PieChart
+
+Pie charts with custom HTML tooltips for showing proportions.
+
+```razor
+<PieChart TItem="BrowserShare"
+    Data="@browserData"
+    Title="Browser Market Share"
+    Name="Share"
+    XValue="@(e => e.Browser)"
+    YValue="@(e => (decimal?)e.Percentage)"
+    Theme="ChartTheme.Colorful"
+    Height="350px" />
+
+@code {
+    private List<BrowserShare> browserData = new()
+    {
+        new("Chrome", 65), new("Firefox", 12),
+        new("Safari", 15), new("Edge", 8)
+    };
+
+    record BrowserShare(string Browser, double Percentage);
+}
+```
+
+### MultiSeriesChart
+
+Display multiple data series on a single chart using `ChartSeries` composition.
+
+```razor
+<MultiSeriesChart TItem="FinancialData"
+    Title="Revenue vs Expenses"
+    Subtitle="Last 6 months"
+    Theme="ChartTheme.Default"
+    Height="400px">
+
+    <ChartSeries TItem="FinancialData"
+        Data="@financialData"
+        Name="Revenue"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Revenue)" />
+
+    <ChartSeries TItem="FinancialData"
+        Data="@financialData"
+        Name="Expenses"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Expenses)" />
+
+</MultiSeriesChart>
+
+@code {
+    private List<FinancialData> financialData = new()
+    {
+        new("Jan", 45000, 32000),
+        new("Feb", 52000, 38000),
+        new("Mar", 48000, 35000),
+        new("Apr", 61000, 40000),
+        new("May", 55000, 42000),
+        new("Jun", 67000, 45000)
+    };
+
+    record FinancialData(string Month, decimal Revenue, decimal Expenses);
+}
+```
+
+### Mixed Chart Types
+
+You can mix different series types in a `MultiSeriesChart`:
+
+```razor
+<MultiSeriesChart TItem="ProjectData"
+    Title="Project Overview"
+    Theme="ChartTheme.Default"
+    Height="400px">
+
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Tasks Completed"
+        SeriesType="SeriesType.Bar"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.Completed)" />
+
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Story Points"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.StoryPoints)" />
+
+</MultiSeriesChart>
+
+@code {
+    private List<ProjectData> projectData = new()
+    {
+        new("Sprint 1", 12, 34),
+        new("Sprint 2", 18, 42),
+        new("Sprint 3", 15, 38),
+        new("Sprint 4", 22, 56)
+    };
+
+    record ProjectData(string Sprint, int Completed, int StoryPoints);
+}
+```
+
+## Chart Themes
+
+ShellUI provides three built-in color themes via the `ChartTheme` enum:
+
+### Default
+Professional blue-based palette suitable for light and dark modes.
+- Colors: Blue, Red, Green, Yellow, Purple
+
+### Colorful
+Vibrant multi-color palette for emphasis with 7 distinct colors.
+- Colors: Blue, Red, Green, Yellow, Purple, Pink, Cyan
+
+### Monochrome
+Slate grays for a minimal, understated aesthetic.
+- Colors: Various shades of slate gray
+
+```razor
+@* Switch themes easily *@
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Default"
+    ... />
+
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Colorful"
+    ... />
+
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Monochrome"
+    ... />
+```
+
+## Theme-Aware Styling
+
+Chart containers automatically integrate with your ShellUI theme:
+
+```css
+/* Charts use these CSS variables from your theme */
+var(--border)         /* Container border */
+var(--card)           /* Background color */
+var(--card-foreground) /* Text color */
+var(--radius)         /* Border radius */
+var(--shadow)         /* Box shadow */
+```
+
+Charts render with transparent backgrounds, inheriting your card styling. The container class is:
+```
+border border-border bg-card text-card-foreground overflow-hidden
+[border-radius:var(--radius)] [box-shadow:var(--shadow)]
+```
+
+## API Reference
+
+### Base Chart Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment?` | `null` | Child content (for Chart base) |
+
+### Typed Chart Properties (BarChart, LineChart, AreaChart, PieChart)
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Data"` | Series name shown in legend/tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Function to extract X-axis value |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Function to extract Y-axis value |
+
+### ChartSeries Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection for this series |
+| `Name` | `string` | `"Series"` | Series name |
+| `SeriesType` | `SeriesType` | `Line` | Chart type for this series |
+| `XValue` | `Func<TItem, object>?` | `null` | X-axis value extractor |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Y-axis value extractor |
+
+### ChartTheme Enum
+
+| Value | Description |
+|-------|-------------|
+| `ChartTheme.Default` | Blue, Red, Green, Yellow, Purple |
+| `ChartTheme.Colorful` | Blue, Red, Green, Yellow, Purple, Pink, Cyan |
+| `ChartTheme.Monochrome` | Slate gray variations |
+
+### SeriesType Enum
+
+| Value | Description |
+|-------|-------------|
+| `SeriesType.Line` | Line chart series |
+| `SeriesType.Bar` | Bar chart series |
+| `SeriesType.Area` | Area chart series |
+| `SeriesType.Pie` | Pie chart series |
+
+## Built-in Features
+
+All chart components include:
+
+- **Toolbar**: Download, zoom, pan, and reset controls
+- **Smooth Curves**: `Curve.Smooth` with rounded line caps
+- **Custom Tooltips**: Multi-series tooltips with color markers
+- **Responsive Legend**: Bottom-positioned with styled markers
+- **Grid Lines**: Dashed grid lines for readability
+- **Category Axis**: Proper string label display on X-axis
+
+## Accessibility
+
+Chart components include:
+- **ARIA Labels**: Descriptive labels for screen readers
+- **Keyboard Navigation**: Full keyboard support for interactive elements
+- **Color Contrast**: Theme colors meet WCAG contrast guidelines
+- **Chart Data Attributes**: `data-chart-theme` attribute for styling hooks
+
+## Performance
+
+- **Efficient Rendering**: ApexCharts handles efficient DOM updates
+- **Smart Data Binding**: Generic type system with delegate-based value extraction
+- **Lazy Options**: Chart options are computed once and cached
+- **Transparent Backgrounds**: Charts blend seamlessly with card containers

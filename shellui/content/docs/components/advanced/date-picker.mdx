@@ -1,0 +1,131 @@
+---
+title: Date Picker
+description: Date input with calendar popup for date selection
+---
+
+The DatePicker component combines a text input with a Calendar popup, providing an intuitive interface for selecting dates. It supports date formatting, min/max ranges, and two-way binding.
+
+## Installation
+
+```bash
+shellui add date-picker
+```
+
+## Basic Usage
+
+```razor
+<DatePicker @bind-Value="selectedDate" />
+
+@code {
+    private DateTime? selectedDate;
+}
+```
+
+## With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Date of Birth</Label>
+  <DatePicker @bind-Value="dateOfBirth" Placeholder="Pick a date" />
+</div>
+
+@code {
+    private DateTime? dateOfBirth;
+}
+```
+
+## Date Range Constraints
+
+Restrict selectable dates with min and max bounds:
+
+```razor
+<DatePicker @bind-Value="selectedDate"
+            MinDate="@DateTime.Today"
+            MaxDate="@DateTime.Today.AddMonths(3)"
+            Placeholder="Select a future date" />
+
+@code {
+    private DateTime? selectedDate;
+}
+```
+
+## With Format
+
+Customize the display format:
+
+```razor
+<DatePicker @bind-Value="selectedDate" Format="yyyy-MM-dd" />
+<DatePicker @bind-Value="selectedDate" Format="dd/MM/yyyy" />
+<DatePicker @bind-Value="selectedDate" Format="MMMM d, yyyy" />
+```
+
+## In a Form
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+  <div class="grid gap-4">
+    <div class="space-y-2">
+      <Label>Event Name</Label>
+      <Input @bind-Value="model.Name" />
+    </div>
+    <div class="space-y-2">
+      <Label>Event Date</Label>
+      <DatePicker @bind-Value="model.Date" />
+    </div>
+    <Button Type="submit">Create Event</Button>
+  </div>
+</EditForm>
+
+@code {
+    private EventModel model = new();
+
+    private void HandleSubmit()
+    {
+        // Handle submission
+    }
+
+    class EventModel
+    {
+        public string Name { get; set; } = "";
+        public DateTime? Date { get; set; }
+    }
+}
+```
+
+## Controlled State
+
+```razor
+<div class="flex items-center gap-4">
+  <DatePicker @bind-Value="selectedDate" />
+  <p class="text-sm text-muted-foreground">
+    Selected: @(selectedDate?.ToString("MMMM d, yyyy") ?? "None")
+  </p>
+</div>
+
+@code {
+    private DateTime? selectedDate;
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `DateTime?` | `null` | Selected date value |
+| `ValueChanged` | `EventCallback<DateTime?>` | — | Callback when date changes |
+| `Placeholder` | `string` | `"Select date"` | Input placeholder text |
+| `Format` | `string` | `"MM/dd/yyyy"` | Date display format |
+| `MinDate` | `DateTime?` | `null` | Earliest selectable date |
+| `MaxDate` | `DateTime?` | `null` | Latest selectable date |
+| `Disabled` | `bool` | `false` | Disable the input |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The DatePicker component includes:
+- Calendar popup with `role="dialog"`
+- Keyboard navigation within the calendar grid
+- Arrow keys to navigate days, months, years
+- Enter to select, Escape to close
+- `aria-label` on the trigger button
+- Screen reader announces selected date

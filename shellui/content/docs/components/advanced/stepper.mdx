@@ -1,0 +1,142 @@
+---
+title: Stepper
+description: Multi-step wizard component for guided workflows
+---
+
+The Stepper component guides users through a multi-step process with clear progress indication. Use it for onboarding flows, checkout processes, form wizards, or any sequential workflow.
+
+## Installation
+
+```bash
+shellui add stepper
+```
+
+## Basic Usage
+
+```razor
+<Stepper ActiveStep="@activeStep">
+  <StepperStep Title="Account" Description="Create your account" />
+  <StepperStep Title="Profile" Description="Set up your profile" />
+  <StepperStep Title="Review" Description="Review and submit" />
+</Stepper>
+
+<div class="mt-6">
+  @switch (activeStep)
+  {
+    case 0:
+      <div class="space-y-4">
+        <Input Placeholder="Email" @bind-Value="email" />
+        <Input Placeholder="Password" Type="password" @bind-Value="password" />
+      </div>
+      break;
+    case 1:
+      <div class="space-y-4">
+        <Input Placeholder="Full Name" @bind-Value="name" />
+        <Textarea Placeholder="Bio" @bind-Value="bio" />
+      </div>
+      break;
+    case 2:
+      <div class="text-sm text-muted-foreground">
+        <p>Email: @email</p>
+        <p>Name: @name</p>
+      </div>
+      break;
+  }
+</div>
+
+<div class="mt-4 flex justify-between">
+  <Button Variant="ButtonVariant.Outline" Disabled="@(activeStep == 0)"
+          OnClick="() => activeStep--">Previous</Button>
+  @if (activeStep < 2)
+  {
+    <Button OnClick="() => activeStep++">Next</Button>
+  }
+  else
+  {
+    <Button OnClick="HandleSubmit">Submit</Button>
+  }
+</div>
+
+@code {
+    private int activeStep = 0;
+    private string email = "", password = "", name = "", bio = "";
+
+    private void HandleSubmit() { /* Final submission */ }
+}
+```
+
+## Vertical Stepper
+
+Use a vertical layout for sidebar or narrow containers:
+
+```razor
+<Stepper ActiveStep="@activeStep" Orientation="vertical">
+  <StepperStep Title="Upload" Description="Upload your files" />
+  <StepperStep Title="Process" Description="Processing data" />
+  <StepperStep Title="Complete" Description="All done" />
+</Stepper>
+```
+
+## With Validation
+
+Prevent advancing until the current step is valid:
+
+```razor
+<div class="flex justify-between mt-4">
+  <Button Variant="ButtonVariant.Outline" Disabled="@(activeStep == 0)"
+          OnClick="() => activeStep--">Back</Button>
+  <Button Disabled="@(!IsCurrentStepValid())"
+          OnClick="() => activeStep++">Continue</Button>
+</div>
+
+@code {
+    private int activeStep = 0;
+
+    private bool IsCurrentStepValid() => activeStep switch
+    {
+        0 => !string.IsNullOrWhiteSpace(email),
+        1 => !string.IsNullOrWhiteSpace(name),
+        _ => true
+    };
+}
+```
+
+## Completed States
+
+Steps before the active step are automatically shown as completed with a check icon.
+
+```razor
+<Stepper ActiveStep="2">
+  <StepperStep Title="Details" Description="Completed" />
+  <StepperStep Title="Payment" Description="Completed" />
+  <StepperStep Title="Confirmation" Description="In progress" />
+</Stepper>
+```
+
+## API Reference
+
+### Stepper
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ActiveStep` | `int` | `0` | Current active step (0-based) |
+| `Orientation` | `string` | `"horizontal"` | Layout: `horizontal` or `vertical` |
+| `ChildContent` | `RenderFragment` | `null` | StepperStep children |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### StepperStep
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Title` | `string` | — | Step title |
+| `Description` | `string?` | `null` | Step description |
+| `Icon` | `RenderFragment?` | `null` | Custom step icon |
+
+## Accessibility
+
+The Stepper component includes:
+- `aria-current="step"` on the active step
+- Step numbers announced to screen readers
+- Completed steps announced with "completed" status
+- Keyboard navigable step indicators
+- Semantic ordered list structure

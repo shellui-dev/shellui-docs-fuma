@@ -1,0 +1,142 @@
+---
+title: Combobox
+description: Searchable dropdown with filtering and selection
+---
+
+The Combobox component provides an input with a filterable dropdown list. It combines free-text search with structured selection, making it ideal for large option sets like country selectors, user pickers, or tag inputs.
+
+## Installation
+
+```bash
+shellui add combobox
+```
+
+## Basic Usage
+
+```razor
+<Combobox TItem="string"
+          Items="@frameworks"
+          @bind-Value="selected"
+          Placeholder="Select framework..."
+          SearchPlaceholder="Search frameworks..." />
+
+@code {
+    private string? selected;
+    private List<string> frameworks = new()
+    {
+        "Blazor", "React", "Vue", "Angular", "Svelte", "Next.js"
+    };
+}
+```
+
+## With Complex Objects
+
+```razor
+<Combobox TItem="Country"
+          Items="@countries"
+          @bind-Value="selectedCountry"
+          TextField="@(c => c.Name)"
+          ValueField="@(c => c.Code)"
+          Placeholder="Select country..."
+          SearchPlaceholder="Search countries..." />
+
+@code {
+    private Country? selectedCountry;
+
+    private List<Country> countries = new()
+    {
+        new("US", "United States"),
+        new("GB", "United Kingdom"),
+        new("DE", "Germany"),
+        new("FR", "France"),
+        new("JP", "Japan")
+    };
+
+    record Country(string Code, string Name);
+}
+```
+
+## Empty State
+
+Show a message when no items match the search:
+
+```razor
+<Combobox TItem="string"
+          Items="@items"
+          @bind-Value="selected"
+          Placeholder="Select item..."
+          EmptyText="No items found." />
+```
+
+## In a Form
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+  <div class="grid gap-4">
+    <div class="space-y-2">
+      <Label>Assignee</Label>
+      <Combobox TItem="TeamMember"
+                Items="@members"
+                @bind-Value="model.Assignee"
+                TextField="@(m => m.Name)"
+                ValueField="@(m => m.Id)"
+                Placeholder="Select assignee..."
+                SearchPlaceholder="Search team..." />
+    </div>
+    <Button Type="submit">Assign</Button>
+  </div>
+</EditForm>
+
+@code {
+    private TaskModel model = new();
+    private List<TeamMember> members = new()
+    {
+        new("1", "Alice"), new("2", "Bob"), new("3", "Charlie")
+    };
+
+    private void HandleSubmit() { /* Handle */ }
+
+    class TaskModel { public TeamMember? Assignee { get; set; } }
+    record TeamMember(string Id, string Name);
+}
+```
+
+## Controlled State
+
+```razor
+<div class="flex items-center gap-4">
+  <Combobox TItem="string"
+            Items="@options"
+            @bind-Value="selected"
+            Placeholder="Pick one..." />
+  <p class="text-sm text-muted-foreground">
+    Selected: @(selected ?? "None")
+  </p>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | generic | — | Item type parameter |
+| `Items` | `List<TItem>` | `[]` | Available options |
+| `Value` | `TItem?` | `null` | Currently selected item |
+| `ValueChanged` | `EventCallback<TItem?>` | — | Callback when selection changes |
+| `TextField` | `Func<TItem, string>` | `ToString()` | Display text accessor |
+| `ValueField` | `Func<TItem, string>` | `ToString()` | Value accessor |
+| `Placeholder` | `string` | `"Select..."` | Trigger placeholder |
+| `SearchPlaceholder` | `string` | `"Search..."` | Search input placeholder |
+| `EmptyText` | `string` | `"No results."` | Text when no matches |
+| `Disabled` | `bool` | `false` | Disable the combobox |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Combobox component includes:
+- `role="combobox"` with `aria-expanded`
+- `aria-autocomplete="list"` on the search input
+- Arrow key navigation through options
+- Enter to select, Escape to close
+- `aria-selected` on the active option
+- Screen reader announces filtered count
