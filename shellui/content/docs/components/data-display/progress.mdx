@@ -1,17 +1,27 @@
 ---
 title: Progress
-description: Progress indicators and bars
+description: Determinate progress bar with configurable value and height.
 ---
 
-The Progress component displays the progress of an operation or task with a visual progress bar.
+## Overview
 
-## Basic Usage
+The Progress component displays the completion state of an operation as a horizontal bar. It accepts a `Value` (0–100), a customizable `Height`, and merges additional classes via `Shell.Cn()`.
+
+## Installation
+
+```bash
+shellui add progress
+```
+
+## Usage
+
+### Basic Progress
 
 ```razor
 <Progress Value="50" />
 ```
 
-## With Label
+### With Label
 
 ```razor
 <div class="space-y-2">
@@ -27,13 +37,13 @@ The Progress component displays the progress of an operation or task with a visu
 }
 ```
 
-## Custom Height
+### Custom Height
 
 ```razor
 <Progress Value="75" Height="1rem" />
 ```
 
-## Loading State Example
+### Animated Loading
 
 ```razor
 @if (isLoading)
@@ -53,61 +63,59 @@ The Progress component displays the progress of an operation or task with a visu
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate progress
         for (int i = 0; i <= 100; i += 10)
         {
             progress = i;
-            await Task.Delay(500);
             StateHasChanged();
+            await Task.Delay(500);
         }
         isLoading = false;
     }
 }
 ```
 
-## Multiple Progress Bars
+### Multiple Progress Bars
 
 ```razor
 <div class="space-y-4">
   <div class="space-y-2">
     <div class="flex justify-between text-sm">
-      <span>Storage Used</span>
-      <span>@storageUsed%</span>
+      <span>Storage</span>
+      <span>@storage%</span>
     </div>
-    <Progress Value="@storageUsed" />
+    <Progress Value="@storage" />
   </div>
   <div class="space-y-2">
     <div class="flex justify-between text-sm">
-      <span>Bandwidth Used</span>
-      <span>@bandwidthUsed%</span>
+      <span>Bandwidth</span>
+      <span>@bandwidth%</span>
     </div>
-    <Progress Value="@bandwidthUsed" />
+    <Progress Value="@bandwidth" />
   </div>
 </div>
 
 @code {
-    private int storageUsed = 65;
-    private int bandwidthUsed = 30;
+    private int storage = 65;
+    private int bandwidth = 30;
 }
+```
+
+### Custom Styling
+
+```razor
+<Progress Value="80" Class="bg-muted" />
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Value` | `int` | `0` | Progress value (0-100) |
-| `Height` | `string` | `0.5rem` | Progress bar height |
-| `ClassName` | `string` | `""` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `int` | `0` | Progress value from 0 to 100 |
+| `Height` | `string` | `"0.5rem"` | CSS height of the progress bar |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
 
 ## Accessibility
 
-The Progress component includes:
-- Proper ARIA attributes
-- Screen reader support
-- Visual progress indication
-
-## Installation
-
-```bash
-shellui add progress
-```
+- Rendered with `role="progressbar"`, `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`.
+- Screen readers announce the current progress percentage.
+- Visual fill width reflects the `Value` for sighted users.

@@ -1,11 +1,21 @@
 ---
 title: Table
-description: Structured data presentation component with customizable styling
+description: Compound component for structured tabular data with semantic HTML.
 ---
 
-The Table component provides a flexible and accessible way to display tabular data with proper semantic HTML structure and responsive design.
+## Overview
 
-## Basic Usage
+The Table component is a compound component that renders semantic HTML tables. Each sub-component (`TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) accepts `ChildContent` and an optional `Class` parameter merged via `Shell.Cn()`.
+
+## Installation
+
+```bash
+shellui add table
+```
+
+## Usage
+
+### Basic Table
 
 ```razor
 <Table>
@@ -31,62 +41,9 @@ The Table component provides a flexible and accessible way to display tabular da
 </Table>
 ```
 
-## Table Structure
-
-Tables are composed of several sub-components:
-
-### TableHeader
-Contains the column headers at the top of the table.
+### Dynamic Data
 
 ```razor
-<TableHeader>
-  <TableRow>
-    <TableHead>Name</TableHead>
-    <TableHead>Email</TableHead>
-    <TableHead>Actions</TableHead>
-  </TableRow>
-</TableHeader>
-```
-
-### TableBody
-Contains the data rows of the table.
-
-```razor
-<TableBody>
-  @foreach (var item in items)
-  {
-    <TableRow>
-      <TableCell>@item.Name</TableCell>
-      <TableCell>@item.Email</TableCell>
-      <TableCell>
-        <Button Size="sm">Edit</Button>
-      </TableCell>
-    </TableRow>
-  }
-</TableBody>
-```
-
-### TableRow
-Represents a single row in the table.
-
-### TableHead
-Represents a header cell in the table.
-
-### TableCell
-Represents a data cell in the table.
-
-## Dynamic Data
-
-```razor
-@code {
-    private List<User> users = new()
-    {
-        new User { Name = "Alice Johnson", Email = "alice@example.com", Role = "Admin" },
-        new User { Name = "Bob Wilson", Email = "bob@example.com", Role = "User" },
-        new User { Name = "Carol Brown", Email = "carol@example.com", Role = "Moderator" }
-    };
-}
-
 <Table>
   <TableHeader>
     <TableRow>
@@ -102,7 +59,7 @@ Represents a data cell in the table.
         <TableCell>@user.Name</TableCell>
         <TableCell>@user.Email</TableCell>
         <TableCell>
-          <Badge Variant="@GetRoleVariant(user.Role)">@user.Role</Badge>
+          <Badge Variant="BadgeVariant.Secondary">@user.Role</Badge>
         </TableCell>
       </TableRow>
     }
@@ -110,14 +67,13 @@ Represents a data cell in the table.
 </Table>
 
 @code {
-    private string GetRoleVariant(string role) => role.ToLower() switch
+    private List<UserModel> users = new()
     {
-        "admin" => "destructive",
-        "moderator" => "secondary",
-        _ => "default"
+        new() { Name = "Alice Johnson", Email = "alice@example.com", Role = "Admin" },
+        new() { Name = "Bob Wilson",    Email = "bob@example.com",   Role = "User" }
     };
 
-    private class User
+    private class UserModel
     {
         public string Name { get; set; } = "";
         public string Email { get; set; } = "";
@@ -126,125 +82,85 @@ Represents a data cell in the table.
 }
 ```
 
-## Table with Actions
+### Table with Actions
 
 ```razor
-<Table>
+<Table Class="w-full">
   <TableHeader>
     <TableRow>
       <TableHead>Name</TableHead>
-      <TableHead>Email</TableHead>
       <TableHead>Status</TableHead>
-      <TableHead>Actions</TableHead>
+      <TableHead Class="text-right">Actions</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
-    @foreach (var user in users)
-    {
-      <TableRow>
-        <TableCell>@user.Name</TableCell>
-        <TableCell>@user.Email</TableCell>
-        <TableCell>
-          <Badge Variant="@(user.IsActive ? "default" : "secondary")">
-            @(user.IsActive ? "Active" : "Inactive")
-          </Badge>
-        </TableCell>
-        <TableCell>
-          <div class="flex space-x-2">
-            <Button Size="sm" Variant="outline">Edit</Button>
-            <Button Size="sm" Variant="destructive">Delete</Button>
-          </div>
-        </TableCell>
-      </TableRow>
-    }
+    <TableRow>
+      <TableCell>Alice Johnson</TableCell>
+      <TableCell><Badge>Active</Badge></TableCell>
+      <TableCell Class="text-right">
+        <Button Variant="outline" Size="sm">Edit</Button>
+      </TableCell>
+    </TableRow>
   </TableBody>
 </Table>
 ```
 
-## Responsive Tables
-
-For mobile devices, tables automatically adapt. You can also use custom responsive classes:
+### Responsive Wrapper
 
 ```razor
 <div class="overflow-x-auto">
   <Table>
-    <!-- Table content -->
+    <!-- wide table content -->
   </Table>
 </div>
 ```
 
 ## API Reference
 
-### Table Component
+### Table
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Table header and body |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### TableHeader Component
+### TableHeader
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Header rows |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### TableBody Component
+### TableBody
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Data rows |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### TableRow Component
+### TableRow
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Cells within the row |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### TableHead Component
+### TableHead
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Header cell content |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### TableCell Component
+### TableCell
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Class` | `string` | `null` | Additional CSS classes |
-
-## Styling
-
-Tables use Tailwind CSS classes and can be customized:
-
-```css
-/* Custom table styling */
-.table {
-  --table-border: #e5e7eb;
-  --table-header-bg: #f9fafb;
-}
-
-.table-row:hover {
-  --table-row-hover: #f3f4f6;
-}
-```
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Data cell content |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
 ## Accessibility
 
-The Table component includes:
-- Proper semantic HTML (`<table>`, `<thead>`, `<tbody>`, etc.)
-- Screen reader compatibility
-- Keyboard navigation support
-- ARIA attributes where needed
-
-## Performance Tips
-
-For large datasets, consider:
-- Using pagination
-- Implementing virtual scrolling with the `ScrollArea` component
-- Lazy loading data
-- Optimizing re-renders with `@key` directives
-
-## Installation
-
-```bash
-shellui add table
-```
+- Renders semantic `<table>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and `<td>` elements.
+- Screen readers can navigate by row and column.
+- Use `<TableHead>` for column headers so assistive technology identifies them correctly.
