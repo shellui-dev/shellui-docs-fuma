@@ -1,0 +1,123 @@
+---
+title: Sheet
+description: Slide-out panel component for supplementary content
+---
+
+The Sheet component provides a slide-out panel that overlays the page from any side. Use it for navigation menus, detail views, forms, or any supplementary content that doesn't need a full page.
+
+## Installation
+
+```bash
+shellui add sheet
+```
+
+## Basic Usage
+
+```razor
+<Button OnClick="() => isOpen = true">Open Sheet</Button>
+
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Title="Sheet Title" Description="Manage your settings here.">
+  <p>Sheet content goes here.</p>
+</Sheet>
+
+@code {
+    private bool isOpen = false;
+}
+```
+
+## Side Variants
+
+The Sheet can slide in from any edge of the viewport using the `Side` parameter:
+
+### Right (Default)
+```razor
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Side="SheetSide.Right" Title="Right Sheet">
+  <p>Slides in from the right.</p>
+</Sheet>
+```
+
+### Left
+```razor
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Side="SheetSide.Left" Title="Navigation">
+  <nav class="space-y-2">
+    <a href="/dashboard" class="block">Dashboard</a>
+    <a href="/settings" class="block">Settings</a>
+  </nav>
+</Sheet>
+```
+
+### Top
+```razor
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Side="SheetSide.Top" Title="Notifications">
+  <p>Slides down from the top.</p>
+</Sheet>
+```
+
+### Bottom
+```razor
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Side="SheetSide.Bottom" Title="Details">
+  <p>Slides up from the bottom.</p>
+</Sheet>
+```
+
+## Form Sheet
+
+Use a Sheet for editing forms without leaving the current page:
+
+```razor
+<Button OnClick="() => isOpen = true">Edit Profile</Button>
+
+<Sheet IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Title="Edit Profile" Description="Update your profile information.">
+  <div class="space-y-4 py-4">
+    <div class="space-y-2">
+      <Label>Name</Label>
+      <Input @bind-Value="name" />
+    </div>
+    <div class="space-y-2">
+      <Label>Email</Label>
+      <Input @bind-Value="email" Type="email" />
+    </div>
+    <Button OnClick="HandleSave">Save Changes</Button>
+  </div>
+</Sheet>
+
+@code {
+    private bool isOpen = false;
+    private string name = "";
+    private string email = "";
+
+    private void HandleSave()
+    {
+        // Save logic
+        isOpen = false;
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls the sheet open state |
+| `IsOpenChanged` | `EventCallback<bool>` | — | Callback when open state changes |
+| `Title` | `string?` | `null` | Sheet header title |
+| `Description` | `string?` | `null` | Sheet header description |
+| `Side` | `SheetSide` | `SheetSide.Right` | Which edge the sheet slides from |
+| `ChildContent` | `RenderFragment` | `null` | Sheet body content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### SheetSide Enum
+- `SheetSide.Left`
+- `SheetSide.Right`
+- `SheetSide.Top`
+- `SheetSide.Bottom`
+
+## Accessibility
+
+The Sheet component includes:
+- Focus trap when open
+- Escape key to close
+- Click on overlay to close
+- Proper `role="dialog"` and ARIA attributes
+- Focus returns to trigger on close
+- Screen reader announcements for title and description

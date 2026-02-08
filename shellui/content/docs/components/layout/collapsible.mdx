@@ -1,0 +1,125 @@
+---
+title: Collapsible
+description: Expandable and collapsible content section
+---
+
+The Collapsible component provides a simple expand/collapse interaction for hiding and revealing content. Use it for secondary information, advanced options, or any content that doesn't need to be visible at all times.
+
+## Installation
+
+```bash
+shellui add collapsible
+```
+
+## Basic Usage
+
+```razor
+<Collapsible IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Ghost">
+      @(isOpen ? "Hide" : "Show") Details
+    </Button>
+  </Trigger>
+  <ChildContent>
+    <div class="rounded-md border px-4 py-3 text-sm">
+      Here is some additional content that can be toggled.
+    </div>
+  </ChildContent>
+</Collapsible>
+
+@code {
+    private bool isOpen = false;
+}
+```
+
+## With Header Row
+
+A common pattern with a label and toggle button:
+
+```razor
+<div class="space-y-2">
+  <div class="flex items-center justify-between">
+    <h4 class="text-sm font-semibold">Advanced Settings</h4>
+    <Collapsible IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)">
+      <Trigger>
+        <Button Variant="ButtonVariant.Ghost" Size="ButtonSize.Sm">
+          @(isOpen ? "Collapse" : "Expand")
+        </Button>
+      </Trigger>
+      <ChildContent>
+        <div class="space-y-2 pt-2">
+          <div class="flex items-center justify-between">
+            <Label>Enable logging</Label>
+            <Switch @bind-Value="enableLogging" />
+          </div>
+          <div class="flex items-center justify-between">
+            <Label>Debug mode</Label>
+            <Switch @bind-Value="debugMode" />
+          </div>
+        </div>
+      </ChildContent>
+    </Collapsible>
+  </div>
+</div>
+
+@code {
+    private bool isOpen = false;
+    private bool enableLogging = false;
+    private bool debugMode = false;
+}
+```
+
+## Multiple Collapsibles
+
+Stack multiple collapsible sections for FAQ-style layouts:
+
+```razor
+@foreach (var faq in faqs)
+{
+  <Collapsible IsOpen="@faq.IsOpen" IsOpenChanged="@((v) => faq.IsOpen = v)" Class="border-b">
+    <Trigger>
+      <div class="flex w-full items-center justify-between py-4 font-medium">
+        @faq.Question
+      </div>
+    </Trigger>
+    <ChildContent>
+      <div class="pb-4 text-sm text-muted-foreground">
+        @faq.Answer
+      </div>
+    </ChildContent>
+  </Collapsible>
+}
+
+@code {
+    private List<FaqItem> faqs = new()
+    {
+        new("What is ShellUI?", "A Blazor component library following shadcn/ui patterns."),
+        new("Is it free?", "Yes, ShellUI is open source and free to use.")
+    };
+
+    class FaqItem(string question, string answer)
+    {
+        public string Question { get; set; } = question;
+        public string Answer { get; set; } = answer;
+        public bool IsOpen { get; set; } = false;
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls expanded/collapsed state |
+| `IsOpenChanged` | `EventCallback<bool>` | — | Callback when state changes |
+| `Trigger` | `RenderFragment?` | `null` | Clickable trigger element |
+| `ChildContent` | `RenderFragment` | `null` | Collapsible content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Collapsible component includes:
+- `aria-expanded` on the trigger
+- `aria-controls` linking trigger to content
+- Keyboard activation via Enter and Space
+- Smooth height animation with `prefers-reduced-motion` support

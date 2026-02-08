@@ -1,190 +1,133 @@
 ---
 title: Card
-description: Container component for organizing and displaying content
+description: Compound container component for organizing and displaying content with visual hierarchy.
 ---
 
-The Card component provides a flexible container for organizing content with clear visual hierarchy and structure.
+## Overview
 
-## Basic Usage
-
-```razor
-<Card>
-  <Header>
-    <h3 class="text-lg font-semibold">Welcome to ShellUI</h3>
-    <p class="text-sm text-muted-foreground">Build beautiful Blazor applications</p>
-  </Header>
-  <ChildContent>
-    <p>Your content goes here</p>
-  </ChildContent>
-  <Footer>
-    <Button>Learn More</Button>
-  </Footer>
-</Card>
-```
-
-## Card Structure
-
-Cards use RenderFragment parameters for flexible content:
-
-### Header
-Contains the title and description at the top of the card.
-
-```razor
-<Card>
-  <Header>
-    <h3 class="text-lg font-semibold">Card Title</h3>
-    <p class="text-sm text-muted-foreground">This is a description of the card content</p>
-  </Header>
-  <ChildContent>
-    <p>Main content goes here</p>
-  </ChildContent>
-</Card>
-```
-
-### ChildContent
-The main content area of the card.
-
-```razor
-<Card>
-  <ChildContent>
-    <p>Main content goes here</p>
-    <Input Placeholder="Enter something" />
-  </ChildContent>
-</Card>
-```
-
-### Footer
-Actions or secondary content at the bottom of the card.
-
-```razor
-<Card>
-  <ChildContent>
-    <p>Content</p>
-  </ChildContent>
-  <Footer>
-    <Button Variant="outline">Cancel</Button>
-    <Button>Save</Button>
-  </Footer>
-</Card>
-```
-
-## Variants
-
-### Default Card
-```razor
-<Card>
-  <Header>
-    <h3 class="text-lg font-semibold">Default Card</h3>
-  </Header>
-  <ChildContent>
-    <p>This is a standard card with default styling.</p>
-  </ChildContent>
-</Card>
-```
-
-### Card with Footer
-```razor
-<Card>
-  <Header>
-    <h3 class="text-lg font-semibold">Settings</h3>
-    <p class="text-sm text-muted-foreground">Manage your account preferences</p>
-  </Header>
-  <ChildContent>
-    <div class="space-y-4">
-      <div>
-        <Label>Email Notifications</Label>
-        <Switch />
-      </div>
-      <div>
-        <Label>Dark Mode</Label>
-        <Switch />
-      </div>
-    </div>
-  </ChildContent>
-  <Footer>
-    <Button Variant="outline">Cancel</Button>
-    <Button>Save Changes</Button>
-  </Footer>
-</Card>
-```
-
-## Layout Examples
-
-### Product Card
-```razor
-<Card>
-  <Header>
-    <div class="flex items-center space-x-4">
-      <Avatar>
-        <AvatarImage src="/product.jpg" />
-        <AvatarFallback>PR</AvatarFallback>
-      </Avatar>
-      <div>
-        <h3 class="text-lg font-semibold">Premium Plan</h3>
-        <p class="text-sm text-muted-foreground">$29/month</p>
-      </div>
-    </div>
-  </Header>
-  <ChildContent>
-    <ul class="space-y-2 text-sm">
-      <li>✓ Unlimited projects</li>
-      <li>✓ Priority support</li>
-      <li>✓ Advanced analytics</li>
-    </ul>
-  </ChildContent>
-  <Footer>
-    <Button Class="w-full">Upgrade Now</Button>
-  </Footer>
-</Card>
-```
-
-### Stats Card
-```razor
-<Card>
-  <Header>
-    <div class="flex flex-row items-center justify-between space-y-0 pb-2">
-      <h3 class="text-sm font-medium">Total Revenue</h3>
-      <span class="text-muted-foreground">$</span>
-    </div>
-  </Header>
-  <ChildContent>
-    <div class="text-2xl font-bold">$45,231.89</div>
-    <p class="text-xs text-muted-foreground">+20.1% from last month</p>
-  </ChildContent>
-</Card>
-```
-
-## API Reference
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Header` | `RenderFragment` | `null` | Header content (title, description, etc.) |
-| `Footer` | `RenderFragment` | `null` | Footer content (actions, buttons, etc.) |
-| `ChildContent` | `RenderFragment` | `null` | Main card content |
-
-## Styling
-
-Cards use Tailwind CSS classes and can be customized using CSS variables:
-
-```css
-/* Custom card styling */
-.card {
-  --card-background: #ffffff;
-  --card-border: #e5e7eb;
-  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-}
-```
-
-## Accessibility
-
-The Card component includes:
-- Proper semantic HTML structure
-- Screen reader compatibility
-- Keyboard navigation support
-- Focus management
+The Card component is a compound component that provides a flexible container for organizing content with clear visual hierarchy. It uses `Shell.Cn()` for class merging and renders with `rounded-lg border bg-card text-card-foreground shadow-sm` styling.
 
 ## Installation
 
 ```bash
 shellui add card
 ```
+
+## Usage
+
+### Basic Card
+
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Welcome to ShellUI</CardTitle>
+    <CardDescription>Build beautiful Blazor applications</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Your content goes here.</p>
+  </CardContent>
+</Card>
+```
+
+### Card with Footer
+
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Settings</CardTitle>
+    <CardDescription>Manage your account preferences</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <div class="space-y-4">
+      <Label>Email Notifications</Label>
+      <Switch />
+    </div>
+  </CardContent>
+  <CardFooter>
+    <Button Variant="outline">Cancel</Button>
+    <Button>Save Changes</Button>
+  </CardFooter>
+</Card>
+```
+
+### Stats Card
+
+```razor
+<Card>
+  <CardHeader>
+    <div class="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardTitle class="text-sm font-medium">Total Revenue</CardTitle>
+      <span class="text-muted-foreground">$</span>
+    </div>
+  </CardHeader>
+  <CardContent>
+    <div class="text-2xl font-bold">$45,231.89</div>
+    <p class="text-xs text-muted-foreground">+20.1% from last month</p>
+  </CardContent>
+</Card>
+```
+
+### Custom Styling
+
+Each sub-component accepts a `Class` parameter merged via `Shell.Cn()`:
+
+```razor
+<Card Class="w-[350px]">
+  <CardHeader Class="pb-2">
+    <CardTitle>Compact Card</CardTitle>
+  </CardHeader>
+  <CardContent Class="text-sm text-muted-foreground">
+    <p>Card with custom class overrides.</p>
+  </CardContent>
+</Card>
+```
+
+## API Reference
+
+### Card
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Child sub-components |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
+
+### CardHeader
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Header content (title, description) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### CardTitle
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Title text |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### CardDescription
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Description text |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### CardContent
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Main card body |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### CardFooter
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Footer content (actions) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+- Uses semantic HTML structure for proper screen reader navigation.
+- Supports keyboard focus management within interactive card content.
+- High contrast border and shadow ensure visual distinction.

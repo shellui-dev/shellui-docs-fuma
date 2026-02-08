@@ -1,21 +1,21 @@
 ---
 title: Separator
-description: Visual content divider
+description: Visual divider for separating content sections horizontally or vertically.
 ---
 
-The Separator component provides a visual divider to separate content sections.
+## Overview
 
-## Basic Usage
+The Separator component renders a thin line to visually divide content. It supports both horizontal and vertical orientations and uses `Shell.Cn()` for class merging.
 
-```razor
-<div>
-  <p>Content above</p>
-  <Separator />
-  <p>Content below</p>
-</div>
+## Installation
+
+```bash
+shellui add separator
 ```
 
-## Horizontal Separator
+## Usage
+
+### Horizontal Separator (Default)
 
 ```razor
 <div class="space-y-4">
@@ -27,10 +27,10 @@ The Separator component provides a visual divider to separate content sections.
 </div>
 ```
 
-## Vertical Separator
+### Vertical Separator
 
 ```razor
-<div class="flex items-center gap-4">
+<div class="flex items-center gap-4 h-5">
   <span>Left</span>
   <Separator Orientation="vertical" />
   <span>Center</span>
@@ -39,10 +39,10 @@ The Separator component provides a visual divider to separate content sections.
 </div>
 ```
 
-## In Navigation
+### In Navigation
 
 ```razor
-<nav class="flex items-center gap-4">
+<nav class="flex items-center gap-4 h-5">
   <a href="/">Home</a>
   <Separator Orientation="vertical" />
   <a href="/docs">Docs</a>
@@ -51,31 +51,21 @@ The Separator component provides a visual divider to separate content sections.
 </nav>
 ```
 
-## In Lists
+### Custom Styling
 
 ```razor
-<div class="space-y-2">
-  <div class="p-4">Item 1</div>
-  <Separator />
-  <div class="p-4">Item 2</div>
-  <Separator />
-  <div class="p-4">Item 3</div>
-</div>
+<Separator Class="my-6" />
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Orientation` | `string` | `horizontal` | Separator orientation |
-| `ClassName` | `string` | `""` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Orientation` | `string` | `"horizontal"` | `"horizontal"` or `"vertical"` |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
 
-### Orientation Options
-- `horizontal` - Horizontal divider
-- `vertical` - Vertical divider
+## Accessibility
 
-## Installation
-
-```bash
-shellui add separator
-```
+- Renders with `role="separator"` for screen readers.
+- `aria-orientation` is set based on the `Orientation` parameter.
+- Purely decorative — does not receive keyboard focus.
