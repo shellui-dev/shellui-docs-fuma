@@ -1,17 +1,25 @@
 ---
 title: Textarea
-description: Multi-line text input component
+description: Multi-line text input component with two-way binding.
 ---
 
-The Textarea component provides a multi-line text input field for longer text content like descriptions, comments, or messages.
+The Textarea component provides a multi-line text input for longer content like descriptions, comments, or messages.
 
-## Basic Usage
+## Installation
+
+```bash
+shellui add textarea
+```
+
+## Usage
+
+### Basic
 
 ```razor
 <Textarea Placeholder="Enter your message..." />
 ```
 
-## With Label
+### With Label
 
 ```razor
 <div class="space-y-2">
@@ -20,7 +28,7 @@ The Textarea component provides a multi-line text input field for longer text co
 </div>
 ```
 
-## Two-way Binding
+### Two-way Binding
 
 ```razor
 <Textarea @bind-Value="message" Placeholder="Enter your message..." />
@@ -30,34 +38,29 @@ The Textarea component provides a multi-line text input field for longer text co
 }
 ```
 
-Or using ValueChanged callback:
+### ValueChanged Callback
 
 ```razor
-<Textarea Value="@message" ValueChanged="@HandleMessageChanged" Placeholder="Enter your message..." />
+<Textarea Value="@message" ValueChanged="@HandleChanged" Placeholder="Enter your message..." />
 
 @code {
     private string message = "";
 
-    private void HandleMessageChanged(string value)
+    private void HandleChanged(string value)
     {
         message = value;
     }
 }
 ```
 
-## Disabled State
+### Disabled and ReadOnly
 
 ```razor
-<Textarea Placeholder="Disabled textarea" Disabled />
+<Textarea Placeholder="Disabled textarea" Disabled="true" />
+<Textarea Value="This is read-only content" ReadOnly="true" />
 ```
 
-## Read-only State
-
-```razor
-<Textarea Value="This is read-only content" ReadOnly />
-```
-
-## With Character Count
+### With Character Count
 
 ```razor
 <div class="space-y-2">
@@ -72,28 +75,18 @@ Or using ValueChanged callback:
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Value` | `string` | `""` | Textarea value |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `InputVariant` | `Default` | Visual style variant |
+| `Value` | `string` | `""` | Current textarea value |
 | `Placeholder` | `string` | `""` | Placeholder text |
 | `Disabled` | `bool` | `false` | Disables the textarea |
 | `ReadOnly` | `bool` | `false` | Makes textarea read-only |
-
-### Events
-- `@bind-Value` - Two-way binding for textarea value
-- `ValueChanged` - `EventCallback<string>` for value changes
-- `OnFocus` - `EventCallback<FocusEventArgs>` for focus events
-- `OnBlur` - `EventCallback<FocusEventArgs>` for blur events
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when value changes |
 
 ## Accessibility
 
-The Textarea component includes:
-- Proper label association via `For` and `Id` attributes
+- Proper label association via `For` / `Id` attributes
 - Keyboard navigation support
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add textarea
-```
+- Screen reader compatible

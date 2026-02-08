@@ -1,118 +1,43 @@
 ---
 title: Input
-description: Text input field component with validation support
+description: Text input field component with variant support and two-way binding.
 ---
 
-The Input component provides a flexible and accessible text input field with built-in validation support and styling options.
+The Input component provides a styled text input field with support for all standard HTML input types, two-way binding, and focus/blur events.
 
-## Basic Usage
+## Installation
 
-```razor
-<Input Placeholder="Enter your email" Type="email" />
+```bash
+shellui add input
 ```
 
-## Input Types
+## Usage
 
-ShellUI inputs support all standard HTML input types:
+### Basic
 
-### Text
 ```razor
 <Input Placeholder="Enter your name" />
 ```
 
-### Email
+### Input Types
+
 ```razor
 <Input Placeholder="email@example.com" Type="email" />
-```
-
-### Password
-```razor
 <Input Placeholder="Enter password" Type="password" />
-```
-
-### Number
-```razor
 <Input Placeholder="Enter amount" Type="number" />
-```
-
-### Search
-```razor
 <Input Placeholder="Search..." Type="search" />
 ```
 
-### Tel
-```razor
-<Input Placeholder="(555) 123-4567" Type="tel" />
-```
-
-### URL
-```razor
-<Input Placeholder="https://example.com" Type="url" />
-```
-
-## With Label
+### With Label
 
 ```razor
 <div class="space-y-2">
   <Label For="email">Email</Label>
-  <Input Id="email" Placeholder="email@example.com" Type="email" />
+  <Input Placeholder="email@example.com" Type="email" />
 </div>
 ```
 
-## With Icon
-
-```razor
-<div class="relative">
-  <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">@</span>
-  <Input Class="pl-10" Placeholder="Email" Type="email" />
-</div>
-```
-
-## Disabled State
-
-```razor
-<Input Placeholder="Disabled input" Disabled />
-```
-
-## Read-only State
-
-```razor
-<Input Value="Read-only value" ReadOnly />
-```
-
-## Validation
-
-Inputs work seamlessly with Blazor's validation system:
-
-```razor
-<EditForm Model="@model" OnValidSubmit="HandleSubmit">
-  <DataAnnotationsValidator />
-  <div class="space-y-2">
-    <Label For="email">Email</Label>
-    <Input @bind-Value="model.Email" Id="email" Type="email" />
-    <ValidationMessage For="@(() => model.Email)" />
-  </div>
-  <Button Type="submit">Submit</Button>
-</EditForm>
-
-@code {
-    private FormModel model = new();
-
-    private void HandleSubmit()
-    {
-        // Handle form submission
-    }
-
-    private class FormModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = "";
-    }
-}
-```
-
-## Two-way Binding
+### Two-way Binding
 
 ```razor
 <Input @bind-Value="email" Placeholder="Enter email" Type="email" />
@@ -122,10 +47,10 @@ Inputs work seamlessly with Blazor's validation system:
 }
 ```
 
-Or using ValueChanged callback:
+### ValueChanged Callback
 
 ```razor
-<Input Value="@email" ValueChanged="@HandleEmailChanged" Placeholder="Enter email" Type="email" />
+<Input Value="@email" ValueChanged="@HandleEmailChanged" Placeholder="Enter email" />
 
 @code {
     private string email = "";
@@ -137,32 +62,40 @@ Or using ValueChanged callback:
 }
 ```
 
+### Disabled and ReadOnly
+
+```razor
+<Input Placeholder="Disabled input" Disabled="true" />
+<Input Value="Read-only value" ReadOnly="true" />
+```
+
+### Custom Class
+
+```razor
+<div class="relative">
+  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">@</span>
+  <Input Class="pl-10" Placeholder="Email" Type="email" />
+</div>
+```
+
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Type` | `string` | `text` | HTML input type |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `InputVariant` | `Default` | Visual style variant |
+| `Type` | `string` | `"text"` | HTML input type attribute |
+| `Value` | `string` | `""` | Current input value |
 | `Placeholder` | `string` | `""` | Placeholder text |
-| `Value` | `string` | `""` | Input value |
 | `Disabled` | `bool` | `false` | Disables the input |
 | `ReadOnly` | `bool` | `false` | Makes input read-only |
-
-### Events
-- `@bind-Value` - Two-way binding for input value
-- `ValueChanged` - `EventCallback<string>` for value changes
-- `OnFocus` - `EventCallback<FocusEventArgs>` for focus events
-- `OnBlur` - `EventCallback<FocusEventArgs>` for blur events
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when value changes |
+| `OnFocus` | `EventCallback<FocusEventArgs>` | — | Fires when input gains focus |
+| `OnBlur` | `EventCallback<FocusEventArgs>` | — | Fires when input loses focus |
 
 ## Accessibility
 
-The Input component includes:
-- Proper label association via `For` and `Id` attributes
+- Proper label association via `For` / `Id` attributes
 - ARIA attributes for validation states
 - Keyboard navigation support
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add input
-```
+- Screen reader compatible
