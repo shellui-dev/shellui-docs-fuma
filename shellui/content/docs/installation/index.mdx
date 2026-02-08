@@ -4,7 +4,7 @@ description: Install ShellUI via CLI or NuGet package
 icon: Download
 ---
 
-ShellUI offers two installation methods to fit your workflow preferences. Choose the method that works best for your project.
+ShellUI v0.2.0 offers a **hybrid workflow** with two installation methods. Use CLI for full customization control, NuGet for quick prototyping.
 
 <Tabs items={['CLI', 'NuGet']}>
   <Tab value="CLI">
@@ -34,8 +34,8 @@ shellui init
 ```
 
 Choose your Tailwind CSS setup method:
-- **Standalone CLI** (recommended): No Node.js required
-- **npm**: Traditional setup with Node.js
+- **Standalone CLI** (recommended): No Node.js required - uses Tailwind v4.1.18
+- **npm**: Traditional setup with Node.js - uses tailwindcss@^4.1.18
 
 ### Add Components
 
@@ -44,6 +44,9 @@ Add components to your project:
 ```bash
 # Add individual components
 shellui add button input card dialog
+
+# Add chart components (new in v0.2.0)
+shellui add chart bar-chart line-chart pie-chart area-chart
 
 # Add multiple components at once
 shellui add table badge avatar alert
@@ -63,6 +66,8 @@ YourProject/
 │       ├── Button.razor
 │       ├── Input.razor
 │       ├── Card.razor
+│       ├── Chart.razor        # New in v0.2.0
+│       ├── BarChart.razor     # New in v0.2.0
 │       └── ...
 ├── wwwroot/
 │   ├── input.css              # Tailwind input
@@ -91,13 +96,21 @@ For traditional package management, use the NuGet package. This method is ideal 
 dotnet add package ShellUI.Components
 ```
 
+### Chart Components Dependency
+
+If you plan to use chart components (new in v0.2.0), also install ApexCharts:
+
+```bash
+dotnet add package Blazor-ApexCharts
+```
+
 ### Manual Tailwind Setup
 
 When using NuGet, you need to set up Tailwind CSS manually:
 
-1. Install Tailwind CSS:
+1. Install Tailwind CSS v4.1.18:
 ```bash
-npm install -D tailwindcss@^4.1.14 @tailwindcss/cli@^4.1.14
+npm install -D tailwindcss@^4.1.18 @tailwindcss/cli@^4.1.18
 ```
 
 2. Create `tailwind.config.js`:
@@ -228,7 +241,7 @@ If the button renders with proper styling, your installation is successful!
 ### Common Issues
 
 **Tailwind CSS not compiling:**
-- Ensure the correct Tailwind version (4.1.14)
+- Ensure the correct Tailwind version (4.1.18)
 - Check your `tailwind.config.js` paths
 - Verify Node.js installation (if using npm method)
 
@@ -244,6 +257,6 @@ If the button renders with proper styling, your installation is successful!
 
 ### Getting Help
 
-- [GitHub Issues](https://github.com/Shelltechlabs/shellui/issues)
+- [GitHub Issues](https://github.com/shellui-dev/shellui/issues)
 - [Documentation](/docs)
-- [Community Discussions](https://github.com/Shelltechlabs/shellui/discussions)
+- [Community Discussions](https://github.com/shellui-dev/shellui/discussions)

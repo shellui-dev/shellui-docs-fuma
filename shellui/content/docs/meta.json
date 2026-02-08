@@ -1,6 +1,6 @@
 {
-  "title": "ShellUI",
-  "description": "CLI-first Blazor component library",
+  "title": "ShellUI v0.2.0",
+  "description": "CLI-first Blazor component library with 80 production-ready components",
   "icon": "Building",
   "root": true,
   "pages": [
