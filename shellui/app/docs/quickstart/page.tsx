@@ -1,11 +1,16 @@
-import { source } from '@/lib/source';
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import {
+  DocsPage,
+  DocsBody,
+  DocsDescription,
+  DocsTitle,
+} from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
+import { source } from "@/lib/source";
+import { getMDXComponents } from "@/mdx-components";
 
 export default function Page() {
-  const page = source.getPage(['quickstart']);
+  const page = source.getPage(["quickstart"]);
 
   if (!page) notFound();
 
