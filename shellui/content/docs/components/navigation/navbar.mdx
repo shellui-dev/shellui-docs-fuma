@@ -1,0 +1,109 @@
+---
+title: Navbar
+description: Sticky top navigation bar with backdrop blur
+---
+
+The Navbar component provides a responsive sticky navigation bar that sits at the top of the viewport. It includes backdrop blur for a modern glass effect and adapts to mobile screens.
+
+## Installation
+
+```bash
+shellui add navbar
+```
+
+## Basic Usage
+
+```razor
+<Navbar>
+  <a href="/" class="font-bold text-lg">MyApp</a>
+  <div class="flex items-center gap-4">
+    <a href="/docs">Docs</a>
+    <a href="/about">About</a>
+    <ThemeToggle />
+  </div>
+</Navbar>
+```
+
+## With Logo and Links
+
+```razor
+<Navbar>
+  <div class="flex items-center gap-6">
+    <a href="/" class="flex items-center gap-2 font-bold">
+      <img src="/logo.svg" alt="Logo" class="h-6 w-6" />
+      ShellUI
+    </a>
+    <nav class="hidden md:flex items-center gap-4 text-sm">
+      <a href="/docs" class="text-muted-foreground hover:text-foreground">Documentation</a>
+      <a href="/components" class="text-muted-foreground hover:text-foreground">Components</a>
+      <a href="/examples" class="text-muted-foreground hover:text-foreground">Examples</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-2">
+    <Button Variant="ButtonVariant.Ghost" Size="ButtonSize.Sm">Sign In</Button>
+    <Button Size="ButtonSize.Sm">Get Started</Button>
+  </div>
+</Navbar>
+```
+
+## With Mobile Menu
+
+Combine with a Drawer for responsive mobile navigation:
+
+```razor
+<Navbar>
+  <div class="flex items-center gap-4">
+    <Button Variant="ButtonVariant.Ghost" Size="ButtonSize.Icon"
+            Class="md:hidden" OnClick="() => mobileMenuOpen = true">
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </Button>
+    <a href="/" class="font-bold">MyApp</a>
+    <nav class="hidden md:flex items-center gap-4 text-sm">
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-2">
+    <ThemeToggle />
+    <Button Size="ButtonSize.Sm">Sign Up</Button>
+  </div>
+</Navbar>
+
+<Drawer IsOpen="@mobileMenuOpen" IsOpenChanged="@((v) => mobileMenuOpen = v)"
+        Side="DrawerSide.Left" Title="Navigation">
+  <nav class="grid gap-2 py-4">
+    <a href="/docs" class="block py-2 text-lg">Documentation</a>
+    <a href="/pricing" class="block py-2 text-lg">Pricing</a>
+    <a href="/about" class="block py-2 text-lg">About</a>
+  </nav>
+</Drawer>
+
+@code {
+    private bool mobileMenuOpen = false;
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | `null` | Navbar content (logo, links, actions) |
+| `ClassName` | `string?` | `null` | Additional CSS classes |
+
+### Default Styling
+The Navbar renders as a sticky top bar with:
+- `position: sticky; top: 0; z-index: 50`
+- Backdrop blur (`backdrop-blur-lg`)
+- Border bottom
+- Responsive padding
+
+## Accessibility
+
+The Navbar component includes:
+- Semantic `header` and `nav` elements
+- Keyboard navigable links
+- Skip-to-content link support
+- Mobile menu toggle with `aria-expanded`
+- Proper landmark roles for screen readers
