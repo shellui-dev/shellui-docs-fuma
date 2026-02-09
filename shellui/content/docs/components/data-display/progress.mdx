@@ -23,42 +23,43 @@ shellui add progress
 
 ### With Label
 
-```razor
-<div class="space-y-2">
-  <div class="flex justify-between text-sm">
-    <span>Upload Progress</span>
-    <span>@progress%</span>
-  </div>
-  <Progress Value="@progress" />
-</div>
+Use the `Label` component alongside `Progress` for clear descriptions:
 
-@code {
-    private int progress = 45;
-}
+```razor
+<div class="space-y-4">
+    <div>
+        <Label>25% Complete</Label>
+        <Progress Value="25" />
+    </div>
+    <div>
+        <Label>50% Complete</Label>
+        <Progress Value="50" />
+    </div>
+    <div>
+        <Label>75% Complete</Label>
+        <Progress Value="75" Height="0.75rem" />
+    </div>
+</div>
 ```
 
 ### Custom Height
 
+Use the `Height` parameter to adjust the bar thickness:
+
 ```razor
-<Progress Value="75" Height="1rem" />
+<Progress Value="60" Height="0.75rem" />
+<Progress Value="80" Height="1rem" />
 ```
 
-### Animated Loading
+### Dynamic Progress
 
 ```razor
-@if (isLoading)
-{
-  <div class="space-y-2">
-    <div class="flex justify-between text-sm">
-      <span>Processing...</span>
-      <span>@progress%</span>
-    </div>
+<div>
+    <Label>Processing... @progress%</Label>
     <Progress Value="@progress" />
-  </div>
-}
+</div>
 
 @code {
-    private bool isLoading = true;
     private int progress = 0;
 
     protected override async Task OnInitializedAsync()
@@ -69,7 +70,6 @@ shellui add progress
             StateHasChanged();
             await Task.Delay(500);
         }
-        isLoading = false;
     }
 }
 ```
@@ -78,25 +78,24 @@ shellui add progress
 
 ```razor
 <div class="space-y-4">
-  <div class="space-y-2">
-    <div class="flex justify-between text-sm">
-      <span>Storage</span>
-      <span>@storage%</span>
+    <div>
+        <Label>Storage — @storage%</Label>
+        <Progress Value="@storage" />
     </div>
-    <Progress Value="@storage" />
-  </div>
-  <div class="space-y-2">
-    <div class="flex justify-between text-sm">
-      <span>Bandwidth</span>
-      <span>@bandwidth%</span>
+    <div>
+        <Label>Bandwidth — @bandwidth%</Label>
+        <Progress Value="@bandwidth" />
     </div>
-    <Progress Value="@bandwidth" />
-  </div>
+    <div>
+        <Label>CPU — @cpu%</Label>
+        <Progress Value="@cpu" Height="0.75rem" />
+    </div>
 </div>
 
 @code {
     private int storage = 65;
     private int bandwidth = 30;
+    private int cpu = 82;
 }
 ```
 
