@@ -20,7 +20,7 @@ shellui add dropdown
 ```razor
 <Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
   <Trigger>
-    <Button Variant="outline">Options</Button>
+    <Button Variant="ButtonVariant.Outline">Options</Button>
   </Trigger>
   <ChildContent>
     <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">Edit</button>
@@ -43,7 +43,7 @@ shellui add dropdown
 ```razor
 <Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
   <Trigger>
-    <Button Variant="outline">Actions</Button>
+    <Button Variant="ButtonVariant.Outline">Actions</Button>
   </Trigger>
   <ChildContent>
     <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">
@@ -72,7 +72,7 @@ shellui add dropdown
 ```razor
 <Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
   <Trigger>
-    <Button Variant="ghost" Class="flex items-center gap-2">
+    <Button Variant="ButtonVariant.Ghost" Class="flex items-center gap-2">
       <Avatar Src="@user.AvatarUrl" Fallback="@user.Initials" Size="AvatarSize.Sm" />
       <span>@user.Name</span>
     </Button>
