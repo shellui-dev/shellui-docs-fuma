@@ -35,7 +35,11 @@ export function SectionSwitcher() {
           <Link key={section.name} href={section.href}>
             <div
               className={`w-full p-3 rounded-md border transition-colors cursor-pointer ${
-                pathname.startsWith(section.href)
+                (
+                  section.href === "/docs"
+                    ? pathname === "/docs"
+                    : pathname.startsWith(section.href)
+                )
                   ? "bg-primary text-primary-foreground border-primary"
                   : "bg-background hover:bg-muted border-border"
               }`}
