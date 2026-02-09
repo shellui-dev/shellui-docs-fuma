@@ -44,15 +44,15 @@ shellui add dropdown command context-menu hover-card theme-toggle
 ### Dropdown Menu
 ```razor
 <Dropdown>
-  <DropdownTrigger>
+  <Trigger>
     <Button>Options</Button>
-  </DropdownTrigger>
-  <DropdownContent>
-    <DropdownItem>Edit</DropdownItem>
-    <DropdownItem>Delete</DropdownItem>
-    <DropdownSeparator />
-    <DropdownItem>Share</DropdownItem>
-  </DropdownContent>
+  </Trigger>
+  <ChildContent>
+    <button class="w-full text-left px-2 py-1.5 text-sm hover:bg-accent rounded-sm">Edit</button>
+    <button class="w-full text-left px-2 py-1.5 text-sm hover:bg-accent rounded-sm">Delete</button>
+    <Separator />
+    <button class="w-full text-left px-2 py-1.5 text-sm hover:bg-accent rounded-sm">Share</button>
+  </ChildContent>
 </Dropdown>
 ```
 
@@ -61,15 +61,13 @@ shellui add dropdown command context-menu hover-card theme-toggle
 <ThemeToggle />
 ```
 
-### Command Palette
+### Empty State
 ```razor
-<Command>
-  <CommandInput placeholder="Search..." />
-  <CommandList>
-    <CommandGroup heading="Actions">
-      <CommandItem>Create New</CommandItem>
-      <CommandItem>Open File</CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>
+<EmptyState
+  Title="No results found"
+  Description="Try adjusting your search or filters.">
+  <Action>
+    <Button>Clear Filters</Button>
+  </Action>
+</EmptyState>
 ```

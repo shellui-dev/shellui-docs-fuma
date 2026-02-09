@@ -1,23 +1,35 @@
 ---
 title: Avatar
-description: User profile images and initials
+description: User profile image with fallback initials and size control via the AvatarSize enum.
 ---
 
-The Avatar component displays user profile pictures or initials in a circular container.
+## Overview
 
-## Basic Usage
+The Avatar component displays a user profile image or fallback initials in a circular container. It uses the `AvatarSize` enum for sizing and `Shell.Cn()` for class merging.
+
+## Installation
+
+```bash
+shellui add avatar
+```
+
+## Usage
+
+### With Image
 
 ```razor
 <Avatar Src="/avatar.jpg" Alt="User avatar" />
 ```
 
-## With Fallback Text
+### With Fallback Initials
+
+When no image is provided, or the image fails to load, the `Fallback` text is displayed:
 
 ```razor
 <Avatar Fallback="JD" />
 ```
 
-## With Image and Fallback
+### Image with Fallback
 
 ```razor
 <Avatar Src="@user.AvatarUrl" Alt="@user.Name" Fallback="@GetInitials(user.Name)" />
@@ -33,22 +45,26 @@ The Avatar component displays user profile pictures or initials in a circular co
 }
 ```
 
-## Sizes
+### Sizes
+
+The `Size` parameter accepts an `AvatarSize` enum value:
 
 ```razor
 <div class="flex items-center gap-4">
-  <Avatar Size="sm" Fallback="SM" />
-  <Avatar Size="default" Fallback="MD" />
-  <Avatar Size="lg" Fallback="LG" />
-  <Avatar Size="xl" Fallback="XL" />
+  <Avatar Size="AvatarSize.Sm" Fallback="SM" />
+  <Avatar Size="AvatarSize.Default" Fallback="MD" />
+  <Avatar Size="AvatarSize.Lg" Fallback="LG" />
 </div>
 ```
 
-## User Profile Example
+### User Profile Card
 
 ```razor
 <div class="flex items-center space-x-4">
-  <Avatar Src="@user.AvatarUrl" Alt="@user.Name" Fallback="@GetInitials(user.Name)" />
+  <Avatar Src="@user.AvatarUrl"
+          Alt="@user.Name"
+          Fallback="@GetInitials(user.Name)"
+          Size="AvatarSize.Lg" />
   <div>
     <h3 class="font-medium">@user.Name</h3>
     <p class="text-sm text-muted-foreground">@user.Email</p>
@@ -56,31 +72,32 @@ The Avatar component displays user profile pictures or initials in a circular co
 </div>
 ```
 
+### Custom Styling
+
+```razor
+<Avatar Fallback="AB" Class="ring-2 ring-primary" />
+```
+
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
 | `Src` | `string?` | `null` | Image source URL |
 | `Alt` | `string?` | `null` | Image alt text |
-| `Fallback` | `string?` | `null` | Fallback text (initials) |
-| `Size` | `string` | `default` | Avatar size |
-| `ClassName` | `string` | `""` | Additional CSS classes |
+| `Fallback` | `string?` | `null` | Fallback text shown when no image loads |
+| `Size` | `AvatarSize` | `AvatarSize.Default` | Avatar size |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
 
-### Size Options
-- `sm` - Small (32px)
-- `default` - Default (40px)
-- `lg` - Large (48px)
-- `xl` - Extra Large (64px)
+### AvatarSize Enum
+
+| Value | Description |
+|-------|-------------|
+| `Default` | Standard size (40 px) |
+| `Sm` | Small (32 px) |
+| `Lg` | Large (48 px) |
 
 ## Accessibility
 
-The Avatar component includes:
-- Proper alt text support
-- Fallback content for missing images
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add avatar
-```
+- The `<img>` element receives the `Alt` text for screen readers.
+- When only `Fallback` is shown, `aria-label` conveys the initials.
+- Decorative avatars can set `Alt=""` to be hidden from assistive technology.

@@ -83,21 +83,11 @@ shellui add card dialog sheet popover tooltip
 </Dialog>
 ```
 
-### Navigation Layout
+### Breadcrumb Navigation
 ```razor
 <Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Components</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
+  <BreadcrumbItem Href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem Href="/docs">Docs</BreadcrumbItem>
+  <BreadcrumbItem IsLast="true">Components</BreadcrumbItem>
 </Breadcrumb>
 ```

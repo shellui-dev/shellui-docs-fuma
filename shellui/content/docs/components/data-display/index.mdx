@@ -72,23 +72,19 @@ shellui add table badge avatar alert toast
 ### User Profile Cards
 ```razor
 <div class="flex items-center space-x-4">
-  <Avatar>
-    <AvatarImage src="@user.AvatarUrl" />
-    <AvatarFallback>@GetInitials(user.Name)</AvatarFallback>
-  </Avatar>
+  <Avatar Src="@user.AvatarUrl" Fallback="@GetInitials(user.Name)" />
   <div>
     <h3 class="font-medium">@user.Name</h3>
     <p class="text-sm text-muted-foreground">@user.Email</p>
   </div>
-  <Badge Variant="secondary">@user.Role</Badge>
+  <Badge Variant="BadgeVariant.Secondary">@user.Role</Badge>
 </div>
 ```
 
 ### Status Messages
 ```razor
-<Alert>
-  <AlertTitle>Success!</AlertTitle>
-  <AlertDescription>Your changes have been saved successfully.</AlertDescription>
+<Alert Title="Success!" Variant="AlertVariant.Default">
+  Your changes have been saved successfully.
 </Alert>
 ```
 

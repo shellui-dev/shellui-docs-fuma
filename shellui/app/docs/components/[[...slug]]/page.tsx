@@ -1,15 +1,22 @@
-import { source } from '@/lib/source';
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/mdx-components';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import {
+  DocsPage,
+  DocsBody,
+  DocsDescription,
+  DocsTitle,
+} from "fumadocs-ui/page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { source } from "@/lib/source";
+import { getMDXComponents } from "@/mdx-components";
 
-export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {
+export default async function Page(props: {
+  params: Promise<{ slug?: string[] }>;
+}) {
   const params = await props.params;
   const slug = params.slug || [];
   // Prepend 'components' to the slug array
-  const page = source.getPage(['components', ...slug]);
+  const page = source.getPage(["components", ...slug]);
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -33,11 +40,13 @@ export async function generateStaticParams() {
   return source.generateParams();
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug?: string[] }> }): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ slug?: string[] }>;
+}): Promise<Metadata> {
   const params = await props.params;
   const slug = params.slug || [];
   // Prepend 'components' to the slug array
-  const page = source.getPage(['components', ...slug]);
+  const page = source.getPage(["components", ...slug]);
   if (!page) notFound();
 
   return {

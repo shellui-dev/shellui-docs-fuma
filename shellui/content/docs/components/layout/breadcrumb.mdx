@@ -1,0 +1,102 @@
+---
+title: Breadcrumb
+description: Navigation breadcrumb trail for hierarchical page structure
+---
+
+The Breadcrumb component displays the user's current location within a site hierarchy, allowing quick navigation to parent pages.
+
+## Installation
+
+```bash
+shellui add breadcrumb
+```
+
+## Basic Usage
+
+```razor
+<Breadcrumb>
+  <BreadcrumbItem Href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem Href="/docs">Documentation</BreadcrumbItem>
+  <BreadcrumbItem IsLast="true">Components</BreadcrumbItem>
+</Breadcrumb>
+```
+
+## With Links
+
+Non-last items render as clickable links when `Href` is provided:
+
+```razor
+<Breadcrumb>
+  <BreadcrumbItem Href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem Href="/products">Products</BreadcrumbItem>
+  <BreadcrumbItem Href="/products/electronics">Electronics</BreadcrumbItem>
+  <BreadcrumbItem IsLast="true">Headphones</BreadcrumbItem>
+</Breadcrumb>
+```
+
+## Dynamic Breadcrumbs
+
+Generate breadcrumbs from route data:
+
+```razor
+<Breadcrumb>
+  @foreach (var (segment, index) in breadcrumbs.Select((s, i) => (s, i)))
+  {
+    <BreadcrumbItem
+      Href="@(index < breadcrumbs.Count - 1 ? segment.Href : null)"
+      IsLast="@(index == breadcrumbs.Count - 1)">
+      @segment.Label
+    </BreadcrumbItem>
+  }
+</Breadcrumb>
+
+@code {
+    private List<BreadcrumbSegment> breadcrumbs = new()
+    {
+        new("Home", "/"),
+        new("Settings", "/settings"),
+        new("Profile", "/settings/profile")
+    };
+
+    record BreadcrumbSegment(string Label, string Href);
+}
+```
+
+## Custom Separator
+
+The default separator is `/`. You can customize it via CSS:
+
+```razor
+<Breadcrumb Class="breadcrumb-chevron">
+  <BreadcrumbItem Href="/">Home</BreadcrumbItem>
+  <BreadcrumbItem Href="/docs">Docs</BreadcrumbItem>
+  <BreadcrumbItem IsLast="true">Breadcrumb</BreadcrumbItem>
+</Breadcrumb>
+```
+
+## API Reference
+
+### Breadcrumb
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | `null` | BreadcrumbItem children |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### BreadcrumbItem
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Href` | `string?` | `null` | Navigation link (renders as anchor when set) |
+| `IsLast` | `bool` | `false` | Marks the current/last item (no link styling) |
+| `ChildContent` | `RenderFragment` | `null` | Item label content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Breadcrumb component includes:
+- `nav` element with `aria-label="breadcrumb"`
+- Ordered list (`ol`) for proper structure
+- `aria-current="page"` on the last item
+- Keyboard navigable links
+- Screen reader friendly separator handling

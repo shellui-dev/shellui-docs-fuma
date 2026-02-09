@@ -1,26 +1,34 @@
 ---
 title: Checkbox
-description: Boolean input with checkbox styling
+description: Boolean input with checkbox styling and two-way binding.
 ---
 
 The Checkbox component provides a styled checkbox input for boolean selections.
 
-## Basic Usage
+## Installation
+
+```bash
+shellui add checkbox
+```
+
+## Usage
+
+### Basic
 
 ```razor
-<Checkbox Checked="@isChecked" CheckedChanged="@HandleCheckedChanged" />
+<Checkbox Checked="@isChecked" CheckedChanged="@HandleChanged" />
 
 @code {
     private bool isChecked = false;
 
-    private void HandleCheckedChanged(bool value)
+    private void HandleChanged(bool value)
     {
         isChecked = value;
     }
 }
 ```
 
-## With Two-way Binding
+### Two-way Binding
 
 ```razor
 <Checkbox @bind-Checked="isChecked" />
@@ -30,7 +38,7 @@ The Checkbox component provides a styled checkbox input for boolean selections.
 }
 ```
 
-## With Label
+### With Label
 
 ```razor
 <div class="flex items-center space-x-2">
@@ -43,69 +51,56 @@ The Checkbox component provides a styled checkbox input for boolean selections.
 }
 ```
 
-## Disabled State
+### Disabled
 
 ```razor
 <div class="flex items-center space-x-2">
-  <Checkbox Checked="true" Disabled />
+  <Checkbox Checked="true" Disabled="true" />
   <Label>Disabled checkbox</Label>
 </div>
 ```
 
-## Form Integration
+### Form Integration
 
 ```razor
-<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+<Form OnValidSubmit="HandleSubmit">
   <div class="space-y-4">
     <div class="flex items-center space-x-2">
       <Checkbox @bind-Checked="model.AcceptTerms" />
       <Label>Accept terms and conditions</Label>
     </div>
     <div class="flex items-center space-x-2">
-      <Checkbox @bind-Checked="model.SubscribeNewsletter" />
+      <Checkbox @bind-Checked="model.Subscribe" />
       <Label>Subscribe to newsletter</Label>
     </div>
     <Button Type="submit">Submit</Button>
   </div>
-</EditForm>
+</Form>
 
 @code {
     private FormModel model = new();
 
-    private void HandleSubmit()
-    {
-        // Handle form submission
-    }
+    private void HandleSubmit() { }
 
     private class FormModel
     {
         public bool AcceptTerms { get; set; }
-        public bool SubscribeNewsletter { get; set; }
+        public bool Subscribe { get; set; }
     }
 }
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
 | `Checked` | `bool` | `false` | Checked state |
+| `CheckedChanged` | `EventCallback<bool>` | — | Fires when checked state changes |
 | `Disabled` | `bool` | `false` | Disables the checkbox |
-| `ClassName` | `string` | `""` | Additional CSS classes |
-
-### Events
-- `@bind-Checked` - Two-way binding for checked state
-- `CheckedChanged` - `EventCallback<bool>` for checked state changes
+| `Class` | `string?` | `null` | Additional CSS classes |
 
 ## Accessibility
 
-The Checkbox component includes:
 - Proper ARIA attributes (`role="checkbox"`, `aria-checked`)
-- Keyboard navigation support
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add checkbox
-```
+- Keyboard navigation support (Space to toggle)
+- Screen reader compatible

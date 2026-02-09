@@ -45,25 +45,24 @@ shellui add navbar sidebar tabs pagination breadcrumb
 ### Top Navigation
 ```razor
 <Navbar>
-  <NavbarBrand href="/">My App</NavbarBrand>
-  <NavbarMenu>
-    <NavbarItem href="/docs">Docs</NavbarItem>
-    <NavbarItem href="/examples">Examples</NavbarItem>
-    <NavbarItem href="/about">About</NavbarItem>
-  </NavbarMenu>
+  <a href="/" class="font-bold text-lg">My App</a>
+  <div class="flex-1" />
+  <a href="/docs" class="text-sm">Docs</a>
+  <a href="/about" class="text-sm">About</a>
+  <ThemeToggle />
 </Navbar>
 ```
 
-### Sidebar Navigation
+### Tabbed Content
 ```razor
-<Sidebar>
-  <SidebarHeader>
-    <SidebarTitle>Navigation</SidebarTitle>
-  </SidebarHeader>
-  <SidebarContent>
-    <SidebarItem href="/dashboard">Dashboard</SidebarItem>
-    <SidebarItem href="/settings">Settings</SidebarItem>
-    <SidebarItem href="/profile">Profile</SidebarItem>
-  </SidebarContent>
-</Sidebar>
+<Tabs Items="@tabs" ActiveTab="tab1">
+</Tabs>
+
+@code {
+    private List<TabItem> tabs = new()
+    {
+        new() { Id = "tab1", Label = "Overview", Content = builder => builder.AddContent(0, "Overview content") },
+        new() { Id = "tab2", Label = "Settings", Content = builder => builder.AddContent(0, "Settings content") }
+    };
+}
 ```

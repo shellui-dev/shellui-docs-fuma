@@ -1,26 +1,34 @@
 ---
 title: Slider
-description: Range input slider component
+description: Range input slider component for selecting numeric values.
 ---
 
-The Slider component provides a range input for selecting numeric values within a specified range.
+The Slider component provides a range input for selecting numeric values within a configurable range.
 
-## Basic Usage
+## Installation
+
+```bash
+shellui add slider
+```
+
+## Usage
+
+### Basic
 
 ```razor
-<Slider Value="@value" ValueChanged="@HandleValueChanged" />
+<Slider Value="@value" ValueChanged="@HandleChanged" />
 
 @code {
     private double value = 50;
 
-    private void HandleValueChanged(double newValue)
+    private void HandleChanged(double newValue)
     {
         value = newValue;
     }
 }
 ```
 
-## With Two-way Binding
+### Two-way Binding
 
 ```razor
 <Slider @bind-Value="volume" />
@@ -30,7 +38,7 @@ The Slider component provides a range input for selecting numeric values within 
 }
 ```
 
-## With Label and Display
+### With Label and Display
 
 ```razor
 <div class="space-y-2">
@@ -46,7 +54,7 @@ The Slider component provides a range input for selecting numeric values within 
 }
 ```
 
-## Custom Range
+### Custom Range and Step
 
 ```razor
 <div class="space-y-2">
@@ -59,61 +67,26 @@ The Slider component provides a range input for selecting numeric values within 
 }
 ```
 
-## Multiple Sliders
+### Disabled
 
 ```razor
-<div class="space-y-6">
-  <div class="space-y-2">
-    <Label>Brightness: @brightness%</Label>
-    <Slider @bind-Value="brightness" Min="0" Max="100" />
-  </div>
-  <div class="space-y-2">
-    <Label>Contrast: @contrast%</Label>
-    <Slider @bind-Value="contrast" Min="0" Max="100" />
-  </div>
-  <div class="space-y-2">
-    <Label>Saturation: @saturation%</Label>
-    <Slider @bind-Value="saturation" Min="0" Max="100" />
-  </div>
-</div>
-
-@code {
-    private double brightness = 75;
-    private double contrast = 50;
-    private double saturation = 60;
-}
-```
-
-## Disabled State
-
-```razor
-<Slider Value="50" Disabled />
+<Slider Value="50" Disabled="true" />
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
 | `Value` | `double` | `50` | Current slider value |
+| `ValueChanged` | `EventCallback<double>` | — | Fires when value changes |
 | `Min` | `double` | `0` | Minimum value |
 | `Max` | `double` | `100` | Maximum value |
 | `Step` | `double` | `1` | Step increment |
 | `Disabled` | `bool` | `false` | Disables the slider |
-| `ClassName` | `string` | `""` | Additional CSS classes |
-
-### Events
-- `@bind-Value` - Two-way binding for slider value
-- `ValueChanged` - `EventCallback<double>` for value changes
+| `Class` | `string?` | `null` | Additional CSS classes |
 
 ## Accessibility
 
-The Slider component includes:
-- Proper ARIA attributes
-- Keyboard navigation support
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add slider
-```
+- Proper ARIA attributes (`role="slider"`, `aria-valuenow`, `aria-valuemin`, `aria-valuemax`)
+- Keyboard navigation support (Arrow keys)
+- Screen reader compatible

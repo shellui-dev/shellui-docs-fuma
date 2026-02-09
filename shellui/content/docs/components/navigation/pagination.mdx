@@ -1,0 +1,112 @@
+---
+title: Pagination
+description: Page navigation controls for paginated content
+---
+
+The Pagination component provides navigation controls for moving between pages of content. It displays page numbers, previous/next buttons, and handles page state.
+
+## Installation
+
+```bash
+shellui add pagination
+```
+
+## Basic Usage
+
+```razor
+<Pagination CurrentPage="@currentPage"
+            CurrentPageChanged="@((page) => currentPage = page)"
+            TotalPages="10" />
+
+@code {
+    private int currentPage = 1;
+}
+```
+
+## With Content
+
+Combine pagination with a data list:
+
+```razor
+<div class="space-y-4">
+  @foreach (var item in GetPagedItems())
+  {
+    <div class="rounded-md border p-4">
+      <h3 class="font-medium">@item.Title</h3>
+      <p class="text-sm text-muted-foreground">@item.Description</p>
+    </div>
+  }
+</div>
+
+<Pagination CurrentPage="@currentPage"
+            CurrentPageChanged="@((page) => currentPage = page)"
+            TotalPages="@totalPages" />
+
+@code {
+    private int currentPage = 1;
+    private int totalPages = 5;
+    private int pageSize = 10;
+
+    private List<Item> GetPagedItems()
+    {
+        return allItems
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+}
+```
+
+## Dynamic Page Count
+
+Calculate total pages from data:
+
+```razor
+<Pagination CurrentPage="@currentPage"
+            CurrentPageChanged="@HandlePageChange"
+            TotalPages="@((int)Math.Ceiling((double)totalItems / pageSize))" />
+
+@code {
+    private int currentPage = 1;
+    private int totalItems = 95;
+    private int pageSize = 10;
+
+    private async Task HandlePageChange(int page)
+    {
+        currentPage = page;
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        // Fetch data for current page
+    }
+}
+```
+
+## Custom Styling
+
+```razor
+<Pagination CurrentPage="@currentPage"
+            CurrentPageChanged="@((page) => currentPage = page)"
+            TotalPages="20"
+            ClassName="justify-center" />
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `CurrentPage` | `int` | `1` | The active page number |
+| `CurrentPageChanged` | `EventCallback<int>` | — | Callback when page changes |
+| `TotalPages` | `int` | `1` | Total number of pages |
+| `ClassName` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Pagination component includes:
+- `nav` element with `aria-label="pagination"`
+- `aria-current="page"` on the active page
+- Keyboard navigable with Tab and Enter
+- Previous/Next buttons with `aria-label`
+- Disabled state for first/last page boundaries

@@ -1,65 +1,49 @@
 ---
 title: Badge
-description: Status indicators and labels component
+description: Compact status indicator using the BadgeVariant enum for visual style control.
 ---
 
-The Badge component displays status indicators, labels, and tags with various visual styles to convey information at a glance.
+## Overview
 
-## Basic Usage
+The Badge component displays status indicators, labels, and tags. It uses the `BadgeVariant` enum to control visual style and `Shell.Cn()` for class merging.
+
+## Installation
+
+```bash
+shellui add badge
+```
+
+## Usage
+
+### Default Badge
 
 ```razor
 <Badge>New</Badge>
 ```
 
-## Variants
+### Variants
 
-Badges come in several variants for different use cases:
+The `Variant` parameter accepts a `BadgeVariant` enum value:
 
-### Default
-```razor
-<Badge>Default</Badge>
-```
-
-### Secondary
-```razor
-<Badge Variant="secondary">Secondary</Badge>
-```
-
-### Destructive
-```razor
-<Badge Variant="destructive">Error</Badge>
-```
-
-### Outline
-```razor
-<Badge Variant="outline">Outline</Badge>
-```
-
-## Common Use Cases
-
-### Status Badges
 ```razor
 <div class="flex items-center gap-2">
-  <Badge Variant="@(user.IsActive ? "default" : "secondary")">
-    @(user.IsActive ? "Active" : "Inactive")
-  </Badge>
-  <Badge Variant="@GetStatusVariant(user.Status)">
-    @user.Status
-  </Badge>
+  <Badge Variant="BadgeVariant.Default">Default</Badge>
+  <Badge Variant="BadgeVariant.Secondary">Secondary</Badge>
+  <Badge Variant="BadgeVariant.Destructive">Error</Badge>
+  <Badge Variant="BadgeVariant.Outline">Outline</Badge>
 </div>
+```
 
-@code {
-    private string GetStatusVariant(string status) => status.ToLower() switch
-    {
-        "pending" => "outline",
-        "approved" => "default",
-        "rejected" => "destructive",
-        _ => "secondary"
-    };
-}
+### Status Badges
+
+```razor
+<Badge Variant="@(user.IsActive ? BadgeVariant.Default : BadgeVariant.Secondary)">
+  @(user.IsActive ? "Active" : "Inactive")
+</Badge>
 ```
 
 ### Notification Count
+
 ```razor
 <div class="relative">
   <Button>Notifications</Button>
@@ -70,58 +54,42 @@ Badges come in several variants for different use cases:
 ```
 
 ### Tags
+
 ```razor
 <div class="flex flex-wrap gap-2">
-  <Badge Variant="outline">React</Badge>
-  <Badge Variant="outline">TypeScript</Badge>
-  <Badge Variant="outline">Tailwind</Badge>
+  <Badge Variant="BadgeVariant.Outline">Blazor</Badge>
+  <Badge Variant="BadgeVariant.Outline">C#</Badge>
+  <Badge Variant="BadgeVariant.Outline">Tailwind</Badge>
 </div>
 ```
 
-### User Roles
+### With Inline Icon
+
 ```razor
-<Badge Variant="@(user.Role == "Admin" ? "destructive" : "secondary")">
-  @user.Role
+<Badge>
+  <span class="mr-1">✓</span> Verified
 </Badge>
-```
-
-## With Icons
-
-```razor
-<div class="flex items-center gap-2">
-  <Badge>
-    <span class="mr-1">✓</span>
-    Verified
-  </Badge>
-</div>
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Variant` | `string` | `default` | Visual style variant |
-| `Class` | `string` | `""` | Additional CSS classes |
-| `ChildContent` | `RenderFragment` | `null` | Badge content |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `BadgeVariant` | `BadgeVariant.Default` | Visual style of the badge |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
+| `ChildContent` | `RenderFragment` | — | Badge label content |
 
-### Variant Options
-- `default`
-- `secondary`
-- `destructive`
-- `outline`
-- `success`
-- `warning`
-- `info`
+### BadgeVariant Enum
+
+| Value | Description |
+|-------|-------------|
+| `Default` | Primary filled badge |
+| `Secondary` | Muted secondary style |
+| `Destructive` | Red / error style |
+| `Outline` | Border-only style |
 
 ## Accessibility
 
-The Badge component includes:
-- Proper semantic HTML
-- Screen reader compatibility
-- High contrast colors for readability
-
-## Installation
-
-```bash
-shellui add badge
-```
+- Rendered as an inline `<span>` with proper semantic meaning.
+- High contrast colors ensure readability in all variants.
+- Works with screen readers when meaningful text content is provided.

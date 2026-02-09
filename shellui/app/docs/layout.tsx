@@ -1,8 +1,8 @@
-import { source } from '@/lib/source';
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { baseOptions, linkItems } from '@/lib/layout.shared';
-import type { ReactNode } from 'react';
-import { Logo } from '@/components/logo';
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import type { ReactNode } from "react";
+import { Logo } from "@/components/logo";
+import { baseOptions, linkItems } from "@/lib/layout.shared";
+import { source } from "@/lib/source";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const base = baseOptions();
@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       {...base}
       tree={source.pageTree}
-      links={linkItems.filter((item) => item.type === 'icon')}
+      links={linkItems.filter((item) => item.type === "icon")}
       nav={{
         ...base.nav,
         title: (

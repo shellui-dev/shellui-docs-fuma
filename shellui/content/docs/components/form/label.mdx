@@ -1,11 +1,19 @@
 ---
 title: Label
-description: Accessible form labels
+description: Accessible form label component for input association.
 ---
 
 The Label component provides accessible labels for form inputs with proper association and styling.
 
-## Basic Usage
+## Installation
+
+```bash
+shellui add label
+```
+
+## Usage
+
+### Basic
 
 ```razor
 <div class="space-y-2">
@@ -14,16 +22,16 @@ The Label component provides accessible labels for form inputs with proper assoc
 </div>
 ```
 
-## With Input Association
+### With Input Association
 
 ```razor
 <div class="space-y-2">
   <Label For="email">Email</Label>
-  <Input Id="email" Type="email" Placeholder="email@example.com" />
+  <Input Type="email" Placeholder="email@example.com" />
 </div>
 ```
 
-## With Checkbox
+### With Checkbox
 
 ```razor
 <div class="flex items-center space-x-2">
@@ -36,7 +44,7 @@ The Label component provides accessible labels for form inputs with proper assoc
 }
 ```
 
-## With Switch
+### With Switch
 
 ```razor
 <div class="flex items-center space-x-2">
@@ -49,7 +57,7 @@ The Label component provides accessible labels for form inputs with proper assoc
 }
 ```
 
-## Required Field Indicator
+### Required Field Indicator
 
 ```razor
 <div class="space-y-2">
@@ -57,27 +65,20 @@ The Label component provides accessible labels for form inputs with proper assoc
     Email
     <span class="text-destructive">*</span>
   </Label>
-  <Input Type="email" Required />
+  <Input Type="email" />
 </div>
 ```
 
 ## API Reference
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `For` | `string` | `""` | Associates label with input via `id` |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `For` | `string` | `""` | Associates label with an input via `id` |
 | `ChildContent` | `RenderFragment` | `null` | Label text content |
 
 ## Accessibility
 
-The Label component includes:
-- Proper semantic HTML (`<label>`)
-- Association with inputs via `For` and `Id` attributes
-- Screen reader compatibility
+- Uses semantic `<label>` element
+- Associates with inputs via `For` / `Id` attributes
+- Screen reader compatible
 - Proper styling for disabled states
-
-## Installation
-
-```bash
-shellui add label
-```

@@ -1,93 +1,67 @@
 ---
 title: Button
-description: Interactive button component with multiple variants and states
+description: Interactive button component with type-safe variants, sizes, and loading state.
 ---
 
-The Button component provides a flexible and accessible button implementation for your Blazor applications.
+The Button component provides a flexible, accessible button for Blazor applications with enum-based variants and sizes following shadcn/ui patterns.
 
-## Basic Usage
+## Installation
+
+```bash
+shellui add button
+```
+
+## Usage
+
+### Basic
 
 ```razor
 <Button>Click me</Button>
 ```
 
-## Variants
+### Variants
 
-ShellUI buttons come in several variants to fit different design needs:
-
-### Default
 ```razor
-<Button>Default Button</Button>
+<Button Variant="ButtonVariant.Default">Default</Button>
+<Button Variant="ButtonVariant.Secondary">Secondary</Button>
+<Button Variant="ButtonVariant.Destructive">Delete</Button>
+<Button Variant="ButtonVariant.Outline">Outline</Button>
+<Button Variant="ButtonVariant.Ghost">Ghost</Button>
+<Button Variant="ButtonVariant.Link">Link</Button>
 ```
 
-### Secondary
+### Sizes
+
 ```razor
-<Button Variant="secondary">Secondary Button</Button>
+<Button Size="ButtonSize.Sm">Small</Button>
+<Button Size="ButtonSize.Default">Default</Button>
+<Button Size="ButtonSize.Lg">Large</Button>
+<Button Size="ButtonSize.Icon">
+  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+</Button>
 ```
 
-### Destructive
+### Loading and Disabled
+
 ```razor
-<Button Variant="destructive">Delete Item</Button>
+<Button IsLoading="true">Saving...</Button>
+<Button Disabled="true">Disabled</Button>
 ```
 
-### Outline
-```razor
-<Button Variant="outline">Outline Button</Button>
-```
-
-### Ghost
-```razor
-<Button Variant="ghost">Ghost Button</Button>
-```
-
-### Link
-```razor
-<Button Variant="link">Link Button</Button>
-```
-
-## Sizes
-
-Choose from different button sizes:
-
-### Small
-```razor
-<Button Size="sm">Small Button</Button>
-```
-
-### Default
-```razor
-<Button>Default Size</Button>
-```
-
-### Large
-```razor
-<Button Size="lg">Large Button</Button>
-```
-
-## States
-
-### Loading State
-```razor
-<Button IsLoading="true">Loading...</Button>
-```
-
-### Disabled State
-```razor
-<Button Disabled="true">Disabled Button</Button>
-```
-
-## With Icons
-
-Buttons can include icons for better visual hierarchy:
+### With Icon
 
 ```razor
 <Button>
-  <span class="mr-2">+</span>
+  <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
   Add Item
 </Button>
 ```
 
-## Event Handling
+### Event Handling
 
 ```razor
 <Button OnClick="HandleClick">Click me</Button>
@@ -102,56 +76,20 @@ Buttons can include icons for better visual hierarchy:
 
 ## API Reference
 
-### Properties
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Variant` | `string` | `default` | Visual style variant |
-| `Size` | `string` | `md` | Button size |
-| `IsLoading` | `bool` | `false` | Shows loading spinner |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `ButtonVariant` | `Default` | Visual style: `Default`, `Secondary`, `Destructive`, `Outline`, `Ghost`, `Link` |
+| `Size` | `ButtonSize` | `Default` | Button size: `Default`, `Sm`, `Lg`, `Icon` |
+| `Type` | `string` | `"button"` | HTML button type attribute |
+| `Class` | `string?` | `null` | Additional CSS classes |
 | `Disabled` | `bool` | `false` | Disables the button |
-| `Type` | `string` | `button` | HTML button type |
+| `IsLoading` | `bool` | `false` | Shows loading spinner and disables interaction |
+| `OnClick` | `EventCallback<MouseEventArgs>` | — | Click event callback |
 | `ChildContent` | `RenderFragment` | `null` | Button content |
-
-### Variant Options
-- `default`
-- `secondary`
-- `destructive`
-- `outline`
-- `ghost`
-- `link`
-
-### Size Options
-- `sm`
-- `md`
-- `lg`
-- `icon`
-
-### Events
-- `OnClick` - `EventCallback<MouseEventArgs>` for click events
 
 ## Accessibility
 
-The Button component includes:
-- Proper ARIA attributes
-- Keyboard navigation support
-- Screen reader compatibility
-- Focus management
-
-## Customization
-
-Buttons can be customized using CSS variables or by modifying the component source:
-
-```css
-/* Custom button colors */
-:root {
-  --button-primary: #your-color;
-  --button-primary-hover: #your-hover-color;
-}
-```
-
-## Installation
-
-```bash
-shellui add button
-```
+- Uses native `<button>` element with semantic HTML
+- `aria-disabled` applied when disabled or loading
+- Full keyboard navigation with visible focus indicators
+- Screen reader compatible

@@ -1,47 +1,50 @@
-import { HomeLayout } from 'fumadocs-ui/layouts/home';
-import { baseOptions, linkItems } from '@/lib/layout.shared';
+import { HomeLayout } from "fumadocs-ui/layouts/home";
 import {
   NavbarMenu,
   NavbarMenuContent,
   NavbarMenuLink,
   NavbarMenuTrigger,
-} from 'fumadocs-ui/layouts/home/navbar';
-import Link from 'fumadocs-core/link';
-import Image from 'next/image';
-import { ComponentIcon, PaletteIcon, RocketIcon, TerminalIcon, Code2Icon } from 'lucide-react';
+} from "fumadocs-ui/layouts/home/navbar";
+import Link from "fumadocs-core/link";
+import { Code2Icon, ComponentIcon, PaletteIcon, RocketIcon, TerminalIcon } from "lucide-react";
+import Image from "next/image";
+import { baseOptions, linkItems } from "@/lib/layout.shared";
 
-export default function Layout({ children }: LayoutProps<'/'>) {
+export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <HomeLayout
       {...baseOptions()}
       links={[
         {
-          type: 'menu',
-          on: 'menu',
-          text: 'Documentation',
+          type: "menu",
+          on: "menu",
+          text: "Documentation",
           items: [
             {
-              text: 'Quickstart',
-              url: '/docs/quickstart',
+              text: "Quickstart",
+              url: "/docs/quickstart",
               icon: <RocketIcon />,
             },
             {
-              text: 'Components',
-              url: '/docs/components',
+              text: "Components",
+              url: "/docs/components",
               icon: <ComponentIcon />,
             },
           ],
         },
         {
-          type: 'custom',
-          on: 'nav',
+          type: "custom",
+          on: "nav",
           children: (
             <NavbarMenu>
               <NavbarMenuTrigger>
                 <Link href="/docs">Documentation</Link>
               </NavbarMenuTrigger>
               <NavbarMenuContent>
-                <NavbarMenuLink href="/docs/quickstart" className="md:row-span-2">
+                <NavbarMenuLink
+                  href="/docs/quickstart"
+                  className="md:row-span-2"
+                >
                   <div className="-mx-3 -mt-3">
                     <div className="h-32 bg-linear-to-br from-primary/20 via-primary/10 to-primary/5 rounded-t-lg flex items-center justify-center relative overflow-hidden">
                       <div className="absolute inset-0 flex items-center justify-center">

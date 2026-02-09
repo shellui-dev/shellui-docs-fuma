@@ -1,9 +1,9 @@
-import { source } from '@/lib/source';
-import { DocsPage, DocsBody } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
+import { notFound } from "next/navigation";
+import { source } from "@/lib/source";
 
 export default function Page() {
-  const page = source.getPage(['framework', 'index']);
+  const page = source.getPage(["framework", "index"]);
 
   if (!page) notFound();
 

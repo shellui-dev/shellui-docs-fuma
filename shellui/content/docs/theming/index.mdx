@@ -4,11 +4,11 @@ description: Customize ShellUI's appearance with themes and CSS variables
 icon: Palette
 ---
 
-ShellUI uses CSS variables for theming, making it easy to customize colors, spacing, typography, and other design tokens to match your brand.
+ShellUI v0.2.0 uses CSS variables for theming, making it easy to customize colors, spacing, typography, and other design tokens to match your brand. Built on Tailwind CSS v4.1.18 with modern CSS variable integration.
 
 ## Overview
 
-All ShellUI components use CSS variables for styling, which means you can customize the entire design system by modifying a few variables. This approach provides flexibility while maintaining consistency.
+All ShellUI components use CSS variables for styling, which means you can customize the entire design system by modifying a few variables. This approach provides flexibility while maintaining consistency. Chart components (new in v0.2.0) also integrate with your theme automatically.
 
 ## Quick Theme Setup
 
@@ -23,34 +23,37 @@ The easiest way to customize your theme is using [tweakcn](https://tweakcn.com):
 
 ### Manual Customization
 
-You can also customize themes manually by modifying CSS variables:
+You can also customize themes manually by modifying CSS variables. ShellUI v0.2.0 uses OKLCH color values:
 
 ```css
 @import "tailwindcss";
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
-  
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  
-  --accent: 210 40% 96%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
-  
+  --background: oklch(0.9900 0 0);
+  --foreground: oklch(0 0 0);
+
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.9400 0 0);
+  --secondary-foreground: oklch(0 0 0);
+
+  --muted: oklch(0.9700 0 0);
+  --muted-foreground: oklch(0.4400 0 0);
+
+  --accent: oklch(0.9400 0 0);
+  --accent-foreground: oklch(0 0 0);
+
+  --destructive: oklch(0.6300 0.1900 23.0300);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.9200 0 0);
+  --input: oklch(0.9400 0 0);
+  --ring: oklch(0 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+
   --radius: 0.5rem;
 }
 ```
@@ -61,27 +64,30 @@ ShellUI supports dark mode out of the box. Define your dark mode variables:
 
 ```css
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0 0 0);
+
+  --secondary: oklch(0.2500 0 0);
+  --secondary-foreground: oklch(1 0 0);
+
+  --muted: oklch(0.2300 0 0);
+  --muted-foreground: oklch(0.7200 0 0);
+
+  --accent: oklch(0.3200 0 0);
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.6900 0.2000 23.9100);
+  --destructive-foreground: oklch(0 0 0);
+
+  --border: oklch(0.2600 0 0);
+  --input: oklch(0.3200 0 0);
+  --ring: oklch(0.7200 0 0);
+
+  --card: oklch(0.1400 0 0);
+  --card-foreground: oklch(1 0 0);
 }
 ```
 
@@ -90,6 +96,26 @@ Use the `ThemeToggle` component to switch between light and dark modes:
 ```razor
 <ThemeToggle />
 ```
+
+## Chart Theme Integration
+
+New in v0.2.0, chart components automatically use your theme's CSS variables for containers:
+
+- `var(--radius)` for border radius
+- `var(--shadow)` for box shadow
+- `var(--border)`, `var(--card)`, `var(--card-foreground)` for colors
+
+Charts also support three built-in color themes via the `ChartTheme` enum:
+
+```razor
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Default"
+    ... />
+```
+
+- **Default** - Professional blue-based palette
+- **Colorful** - Vibrant multi-color palette
+- **Monochrome** - Slate grays for minimal aesthetic
 
 ## Custom Fonts
 
@@ -120,3 +146,4 @@ You can also customize individual components by overriding their CSS classes or 
 - Test your theme in both light and dark modes
 - Ensure sufficient contrast ratios for accessibility
 - Keep your theme consistent across all components
+- Use chart themes that complement your overall color scheme

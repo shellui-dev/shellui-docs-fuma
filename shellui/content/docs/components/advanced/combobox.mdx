@@ -1,0 +1,178 @@
+---
+title: Combobox
+description: Searchable dropdown with filtering and selection
+---
+
+The Combobox component provides a dropdown with built-in search filtering. It accepts a list of string options and supports two-way binding, custom placeholders, and disabled state.
+
+## Installation
+
+```bash
+shellui add combobox
+```
+
+## Basic Usage
+
+```razor
+<Combobox Options="@frameworks"
+          @bind-Value="selected"
+          Placeholder="Select framework..." />
+
+<p class="text-sm mt-2">Selected: @(selected ?? "None")</p>
+
+@code {
+    private string selected = "";
+
+    private List<string> frameworks = new()
+    {
+        "Blazor", "React", "Vue", "Angular", "Svelte", "Next.js"
+    };
+}
+```
+
+## With Search Filtering
+
+Search is enabled by default. Type to filter the options list:
+
+```razor
+<Combobox Options="@countries"
+          @bind-Value="selectedCountry"
+          Placeholder="Select country..."
+          Searchable="true" />
+
+@code {
+    private string selectedCountry = "";
+
+    private List<string> countries = new()
+    {
+        "United States", "United Kingdom", "Germany",
+        "France", "Japan", "Australia", "Canada",
+        "Brazil", "India", "South Korea"
+    };
+}
+```
+
+## Disabled State
+
+```razor
+<Combobox Options="@options"
+          @bind-Value="selected"
+          Placeholder="Disabled..."
+          Disabled="true" />
+```
+
+## Without Search
+
+Disable the search input for short option lists:
+
+```razor
+<Combobox Options="@sizes"
+          @bind-Value="selectedSize"
+          Placeholder="Select size..."
+          Searchable="false" />
+
+@code {
+    private string selectedSize = "";
+    private List<string> sizes = new() { "Small", "Medium", "Large", "X-Large" };
+}
+```
+
+## In a Form
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleSubmit">
+  <div class="grid gap-4">
+    <div class="space-y-2">
+      <Label>Role</Label>
+      <Combobox Options="@roles"
+                @bind-Value="model.Role"
+                Placeholder="Select role..." />
+    </div>
+    <div class="space-y-2">
+      <Label>Department</Label>
+      <Combobox Options="@departments"
+                @bind-Value="model.Department"
+                Placeholder="Select department..." />
+    </div>
+    <Button Type="submit">Save</Button>
+  </div>
+</EditForm>
+
+@code {
+    private UserModel model = new();
+
+    private List<string> roles = new()
+    {
+        "Admin", "Editor", "Viewer", "Contributor"
+    };
+
+    private List<string> departments = new()
+    {
+        "Engineering", "Design", "Marketing", "Sales", "Support"
+    };
+
+    private void HandleSubmit() { /* Handle */ }
+
+    class UserModel
+    {
+        public string Role { get; set; } = "";
+        public string Department { get; set; } = "";
+    }
+}
+```
+
+## With Custom Content
+
+Use `ChildContent` to render custom dropdown content:
+
+```razor
+<Combobox @bind-Value="selected" Placeholder="Pick a color...">
+  <div class="p-2 space-y-1">
+    @foreach (var color in colors)
+    {
+      <button class="flex items-center gap-2 w-full px-2 py-1.5 rounded hover:bg-accent text-sm"
+              @onclick="() => selected = color.Name">
+        <span class="w-3 h-3 rounded-full" style="background-color: @color.Hex"></span>
+        @color.Name
+      </button>
+    }
+  </div>
+</Combobox>
+
+@code {
+    private string selected = "";
+
+    private List<ColorItem> colors = new()
+    {
+        new("Red", "#ef4444"),
+        new("Blue", "#3b82f6"),
+        new("Green", "#22c55e"),
+        new("Purple", "#a855f7")
+    };
+
+    record ColorItem(string Name, string Hex);
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Value` | `string` | `""` | Currently selected value |
+| `ValueChanged` | `EventCallback<string>` | — | Two-way binding callback |
+| `Options` | `IEnumerable<string>?` | `null` | List of string options |
+| `Placeholder` | `string` | `"Select..."` | Placeholder text when nothing is selected |
+| `Searchable` | `bool` | `true` | Show search input in dropdown |
+| `Disabled` | `bool` | `false` | Disable the combobox |
+| `ChildContent` | `RenderFragment?` | `null` | Custom dropdown content (replaces `Options`) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Combobox component includes:
+- `role="combobox"` with `aria-expanded`
+- Arrow key navigation through options
+- Enter to select, Escape to close
+- `aria-selected` on the active option
+- Click-outside overlay to dismiss
+- Selected option shows a checkmark indicator

@@ -1,27 +1,39 @@
 ---
 title: Accordion
-description: Expandable content sections
+description: Expandable content sections using a compound component pattern with CascadingValue.
 ---
 
-The Accordion component provides collapsible content sections that can be expanded or collapsed.
+## Overview
 
-## Basic Usage
+The Accordion component provides collapsible content sections. The parent `Accordion` uses `CascadingValue` to coordinate state with its `AccordionItem` children. Each item can be expanded or collapsed independently.
+
+## Installation
+
+```bash
+shellui add accordion
+```
+
+## Usage
+
+### Basic Accordion
 
 ```razor
 <Accordion>
-  <AccordionItem Title="Section 1" IsOpen="false">
+  <AccordionItem Title="Section 1">
     <p>Content for section 1 goes here.</p>
   </AccordionItem>
-  <AccordionItem Title="Section 2" IsOpen="false">
+  <AccordionItem Title="Section 2">
     <p>Content for section 2 goes here.</p>
   </AccordionItem>
-  <AccordionItem Title="Section 3" IsOpen="false">
+  <AccordionItem Title="Section 3">
     <p>Content for section 3 goes here.</p>
   </AccordionItem>
 </Accordion>
 ```
 
-## Controlled Accordion
+### Controlled Accordion
+
+Control which items are open via the `IsOpen` parameter:
 
 ```razor
 <Accordion>
@@ -34,32 +46,32 @@ The Accordion component provides collapsible content sections that can be expand
 </Accordion>
 
 @code {
-    private bool item1Open = false;
+    private bool item1Open = true;
     private bool item2Open = false;
 }
 ```
 
-## FAQ Example
+### FAQ Example
 
 ```razor
 <Accordion>
-  <AccordionItem Title="What is ShellUI?" IsOpen="false">
+  <AccordionItem Title="What is ShellUI?">
     <p>ShellUI is a CLI-first Blazor component library inspired by shadcn/ui.</p>
   </AccordionItem>
-  <AccordionItem Title="How do I install ShellUI?" IsOpen="false">
-    <p>You can install ShellUI via CLI or NuGet package. See the installation guide for details.</p>
+  <AccordionItem Title="How do I install ShellUI?">
+    <p>Install via CLI or NuGet. See the installation guide for details.</p>
   </AccordionItem>
-  <AccordionItem Title="Is ShellUI free?" IsOpen="false">
-    <p>Yes, ShellUI is completely free and open source under the MIT license.</p>
+  <AccordionItem Title="Is ShellUI free?">
+    <p>Yes — ShellUI is free and open source under the MIT license.</p>
   </AccordionItem>
 </Accordion>
 ```
 
-## With Rich Content
+### With Rich Content
 
 ```razor
-<Accordion>
-  <AccordionItem Title="Features" IsOpen="false">
+<Accordion Class="w-full">
+  <AccordionItem Title="Features">
     <ul class="list-disc list-inside space-y-2">
       <li>69+ production-ready components</li>
       <li>CLI-first installation</li>
@@ -67,46 +79,36 @@ The Accordion component provides collapsible content sections that can be expand
       <li>Full accessibility support</li>
     </ul>
   </AccordionItem>
-  <AccordionItem Title="Getting Started" IsOpen="false">
-    <div class="space-y-4">
-      <p>Follow these steps to get started:</p>
-      <ol class="list-decimal list-inside space-y-2">
-        <li>Install the CLI tool</li>
-        <li>Initialize your project</li>
-        <li>Add components</li>
-      </ol>
-    </div>
+  <AccordionItem Title="Getting Started">
+    <ol class="list-decimal list-inside space-y-2">
+      <li>Install the CLI tool</li>
+      <li>Initialize your project</li>
+      <li>Add components</li>
+    </ol>
   </AccordionItem>
 </Accordion>
 ```
 
 ## API Reference
 
-### Accordion Component
+### Accordion
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `ChildContent` | `RenderFragment` | `null` | Accordion items |
-| `ClassName` | `string` | `""` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `AccordionItem` children |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
-### AccordionItem Component
+### AccordionItem
 
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `Title` | `string` | `""` | Item title |
-| `IsOpen` | `bool` | `false` | Open state |
-| `ChildContent` | `RenderFragment` | `null` | Item content |
-| `ClassName` | `string` | `""` | Additional CSS classes |
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Title` | `string` | `""` | Header text displayed on the trigger |
+| `IsOpen` | `bool` | `false` | Whether the item is expanded |
+| `ChildContent` | `RenderFragment` | — | Collapsible content |
+| `Class` | `string?` | `null` | Additional CSS classes |
 
 ## Accessibility
 
-The Accordion component includes:
-- Keyboard navigation support
-- Proper ARIA attributes
-- Screen reader compatibility
-
-## Installation
-
-```bash
-shellui add accordion
-```
+- Each item header is a `<button>` with `aria-expanded` reflecting the open state.
+- Content regions use `role="region"` with `aria-labelledby` pointing to the header.
+- Full keyboard support — Enter / Space to toggle, Arrow keys to navigate between items.

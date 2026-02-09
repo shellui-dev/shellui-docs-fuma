@@ -1,0 +1,612 @@
+---
+title: NuGet Installation
+description: Step-by-step guide for installing ShellUI via NuGet package with manual Tailwind CSS setup
+icon: Package
+---
+
+The NuGet package provides pre-compiled ShellUI components as a traditional package reference. Unlike the CLI approach (which copies component source files into your project), NuGet gives you compiled components — ideal for quick prototyping, teams already using package-based workflows, or when you don't need to modify component internals.
+
+## When to Use NuGet vs CLI
+
+| Aspect | NuGet Package | CLI Tool |
+|--------|--------------|----------|
+| **Components** | Pre-compiled, referenced as package | Source copied to your project |
+| **Customization** | Override via CSS, limited code changes | Full source code access |
+| **Updates** | `dotnet add package` to bump version | Re-run `shellui add` to update |
+| **Bundle size** | All components included | Only what you add |
+| **Tailwind setup** | Manual (see below) | Automatic via `shellui init` |
+| **Best for** | Prototyping, quick starts, package workflows | Customization, production apps |
+
+> **Tip:** You can use both approaches in the same project. Use NuGet for components you don't need to customize, and CLI for ones you do.
+
+---
+
+## Step 1: Install the Package
+
+```bash
+dotnet add package ShellUI.Components
+```
+
+For chart components (optional):
+```bash
+dotnet add package Blazor-ApexCharts
+```
+
+---
+
+## Step 2: Remove Bootstrap (New Projects)
+
+New Blazor projects ship with Bootstrap. Since ShellUI uses Tailwind CSS, you should remove Bootstrap to avoid style conflicts.
+
+<Tabs items={['What to Delete', 'Commands']}>
+  <Tab value="What to Delete">
+
+Remove these files and folders from your project:
+
+```
+wwwroot/
+├── lib/
+│   └── bootstrap/          ← Delete entire folder
+├── css/
+│   ├── bootstrap*.css      ← Delete
+│   └── bootstrap*.min.css  ← Delete
+```
+
+Also remove any Bootstrap `<link>` or `<script>` tags from your layout files (`App.razor`, `MainLayout.razor`, or `_Layout.cshtml`).
+
+  </Tab>
+  <Tab value="Commands">
+
+```bash
+# Windows (PowerShell)
+Remove-Item -Recurse -Force wwwroot/lib/bootstrap
+Remove-Item -Force wwwroot/css/bootstrap*.css -ErrorAction SilentlyContinue
+
+# macOS / Linux
+rm -rf wwwroot/lib/bootstrap/
+rm -f wwwroot/css/bootstrap*.css
+```
+
+  </Tab>
+</Tabs>
+
+---
+
+## Step 3: Install Tailwind CSS v4.1.18
+
+ShellUI components require Tailwind CSS. Choose your preferred setup method:
+
+<Tabs items={['Standalone CLI (No Node.js)', 'npm (Node.js)']}>
+  <Tab value="Standalone CLI (No Node.js)">
+
+### Download the Tailwind CSS standalone binary
+
+No Node.js or npm required — just a single binary.
+
+<Tabs items={['Windows', 'macOS', 'Linux']}>
+  <Tab value="Windows">
+
+```powershell
+# Download Tailwind CLI v4.1.18
+curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-windows-x64.exe
+
+# Move to a known location
+mkdir .shellui\bin -Force
+Move-Item tailwindcss-windows-x64.exe .shellui\bin\tailwindcss.exe
+```
+
+  </Tab>
+  <Tab value="macOS">
+
+```bash
+# Download Tailwind CLI v4.1.18
+curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-macos-x64
+
+# Make executable and move
+chmod +x tailwindcss-macos-x64
+mkdir -p .shellui/bin
+mv tailwindcss-macos-x64 .shellui/bin/tailwindcss
+```
+
+  </Tab>
+  <Tab value="Linux">
+
+```bash
+# Download Tailwind CLI v4.1.18
+curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.1.18/tailwindcss-linux-x64
+
+# Make executable and move
+chmod +x tailwindcss-linux-x64
+mkdir -p .shellui/bin
+mv tailwindcss-linux-x64 .shellui/bin/tailwindcss
+```
+
+  </Tab>
+</Tabs>
+
+### Build CSS with standalone CLI
+
+```bash
+# Windows
+.shellui\bin\tailwindcss.exe -i wwwroot/input.css -o wwwroot/app.css
+
+# macOS / Linux
+.shellui/bin/tailwindcss -i wwwroot/input.css -o wwwroot/app.css
+```
+
+  </Tab>
+  <Tab value="npm (Node.js)">
+
+### Install via npm
+
+Requires Node.js installed on your system.
+
+```bash
+npm install -D tailwindcss@^4.1.18 @tailwindcss/cli@^4.1.18
+```
+
+### Build CSS with npm
+
+```bash
+npx @tailwindcss/cli -i wwwroot/input.css -o wwwroot/app.css
+```
+
+  </Tab>
+</Tabs>
+
+---
+
+## Step 4: Create CSS Files
+
+### `wwwroot/input.css`
+
+This is the main Tailwind entry point with ShellUI's complete theme variables for light and dark mode:
+
+```css
+@import "tailwindcss";
+
+/* ─── ShellUI Theme Variables – Light Mode ─── */
+:root {
+  --background: oklch(0.9900 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(0.9900 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9400 0 0);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.9700 0 0);
+  --muted-foreground: oklch(0.4400 0 0);
+  --accent: oklch(0.9400 0 0);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.6300 0.1900 23.0300);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9200 0 0);
+  --input: oklch(0.9400 0 0);
+  --ring: oklch(0 0 0);
+  --chart-1: oklch(0.8100 0.1700 75.3500);
+  --chart-2: oklch(0.5500 0.2200 264.5300);
+  --chart-3: oklch(0.7200 0 0);
+  --chart-4: oklch(0.9200 0 0);
+  --chart-5: oklch(0.5600 0 0);
+  --sidebar: oklch(0.9900 0 0);
+  --sidebar-foreground: oklch(0 0 0);
+  --sidebar-primary: oklch(0 0 0);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9400 0 0);
+  --sidebar-accent-foreground: oklch(0 0 0);
+  --sidebar-border: oklch(0.9400 0 0);
+  --sidebar-ring: oklch(0 0 0);
+  --font-sans: Geist, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Geist Mono, monospace;
+  --radius: 0.5rem;
+  --shadow-x: 0px;
+  --shadow-y: 1px;
+  --shadow-blur: 2px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.18;
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
+  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+/* ─── Dark Mode ─── */
+.dark {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.1400 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.1800 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.2500 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.2300 0 0);
+  --muted-foreground: oklch(0.7200 0 0);
+  --accent: oklch(0.3200 0 0);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.6900 0.2000 23.9100);
+  --destructive-foreground: oklch(0 0 0);
+  --border: oklch(0.2600 0 0);
+  --input: oklch(0.3200 0 0);
+  --ring: oklch(0.7200 0 0);
+  --chart-1: oklch(0.8100 0.1700 75.3500);
+  --chart-2: oklch(0.5800 0.2100 260.8400);
+  --chart-3: oklch(0.5600 0 0);
+  --chart-4: oklch(0.4400 0 0);
+  --chart-5: oklch(0.9200 0 0);
+  --sidebar: oklch(0.1800 0 0);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(1 0 0);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.3200 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.3200 0 0);
+  --sidebar-ring: oklch(0.7200 0 0);
+  --font-sans: Geist, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Geist Mono, monospace;
+  --radius: 0.5rem;
+  --shadow-x: 0px;
+  --shadow-y: 1px;
+  --shadow-blur: 2px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.18;
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
+  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 1px 2px -1px hsl(0 0% 0% / 0.18);
+  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 2px 4px -1px hsl(0 0% 0% / 0.18);
+  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 4px 6px -1px hsl(0 0% 0% / 0.18);
+  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.18), 0px 8px 10px -1px hsl(0 0% 0% / 0.18);
+  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+}
+
+/* ─── Tailwind Theme Integration ─── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+}
+```
+
+> **Custom themes:** You can customize all these variables using [tweakcn](https://tweakcn.com/) — design your theme visually, copy the CSS, and paste it into `input.css`. All ShellUI components update automatically.
+
+---
+
+## Step 5: Include ShellUI Theme CSS
+
+Add the ShellUI static theme CSS to your layout file. This provides the base component styles.
+
+<Tabs items={['App.razor / MainLayout.razor', '_Layout.cshtml']}>
+  <Tab value="App.razor / MainLayout.razor">
+
+```html
+<head>
+    <!-- ShellUI component styles -->
+    <link rel="stylesheet" href="_content/ShellUI.Components/shellui-theme.css" />
+    <!-- Tailwind compiled output -->
+    <link href="app.css" rel="stylesheet" />
+</head>
+```
+
+  </Tab>
+  <Tab value="_Layout.cshtml">
+
+```html
+<head>
+    <!-- ShellUI component styles -->
+    <link rel="stylesheet" href="~/_content/ShellUI.Components/shellui-theme.css" />
+    <!-- Tailwind compiled output -->
+    <link href="~/app.css" rel="stylesheet" />
+</head>
+```
+
+  </Tab>
+</Tabs>
+
+---
+
+## Step 6: Add Imports
+
+Add the ShellUI namespace to your `_Imports.razor` so components are available globally:
+
+```razor
+@using ShellUI.Components
+```
+
+---
+
+## Step 7: Configure Tailwind Build
+
+### Option A: MSBuild Integration (Recommended)
+
+Create a `Build/ShellUI.targets` file in your project root:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <ShellUIBinPath Condition="'$(ShellUIBinPath)' == ''">$(MSBuildProjectDirectory)\.shellui\bin</ShellUIBinPath>
+    <TailwindExecutable Condition="'$(OS)' == 'Windows_NT'">$(ShellUIBinPath)\tailwindcss.exe</TailwindExecutable>
+    <TailwindExecutable Condition="'$(OS)' != 'Windows_NT'">$(ShellUIBinPath)/tailwindcss</TailwindExecutable>
+    <TailwindInputCss>$(MSBuildProjectDirectory)\wwwroot\input.css</TailwindInputCss>
+    <TailwindOutputCss>$(MSBuildProjectDirectory)\wwwroot\app.css</TailwindOutputCss>
+    <TailwindMinify Condition="'$(Configuration)' == 'Release'">--minify</TailwindMinify>
+    <TailwindMinify Condition="'$(Configuration)' != 'Release'"></TailwindMinify>
+  </PropertyGroup>
+
+  <Target Name="BuildTailwindCSS" BeforeTargets="BeforeBuild"
+          Condition="Exists('$(TailwindExecutable)') AND Exists('$(TailwindInputCss)')">
+    <Message Importance="high" Text="Building Tailwind CSS..." />
+    <Exec Command="&quot;$(TailwindExecutable)&quot; -i &quot;$(TailwindInputCss)&quot; -o &quot;$(TailwindOutputCss)&quot; $(TailwindMinify)" />
+    <Message Importance="high" Text="Tailwind CSS built successfully!" />
+  </Target>
+
+  <Target Name="CleanTailwindCSS" AfterTargets="Clean"
+          Condition="Exists('$(TailwindOutputCss)')">
+    <Delete Files="$(TailwindOutputCss)" />
+  </Target>
+</Project>
+```
+
+Then import it in your `.csproj`:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- ... existing content ... -->
+  <Import Project="Build\ShellUI.targets" />
+</Project>
+```
+
+Now `dotnet build` automatically compiles Tailwind CSS, and `dotnet build --configuration Release` minifies the output.
+
+### Option B: npm Build Target
+
+If you're using the npm method, add this to your `.csproj`:
+
+```xml
+<Target Name="BuildTailwind" BeforeTargets="Build">
+  <Exec Command="npx @tailwindcss/cli -i wwwroot/input.css -o wwwroot/app.css --watch=false" />
+</Target>
+```
+
+---
+
+## Step 8: Create Tailwind Config
+
+Create `tailwind.config.js` in your project root:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./**/*.{razor,html,cshtml}",
+    "./wwwroot/**/*.{js,css}"
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+---
+
+## Step 9: Use Components
+
+You're ready to go! Use ShellUI components in your Razor files:
+
+```razor
+@page "/example"
+
+<Card>
+    <CardHeader>
+        <CardTitle>Welcome to ShellUI</CardTitle>
+        <CardDescription>Build beautiful Blazor apps</CardDescription>
+    </CardHeader>
+    <CardContent>
+        <div class="space-y-4">
+            <div>
+                <Label>Email</Label>
+                <Input Placeholder="you@example.com" Type="email" />
+            </div>
+            <Button>Get Started</Button>
+            <Button Variant="ButtonVariant.Outline">Learn More</Button>
+        </div>
+    </CardContent>
+</Card>
+```
+
+---
+
+## Complete NuGet Setup Checklist
+
+Use this checklist to verify your setup:
+
+- [ ] **Install package**: `dotnet add package ShellUI.Components`
+- [ ] **Remove Bootstrap**: Delete `wwwroot/lib/bootstrap/` and Bootstrap CSS files
+- [ ] **Install Tailwind**: Download standalone CLI v4.1.18 or install via npm
+- [ ] **Create `wwwroot/input.css`**: With ShellUI theme variables (light + dark mode + `@theme inline`)
+- [ ] **Include theme CSS**: Add `<link>` for `_content/ShellUI.Components/shellui-theme.css`
+- [ ] **Add CSS link**: Add `<link>` for `app.css` in your layout
+- [ ] **Add imports**: `@using ShellUI.Components` in `_Imports.razor`
+- [ ] **Configure build**: MSBuild targets or npm build target in `.csproj`
+- [ ] **Create Tailwind config**: `tailwind.config.js` with proper content paths
+- [ ] **Build & verify**: `dotnet build` should generate `wwwroot/app.css`
+
+---
+
+## Project Structure After Setup
+
+```
+YourProject/
+├── Build/
+│   └── ShellUI.targets        # MSBuild Tailwind integration
+├── wwwroot/
+│   ├── input.css               # Tailwind entry + ShellUI theme variables
+│   └── app.css                 # Compiled CSS (auto-generated on build)
+├── .shellui/
+│   └── bin/
+│       └── tailwindcss.exe     # Standalone Tailwind binary (if using standalone)
+├── _Imports.razor              # @using ShellUI.Components
+├── tailwind.config.js          # Tailwind configuration
+└── YourProject.csproj          # With ShellUI.targets import
+```
+
+---
+
+## Custom Themes with tweakcn
+
+ShellUI's theme system is compatible with [tweakcn](https://tweakcn.com/), the same tool used to customize shadcn/ui themes.
+
+1. Visit [tweakcn.com](https://tweakcn.com/)
+2. Design your theme — customize colors, fonts, radius, shadows
+3. Copy the generated CSS variables
+4. Paste into your `wwwroot/input.css`, replacing the `:root` and `.dark` sections
+5. Rebuild: `dotnet build`
+
+All ShellUI components automatically pick up your custom theme.
+
+### Custom Fonts
+
+```html
+<!-- Add Google Fonts to your layout -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+```
+
+Then update the font variables in `input.css`:
+
+```css
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* ... rest of variables ... */
+}
+```
+
+---
+
+## Bootstrap Compatibility
+
+ShellUI components can coexist with Bootstrap, though it's not recommended for production:
+
+- **Keep both**: Use ShellUI for new components, Bootstrap for existing ones
+- **Gradual migration**: Replace Bootstrap components one at a time
+- **Remove Bootstrap**: Delete Bootstrap references for a clean Tailwind-only setup (recommended)
+
+> **Best practice:** Remove Bootstrap entirely to avoid CSS conflicts and reduce bundle size.
+
+---
+
+## Troubleshooting
+
+### Components render without styling
+
+1. Verify `wwwroot/app.css` exists and contains Tailwind output
+2. Check that both CSS links are in your layout (`shellui-theme.css` and `app.css`)
+3. Ensure `tailwind.config.js` content paths include `**/*.razor`
+4. Rebuild: `dotnet build`
+
+### `@using ShellUI.Components` not found
+
+```bash
+# Ensure the package is installed
+dotnet list package | findstr ShellUI
+
+# If not listed, install it
+dotnet add package ShellUI.Components
+```
+
+### Dark mode not working
+
+Ensure your layout has the dark mode class toggle. ShellUI uses `class`-based dark mode:
+
+```html
+<html class="dark">
+  <!-- dark mode active -->
+</html>
+```
+
+Use the `ThemeToggle` component (via CLI) or implement your own toggle.
+
+### Tailwind not building on `dotnet build`
+
+1. Verify `Build/ShellUI.targets` exists
+2. Check the `.csproj` imports it: `<Import Project="Build\ShellUI.targets" />`
+3. Confirm the Tailwind binary exists at `.shellui/bin/tailwindcss.exe` (or the npm equivalent)
+4. Check MSBuild output for errors: `dotnet build -v detailed`
+
+### Missing theme variables
+
+If components look unstyled or have wrong colors, your `input.css` may be missing the `@theme inline` block. This block maps CSS variables to Tailwind's theme system — without it, Tailwind classes like `bg-primary` and `text-muted-foreground` won't resolve.
+
+---
+
+## Next Steps
+
+- [Quick Start Guide](/docs/quickstart) — Build your first page
+- [Theming](/docs/theming) — Deep dive into theme customization
+- [Components](/docs/components) — Browse all 80+ components
+- [CLI Installation](/docs/installation/cli) — Switch to CLI for full component ownership
