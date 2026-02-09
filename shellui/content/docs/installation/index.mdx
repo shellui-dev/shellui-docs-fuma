@@ -4,259 +4,150 @@ description: Install ShellUI via CLI or NuGet package
 icon: Download
 ---
 
-ShellUI v0.2.0 offers a **hybrid workflow** with two installation methods. Use CLI for full customization control, NuGet for quick prototyping.
+ShellUI v0.2.0 offers a **hybrid workflow** with two installation methods. Choose the approach that fits your project.
 
-<Tabs items={['CLI', 'NuGet']}>
-  <Tab value="CLI">
+## Prerequisites
 
-## CLI Installation (Recommended)
+- **.NET 8.0** or higher
+- **Node.js** (optional — only needed if using npm for Tailwind)
+- A **Blazor project** (Server, WebAssembly, Hybrid, or Interactive Server)
 
-The CLI method copies components directly to your project, giving you full control and customization capabilities.
+---
 
-### Prerequisites
+## Installation Methods
 
-- .NET 8.0 or higher
-- Node.js (optional - only needed if using npm for Tailwind)
+<Cards>
+  <Card title="CLI Installation (Recommended)" href="/docs/installation/cli" description="Copy components directly into your project for full ownership and customization. Automatic Tailwind setup, MSBuild integration, and component management." />
+  <Card title="NuGet Package" href="/docs/installation/nuget" description="Traditional package install for quick prototyping. Pre-compiled components with manual Tailwind CSS setup." />
+</Cards>
 
-### Install the CLI
+---
+
+## CLI vs NuGet — Which to Choose?
+
+| Aspect | CLI Tool | NuGet Package |
+|--------|----------|---------------|
+| **Install command** | `shellui add button card` | `dotnet add package ShellUI.Components` |
+| **Components** | Source copied to your project | Pre-compiled, referenced as package |
+| **Customization** | Full source code access — edit anything | Override via CSS, limited code changes |
+| **Tailwind setup** | Automatic via `shellui init` | Manual setup required |
+| **Bundle size** | Only components you add | All components included |
+| **Updates** | Re-run `shellui add` per component | Bump package version |
+| **Best for** | Production apps, full customization | Prototyping, quick starts |
+
+> **Tip:** You can use both approaches together. Use NuGet for standard components and CLI for ones you need to customize.
+
+---
+
+## Quick Start
+
+The fastest way to get started with ShellUI:
 
 ```bash
+# 1. Install the CLI tool
 dotnet tool install -g ShellUI.CLI
-```
 
-### Initialize Your Project
-
-Navigate to your Blazor project directory and initialize ShellUI:
-
-```bash
+# 2. Initialize in your Blazor project
 cd your-blazor-project
 shellui init
-```
 
-Choose your Tailwind CSS setup method:
-- **Standalone CLI** (recommended): No Node.js required - uses Tailwind v4.1.18
-- **npm**: Traditional setup with Node.js - uses tailwindcss@^4.1.18
-
-### Add Components
-
-Add components to your project:
-
-```bash
-# Add individual components
+# 3. Add components
 shellui add button input card dialog
 
-# Add chart components (new in v0.2.0)
-shellui add chart bar-chart line-chart pie-chart area-chart
-
-# Add multiple components at once
-shellui add table badge avatar alert
-
-# See all available components
-shellui list
+# 4. Run your app
+dotnet run
 ```
 
-### Project Structure
+That's it — `shellui init` handles Tailwind CSS setup, Bootstrap cleanup, folder creation, and MSBuild integration automatically.
 
-After installation, your project will have this structure:
+[View full CLI guide](/docs/installation/cli) | [View full NuGet guide](/docs/installation/nuget)
 
+---
+
+## Project Types
+
+ShellUI works with all Blazor hosting models:
+
+<Tabs items={['Blazor Server', 'Blazor WebAssembly', 'Blazor Hybrid', 'Interactive Server']}>
+  <Tab value="Blazor Server">
+
+```bash
+dotnet new blazorserver -n MyApp
+cd MyApp
+shellui init
+shellui add button card input
+dotnet run
 ```
-YourProject/
-├── Components/
-│   └── UI/                    # ShellUI components
-│       ├── Button.razor
-│       ├── Input.razor
-│       ├── Card.razor
-│       ├── Chart.razor        # New in v0.2.0
-│       ├── BarChart.razor     # New in v0.2.0
-│       └── ...
-├── wwwroot/
-│   ├── input.css              # Tailwind input
-│   └── app.css                # Compiled CSS
-├── .shellui/
-│   └── bin/                   # Tailwind CLI binary
-├── tailwind.config.js         # Tailwind configuration
-├── shellui.json              # ShellUI configuration
-└── Build/
-    └── ShellUI.targets       # MSBuild integration
-```
-
-**Note:** With CLI installation, Tailwind CSS compiles automatically on build. No manual setup required.
 
   </Tab>
-
-  <Tab value="NuGet">
-
-## NuGet Package Installation
-
-For traditional package management, use the NuGet package. This method is ideal for quick prototyping or if you prefer package-based workflows.
-
-### Install Package
+  <Tab value="Blazor WebAssembly">
 
 ```bash
-dotnet add package ShellUI.Components
+dotnet new blazorwasm -n MyApp
+cd MyApp
+shellui init
+shellui add button card input
+dotnet run
 ```
 
-### Chart Components Dependency
+  </Tab>
+  <Tab value="Blazor Hybrid">
 
-If you plan to use chart components (new in v0.2.0), also install ApexCharts:
+Works with MAUI, WPF, and WinForms Blazor Hybrid apps.
 
 ```bash
-dotnet add package Blazor-ApexCharts
+dotnet new maui-blazor -n MyApp
+cd MyApp
+shellui init
+shellui add button card input
+dotnet run
 ```
 
-### Manual Tailwind Setup
+  </Tab>
+  <Tab value="Interactive Server">
 
-When using NuGet, you need to set up Tailwind CSS manually:
+Supports .NET 9's Interactive Server rendering mode.
 
-1. Install Tailwind CSS v4.1.18:
 ```bash
-npm install -D tailwindcss@^4.1.18 @tailwindcss/cli@^4.1.18
-```
-
-2. Create `tailwind.config.js`:
-```javascript
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./**/*.{razor,html,cshtml}",
-    "./wwwroot/**/*.{js,css}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-```
-
-3. Create `wwwroot/input.css`:
-```css
-@import "tailwindcss";
-```
-
-### Build Integration
-
-For NuGet installations, add this to your `.csproj` for automatic Tailwind compilation:
-
-```xml
-<Target Name="BuildTailwind" BeforeTargets="Build">
-  <Exec Command="npx @tailwindcss/cli -i wwwroot/input.css -o wwwroot/app.css --watch=false" />
-</Target>
+dotnet new blazor -n MyApp
+cd MyApp
+shellui init
+shellui add button card input
+dotnet run
 ```
 
   </Tab>
 </Tabs>
 
-## Project Types
-
-ShellUI works with all Blazor hosting models. The setup process is the same regardless of your project type.
-
-### Blazor Server
-
-Works out of the box with Blazor Server applications. No additional configuration needed.
-
-```bash
-# Create a new Blazor Server project
-dotnet new blazorserver -n MyApp
-cd MyApp
-
-# Install ShellUI
-shellui init
-shellui add button card input
-```
-
-### Blazor WebAssembly
-
-Fully supported with Blazor WebAssembly (WASM) projects.
-
-```bash
-# Create a new Blazor WASM project
-dotnet new blazorwasm -n MyApp
-cd MyApp
-
-# Install ShellUI
-shellui init
-shellui add button card input
-```
-
-### Blazor Hybrid
-
-Works seamlessly with Blazor Hybrid applications (MAUI, WPF, WinForms).
-
-```bash
-# Create a new Blazor Hybrid project
-dotnet new maui-blazor -n MyApp
-cd MyApp
-
-# Install ShellUI
-shellui init
-shellui add button card input
-```
-
-### Blazor Interactive Server
-
-Supports .NET 9's Interactive Server rendering mode.
-
-```bash
-# Create a new Blazor Interactive Server project
-dotnet new blazor -n MyApp
-cd MyApp
-
-# Install ShellUI
-shellui init
-shellui add button card input
-```
-
-### Import Components
-
-After adding components, import them in your `_Imports.razor` or individual Razor files:
-
-```razor
-@using YourProject.Components.UI
-```
+---
 
 ## Verification
 
 After installation, verify everything is working:
 
-1. Build your project: `dotnet build`
-2. Check that `wwwroot/app.css` was generated (for CLI method, this happens automatically)
-3. Use a component in your Razor file
-4. Ensure proper styling is applied
+1. **Build** your project: `dotnet build`
+2. **Check** that `wwwroot/app.css` was generated
+3. **Run** the project: `dotnet run`
 
 ### Quick Test
-
-Add a simple component to test:
 
 ```razor
 @page "/test"
 @using YourProject.Components.UI
 
-<Button>Test Button</Button>
+<div class="p-8 space-y-4">
+  <Button>Click Me</Button>
+  <Button Variant="ButtonVariant.Outline">Outline</Button>
+  <Button Variant="ButtonVariant.Destructive">Delete</Button>
+</div>
 ```
 
-If the button renders with proper styling, your installation is successful!
+If the buttons render with proper styling, your installation is successful.
 
-## Troubleshooting
+---
 
-### Common Issues
+## Getting Help
 
-**Tailwind CSS not compiling:**
-- Ensure the correct Tailwind version (4.1.18)
-- Check your `tailwind.config.js` paths
-- Verify Node.js installation (if using npm method)
-
-**Components not rendering:**
-- Check that components are in `Components/UI/` folder
-- Ensure proper namespace imports
-- Verify Tailwind CSS is loaded
-
-**CLI not found:**
-- Restart your terminal/command prompt
-- Check `dotnet tool list -g` for installation
-- Ensure PATH includes .NET tools directory
-
-### Getting Help
-
-- [GitHub Issues](https://github.com/shellui-dev/shellui/issues)
-- [Documentation](/docs)
-- [Community Discussions](https://github.com/shellui-dev/shellui/discussions)
+- [GitHub Issues](https://github.com/shellui-dev/shellui/issues) — Report bugs or request features
+- [Documentation](/docs) — Full ShellUI docs
+- [Community Discussions](https://github.com/shellui-dev/shellui/discussions) — Ask questions

@@ -1,3 +1,7 @@
 {
-  "collapsible": false
+  "pages": [
+    "...",
+    "cli",
+    "nuget"
+  ]
 }
