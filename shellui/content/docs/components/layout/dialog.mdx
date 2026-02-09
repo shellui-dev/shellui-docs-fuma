@@ -29,7 +29,7 @@ shellui add dialog
     </DialogHeader>
     <p>Your content goes here.</p>
     <DialogFooter>
-      <DialogClose><Button Variant="outline">Cancel</Button></DialogClose>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
       <Button OnClick="HandleSave">Save</Button>
     </DialogFooter>
   </DialogContent>
@@ -46,7 +46,7 @@ shellui add dialog
 ```razor
 <Dialog Open="@showConfirm" OpenChanged="@((bool v) => showConfirm = v)">
   <DialogTrigger>
-    <Button Variant="destructive">Delete Item</Button>
+    <Button Variant="ButtonVariant.Destructive">Delete Item</Button>
   </DialogTrigger>
   <DialogContent>
     <DialogHeader>
@@ -54,8 +54,8 @@ shellui add dialog
       <DialogDescription>This action cannot be undone.</DialogDescription>
     </DialogHeader>
     <DialogFooter>
-      <DialogClose><Button Variant="outline">Cancel</Button></DialogClose>
-      <Button Variant="destructive" OnClick="HandleDelete">Delete</Button>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
+      <Button Variant="ButtonVariant.Destructive" OnClick="HandleDelete">Delete</Button>
     </DialogFooter>
   </DialogContent>
 </Dialog>
@@ -89,7 +89,7 @@ shellui add dialog
       </div>
     </div>
     <DialogFooter>
-      <DialogClose><Button Variant="outline">Cancel</Button></DialogClose>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
       <Button OnClick="HandleSubmit">Add User</Button>
     </DialogFooter>
   </DialogContent>
