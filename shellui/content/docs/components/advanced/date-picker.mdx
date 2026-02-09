@@ -3,7 +3,7 @@ title: Date Picker
 description: Date input with calendar popup for date selection
 ---
 
-The DatePicker component combines a text input with a Calendar popup, providing an intuitive interface for selecting dates. It supports date formatting, min/max ranges, and two-way binding.
+The DatePicker component combines a button trigger with a calendar popup for selecting dates. It supports two-way binding, placeholder text, clear functionality, and disabled state.
 
 ## Installation
 
@@ -21,12 +21,13 @@ shellui add date-picker
 }
 ```
 
-## With Label
+## With Placeholder
 
 ```razor
 <div class="space-y-2">
   <Label>Date of Birth</Label>
-  <DatePicker @bind-Value="dateOfBirth" Placeholder="Pick a date" />
+  <DatePicker @bind-Value="dateOfBirth"
+              Placeholder="Pick a date" />
 </div>
 
 @code {
@@ -34,29 +35,33 @@ shellui add date-picker
 }
 ```
 
-## Date Range Constraints
+## With Clear Button
 
-Restrict selectable dates with min and max bounds:
+Allow users to clear the selected date (enabled by default):
 
 ```razor
 <DatePicker @bind-Value="selectedDate"
-            MinDate="@DateTime.Today"
-            MaxDate="@DateTime.Today.AddMonths(3)"
-            Placeholder="Select a future date" />
+            AllowClear="true"
+            Placeholder="Select a date" />
 
 @code {
-    private DateTime? selectedDate;
+    private DateTime? selectedDate = DateTime.Today;
 }
 ```
 
-## With Format
-
-Customize the display format:
+To disable clearing:
 
 ```razor
-<DatePicker @bind-Value="selectedDate" Format="yyyy-MM-dd" />
-<DatePicker @bind-Value="selectedDate" Format="dd/MM/yyyy" />
-<DatePicker @bind-Value="selectedDate" Format="MMMM d, yyyy" />
+<DatePicker @bind-Value="selectedDate"
+            AllowClear="false" />
+```
+
+## Disabled State
+
+```razor
+<DatePicker @bind-Value="selectedDate"
+            Disabled="true"
+            Placeholder="Not available" />
 ```
 
 ## In a Form
@@ -70,7 +75,8 @@ Customize the display format:
     </div>
     <div class="space-y-2">
       <Label>Event Date</Label>
-      <DatePicker @bind-Value="model.Date" />
+      <DatePicker @bind-Value="model.Date"
+                  Placeholder="Pick event date" />
     </div>
     <Button Type="submit">Create Event</Button>
   </div>
@@ -98,7 +104,7 @@ Customize the display format:
 <div class="flex items-center gap-4">
   <DatePicker @bind-Value="selectedDate" />
   <p class="text-sm text-muted-foreground">
-    Selected: @(selectedDate?.ToString("MMMM d, yyyy") ?? "None")
+    Selected: @(selectedDate?.ToString("MMM dd, yyyy") ?? "None")
   </p>
 </div>
 
@@ -107,25 +113,43 @@ Customize the display format:
 }
 ```
 
+## Side-by-Side Date Range
+
+Use two DatePicker components for a date range:
+
+```razor
+<div class="flex items-center gap-2">
+  <DatePicker @bind-Value="startDate" Placeholder="Start date" />
+  <span class="text-muted-foreground">to</span>
+  <DatePicker @bind-Value="endDate" Placeholder="End date" />
+</div>
+
+@code {
+    private DateTime? startDate;
+    private DateTime? endDate;
+}
+```
+
 ## API Reference
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `Value` | `DateTime?` | `null` | Selected date value |
-| `ValueChanged` | `EventCallback<DateTime?>` | — | Callback when date changes |
-| `Placeholder` | `string` | `"Select date"` | Input placeholder text |
-| `Format` | `string` | `"MM/dd/yyyy"` | Date display format |
-| `MinDate` | `DateTime?` | `null` | Earliest selectable date |
-| `MaxDate` | `DateTime?` | `null` | Latest selectable date |
-| `Disabled` | `bool` | `false` | Disable the input |
+| `ValueChanged` | `EventCallback<DateTime?>` | — | Two-way binding callback |
+| `Placeholder` | `string` | `"Pick a date"` | Text shown when no date is selected |
+| `Disabled` | `bool` | `false` | Disable the date picker |
+| `AllowClear` | `bool` | `true` | Show a clear button when a date is selected |
 | `Class` | `string?` | `null` | Additional CSS classes |
+
+## Display Format
+
+The selected date is displayed as **"MMM dd, yyyy"** (e.g., "Feb 08, 2026"). The calendar popup provides month navigation with Previous/Next buttons.
 
 ## Accessibility
 
 The DatePicker component includes:
-- Calendar popup with `role="dialog"`
+- Calendar popup as an overlay with click-outside dismiss
 - Keyboard navigation within the calendar grid
-- Arrow keys to navigate days, months, years
-- Enter to select, Escape to close
+- Month navigation via Previous/Next buttons
+- Clear button with proper labeling
 - `aria-label` on the trigger button
-- Screen reader announces selected date
