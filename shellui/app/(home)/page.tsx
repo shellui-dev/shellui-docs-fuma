@@ -337,41 +337,55 @@ shellui add button card input
             {/* Left: Code Block */}
             <div className="relative order-2 lg:order-1">
               <CodeBlock
-                code={`<MultiSeriesChart TItem="ProjectData"
-    Title="Project Overview"
-    Theme="ChartTheme.Default"
-    Height="400px">
-
-    <ChartSeries TItem="ProjectData"
-        Data="@projectData"
-        Name="Tasks Completed"
-        SeriesType="SeriesType.Bar"
-        XValue="@(e => e.Sprint)"
-        YValue="@(e => (decimal?)e.Completed)" />
-
-    <ChartSeries TItem="ProjectData"
-        Data="@projectData"
-        Name="Story Points"
-        SeriesType="SeriesType.Line"
-        XValue="@(e => e.Sprint)"
-        YValue="@(e => (decimal?)e.StoryPoints)" />
-
-</MultiSeriesChart>
+                code={`<Dialog Open="@isOpen"
+       OpenChanged="@((bool v) => isOpen = v)">
+  <DialogTrigger>
+    <Button>Edit Profile</Button>
+  </DialogTrigger>
+  <DialogContent Class="sm:max-w-[425px]">
+    <DialogHeader>
+      <DialogTitle>Edit Profile</DialogTitle>
+      <DialogDescription>
+        Update your profile information below.
+      </DialogDescription>
+    </DialogHeader>
+    <div class="space-y-4 py-4">
+      <div class="space-y-2">
+        <Label>Name</Label>
+        <Input @bind-Value="name" />
+      </div>
+      <div class="space-y-2">
+        <Label>Email</Label>
+        <Input @bind-Value="email" Type="email" />
+      </div>
+    </div>
+    <DialogFooter>
+      <DialogClose>
+        <Button Variant="ButtonVariant.Outline">
+          Cancel
+        </Button>
+      </DialogClose>
+      <Button OnClick="HandleSave">
+        Save Changes
+      </Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
 
 @code {
-    private List<ProjectData> projectData = new()
-    {
-        new("Sprint 1", 12, 34),
-        new("Sprint 2", 18, 42),
-        new("Sprint 3", 15, 38),
-        new("Sprint 4", 22, 56)
-    };
+    private bool isOpen = false;
+    private string name = "";
+    private string email = "";
 
-    record ProjectData(string Sprint, int Completed, int StoryPoints);
+    private void HandleSave()
+    {
+        // Save profile changes
+        isOpen = false;
+    }
 }`}
                 lang="razor"
                 wrapper={{
-                  title: "MixedChart.razor",
+                  title: "EditProfile.razor",
                 }}
               />
             </div>
@@ -380,12 +394,12 @@ shellui add button card input
             <div className="max-lg:row-start-1 space-y-6">
               <div className="space-y-4">
                 <h3 className="text-3xl md:text-4xl font-bold">
-                  Use Components Like Native Blazor
+                  Compound Components, Native Blazor
                 </h3>
                 <p className="text-lg text-muted-foreground">
-                  ShellUI components work seamlessly with Blazor's component
-                  model. Use RenderFragments, event handlers, and all the
-                  features you're familiar with.
+                  ShellUI uses compound component patterns — nest Dialog, Sheet,
+                  and Accordion sub-components just like native Blazor. Full
+                  RenderFragment support, event callbacks, and two-way binding.
                 </p>
               </div>
               <div className="space-y-3">
