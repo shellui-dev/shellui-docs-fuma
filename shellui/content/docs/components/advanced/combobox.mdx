@@ -3,7 +3,7 @@ title: Combobox
 description: Searchable dropdown with filtering and selection
 ---
 
-The Combobox component provides an input with a filterable dropdown list. It combines free-text search with structured selection, making it ideal for large option sets like country selectors, user pickers, or tag inputs.
+The Combobox component provides a dropdown with built-in search filtering. It accepts a list of string options and supports two-way binding, custom placeholders, and disabled state.
 
 ## Installation
 
@@ -14,14 +14,15 @@ shellui add combobox
 ## Basic Usage
 
 ```razor
-<Combobox TItem="string"
-          Items="@frameworks"
+<Combobox Options="@frameworks"
           @bind-Value="selected"
-          Placeholder="Select framework..."
-          SearchPlaceholder="Search frameworks..." />
+          Placeholder="Select framework..." />
+
+<p class="text-sm mt-2">Selected: @(selected ?? "None")</p>
 
 @code {
-    private string? selected;
+    private string selected = "";
+
     private List<string> frameworks = new()
     {
         "Blazor", "React", "Vue", "Angular", "Svelte", "Next.js"
@@ -29,43 +30,51 @@ shellui add combobox
 }
 ```
 
-## With Complex Objects
+## With Search Filtering
+
+Search is enabled by default. Type to filter the options list:
 
 ```razor
-<Combobox TItem="Country"
-          Items="@countries"
+<Combobox Options="@countries"
           @bind-Value="selectedCountry"
-          TextField="@(c => c.Name)"
-          ValueField="@(c => c.Code)"
           Placeholder="Select country..."
-          SearchPlaceholder="Search countries..." />
+          Searchable="true" />
 
 @code {
-    private Country? selectedCountry;
+    private string selectedCountry = "";
 
-    private List<Country> countries = new()
+    private List<string> countries = new()
     {
-        new("US", "United States"),
-        new("GB", "United Kingdom"),
-        new("DE", "Germany"),
-        new("FR", "France"),
-        new("JP", "Japan")
+        "United States", "United Kingdom", "Germany",
+        "France", "Japan", "Australia", "Canada",
+        "Brazil", "India", "South Korea"
     };
-
-    record Country(string Code, string Name);
 }
 ```
 
-## Empty State
-
-Show a message when no items match the search:
+## Disabled State
 
 ```razor
-<Combobox TItem="string"
-          Items="@items"
+<Combobox Options="@options"
           @bind-Value="selected"
-          Placeholder="Select item..."
-          EmptyText="No items found." />
+          Placeholder="Disabled..."
+          Disabled="true" />
+```
+
+## Without Search
+
+Disable the search input for short option lists:
+
+```razor
+<Combobox Options="@sizes"
+          @bind-Value="selectedSize"
+          Placeholder="Select size..."
+          Searchable="false" />
+
+@code {
+    private string selectedSize = "";
+    private List<string> sizes = new() { "Small", "Medium", "Large", "X-Large" };
+}
 ```
 
 ## In a Form
@@ -74,69 +83,96 @@ Show a message when no items match the search:
 <EditForm Model="@model" OnValidSubmit="HandleSubmit">
   <div class="grid gap-4">
     <div class="space-y-2">
-      <Label>Assignee</Label>
-      <Combobox TItem="TeamMember"
-                Items="@members"
-                @bind-Value="model.Assignee"
-                TextField="@(m => m.Name)"
-                ValueField="@(m => m.Id)"
-                Placeholder="Select assignee..."
-                SearchPlaceholder="Search team..." />
+      <Label>Role</Label>
+      <Combobox Options="@roles"
+                @bind-Value="model.Role"
+                Placeholder="Select role..." />
     </div>
-    <Button Type="submit">Assign</Button>
+    <div class="space-y-2">
+      <Label>Department</Label>
+      <Combobox Options="@departments"
+                @bind-Value="model.Department"
+                Placeholder="Select department..." />
+    </div>
+    <Button Type="submit">Save</Button>
   </div>
 </EditForm>
 
 @code {
-    private TaskModel model = new();
-    private List<TeamMember> members = new()
+    private UserModel model = new();
+
+    private List<string> roles = new()
     {
-        new("1", "Alice"), new("2", "Bob"), new("3", "Charlie")
+        "Admin", "Editor", "Viewer", "Contributor"
+    };
+
+    private List<string> departments = new()
+    {
+        "Engineering", "Design", "Marketing", "Sales", "Support"
     };
 
     private void HandleSubmit() { /* Handle */ }
 
-    class TaskModel { public TeamMember? Assignee { get; set; } }
-    record TeamMember(string Id, string Name);
+    class UserModel
+    {
+        public string Role { get; set; } = "";
+        public string Department { get; set; } = "";
+    }
 }
 ```
 
-## Controlled State
+## With Custom Content
+
+Use `ChildContent` to render custom dropdown content:
 
 ```razor
-<div class="flex items-center gap-4">
-  <Combobox TItem="string"
-            Items="@options"
-            @bind-Value="selected"
-            Placeholder="Pick one..." />
-  <p class="text-sm text-muted-foreground">
-    Selected: @(selected ?? "None")
-  </p>
-</div>
+<Combobox @bind-Value="selected" Placeholder="Pick a color...">
+  <div class="p-2 space-y-1">
+    @foreach (var color in colors)
+    {
+      <button class="flex items-center gap-2 w-full px-2 py-1.5 rounded hover:bg-accent text-sm"
+              @onclick="() => selected = color.Name">
+        <span class="w-3 h-3 rounded-full" style="background-color: @color.Hex"></span>
+        @color.Name
+      </button>
+    }
+  </div>
+</Combobox>
+
+@code {
+    private string selected = "";
+
+    private List<ColorItem> colors = new()
+    {
+        new("Red", "#ef4444"),
+        new("Blue", "#3b82f6"),
+        new("Green", "#22c55e"),
+        new("Purple", "#a855f7")
+    };
+
+    record ColorItem(string Name, string Hex);
+}
 ```
 
 ## API Reference
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `TItem` | generic | — | Item type parameter |
-| `Items` | `List<TItem>` | `[]` | Available options |
-| `Value` | `TItem?` | `null` | Currently selected item |
-| `ValueChanged` | `EventCallback<TItem?>` | — | Callback when selection changes |
-| `TextField` | `Func<TItem, string>` | `ToString()` | Display text accessor |
-| `ValueField` | `Func<TItem, string>` | `ToString()` | Value accessor |
-| `Placeholder` | `string` | `"Select..."` | Trigger placeholder |
-| `SearchPlaceholder` | `string` | `"Search..."` | Search input placeholder |
-| `EmptyText` | `string` | `"No results."` | Text when no matches |
+| `Value` | `string` | `""` | Currently selected value |
+| `ValueChanged` | `EventCallback<string>` | — | Two-way binding callback |
+| `Options` | `IEnumerable<string>?` | `null` | List of string options |
+| `Placeholder` | `string` | `"Select..."` | Placeholder text when nothing is selected |
+| `Searchable` | `bool` | `true` | Show search input in dropdown |
 | `Disabled` | `bool` | `false` | Disable the combobox |
+| `ChildContent` | `RenderFragment?` | `null` | Custom dropdown content (replaces `Options`) |
 | `Class` | `string?` | `null` | Additional CSS classes |
 
 ## Accessibility
 
 The Combobox component includes:
 - `role="combobox"` with `aria-expanded`
-- `aria-autocomplete="list"` on the search input
 - Arrow key navigation through options
 - Enter to select, Escape to close
 - `aria-selected` on the active option
-- Screen reader announces filtered count
+- Click-outside overlay to dismiss
+- Selected option shows a checkmark indicator

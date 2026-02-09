@@ -3,7 +3,7 @@ title: Carousel
 description: Image and content carousel with navigation controls
 ---
 
-The Carousel component provides a slideshow interface for cycling through content. It supports autoplay, looping, navigation arrows, and dot indicators.
+The Carousel component provides a slideshow interface for cycling through content. It supports autoplay, looping, arrow navigation, and dot indicators — all controlled via parameters (no sub-components).
 
 ## Installation
 
@@ -14,41 +14,50 @@ shellui add carousel
 ## Basic Usage
 
 ```razor
-<Carousel>
-  <CarouselContent>
-    <CarouselItem>
-      <div class="p-6 text-center">Slide 1</div>
-    </CarouselItem>
-    <CarouselItem>
-      <div class="p-6 text-center">Slide 2</div>
-    </CarouselItem>
-    <CarouselItem>
-      <div class="p-6 text-center">Slide 3</div>
-    </CarouselItem>
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>
-```
-
-## With Images
-
-```razor
-<Carousel>
-  <CarouselContent>
-    @foreach (var image in images)
-    {
-      <CarouselItem>
-        <img src="@image.Src" alt="@image.Alt" class="w-full rounded-lg object-cover" />
-      </CarouselItem>
-    }
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-  <CarouselDots />
+<Carousel TotalSlides="3"
+          @bind-CurrentSlide="currentSlide"
+          ShowArrows="true"
+          ShowDots="true">
+  @switch (currentSlide)
+  {
+    case 0:
+      <div class="flex items-center justify-center h-full p-6">
+        <h2 class="text-2xl font-bold">Slide 1</h2>
+      </div>
+      break;
+    case 1:
+      <div class="flex items-center justify-center h-full p-6">
+        <h2 class="text-2xl font-bold">Slide 2</h2>
+      </div>
+      break;
+    case 2:
+      <div class="flex items-center justify-center h-full p-6">
+        <h2 class="text-2xl font-bold">Slide 3</h2>
+      </div>
+      break;
+  }
 </Carousel>
 
 @code {
+    private int currentSlide = 0;
+}
+```
+
+## Image Carousel
+
+```razor
+<Carousel TotalSlides="@images.Count"
+          @bind-CurrentSlide="current"
+          Loop="true"
+          AspectRatio="16/9">
+  <img src="@images[current].Src"
+       alt="@images[current].Alt"
+       class="w-full h-full object-cover" />
+</Carousel>
+
+@code {
+    private int current = 0;
+
     private List<ImageItem> images = new()
     {
         new("/images/slide1.jpg", "Mountain landscape"),
@@ -60,75 +69,96 @@ shellui add carousel
 }
 ```
 
-## Card Carousel
-
-Display cards in a scrollable carousel:
-
-```razor
-<Carousel>
-  <CarouselContent>
-    @foreach (var product in products)
-    {
-      <CarouselItem Class="md:basis-1/2 lg:basis-1/3">
-        <Card>
-          <CardHeader>
-            <CardTitle>@product.Name</CardTitle>
-            <CardDescription>@product.Price</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p class="text-sm">@product.Description</p>
-          </CardContent>
-        </Card>
-      </CarouselItem>
-    }
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>
-```
-
 ## Autoplay
 
 Enable automatic slide transitions:
 
 ```razor
-<Carousel Autoplay="true" AutoplayInterval="5000" Loop="true">
-  <CarouselContent>
-    <CarouselItem><div class="p-6">Slide 1</div></CarouselItem>
-    <CarouselItem><div class="p-6">Slide 2</div></CarouselItem>
-    <CarouselItem><div class="p-6">Slide 3</div></CarouselItem>
-  </CarouselContent>
-  <CarouselDots />
+<Carousel TotalSlides="4"
+          @bind-CurrentSlide="slide"
+          AutoPlay="true"
+          AutoPlayInterval="5000"
+          Loop="true"
+          ShowDots="true"
+          ShowArrows="false">
+  <div class="flex items-center justify-center h-full p-8">
+    <p class="text-lg">Auto-playing slide @(slide + 1)</p>
+  </div>
 </Carousel>
+
+@code {
+    private int slide = 0;
+}
+```
+
+## Custom Arrow Styling
+
+```razor
+<Carousel TotalSlides="3"
+          @bind-CurrentSlide="current"
+          ArrowClass="bg-primary text-primary-foreground hover:bg-primary/90"
+          Class="rounded-xl overflow-hidden border">
+  @* Slide content *@
+</Carousel>
+```
+
+## Handling Slide Changes
+
+```razor
+<Carousel TotalSlides="@slides.Count"
+          @bind-CurrentSlide="activeSlide"
+          OnSlideChanged="HandleSlideChanged">
+  <div class="p-6">
+    <h3 class="font-bold">@slides[activeSlide].Title</h3>
+    <p class="text-muted-foreground">@slides[activeSlide].Description</p>
+  </div>
+</Carousel>
+
+<p class="text-sm mt-2">Viewed slide: @lastViewed</p>
+
+@code {
+    private int activeSlide = 0;
+    private int lastViewed = 0;
+
+    private List<SlideData> slides = new()
+    {
+        new("Welcome", "Get started with ShellUI"),
+        new("Features", "80 production-ready components"),
+        new("Charts", "New in v0.2.0")
+    };
+
+    private void HandleSlideChanged(int index)
+    {
+        lastViewed = index;
+    }
+
+    record SlideData(string Title, string Description);
+}
 ```
 
 ## API Reference
 
-### Carousel
-
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `Autoplay` | `bool` | `false` | Enable automatic transitions |
-| `AutoplayInterval` | `int` | `3000` | Milliseconds between slides |
-| `Loop` | `bool` | `false` | Loop back to start after last slide |
-| `ChildContent` | `RenderFragment` | `null` | Carousel sub-components |
-
-### Sub-Components
-
-| Component | Description |
-|-----------|-------------|
-| `CarouselContent` | Container for carousel items |
-| `CarouselItem` | Individual slide wrapper |
-| `CarouselPrevious` | Previous slide button |
-| `CarouselNext` | Next slide button |
-| `CarouselDots` | Dot indicators for each slide |
+| `ChildContent` | `RenderFragment?` | `null` | Slide content |
+| `CurrentSlide` | `int` | `0` | Active slide index (0-based) |
+| `CurrentSlideChanged` | `EventCallback<int>` | — | Two-way binding callback |
+| `TotalSlides` | `int` | `0` | Total number of slides |
+| `ShowArrows` | `bool` | `true` | Show previous/next arrow buttons |
+| `ShowDots` | `bool` | `true` | Show dot indicators |
+| `Loop` | `bool` | `true` | Loop back to start after last slide |
+| `AutoPlay` | `bool` | `false` | Enable automatic transitions |
+| `AutoPlayInterval` | `int` | `3000` | Milliseconds between auto-play transitions |
+| `AspectRatio` | `string` | `"16/9"` | CSS aspect ratio for the carousel container |
+| `Class` | `string` | `""` | Additional CSS classes for outer container |
+| `ArrowClass` | `string` | `""` | Additional CSS classes for arrow buttons |
+| `OnSlideChanged` | `EventCallback<int>` | — | Fired when slide changes (in addition to `CurrentSlideChanged`) |
 
 ## Accessibility
 
 The Carousel component includes:
 - `role="region"` with `aria-roledescription="carousel"`
-- `aria-label` on each slide
-- Previous/Next buttons with `aria-label`
+- `aria-label` on each navigation control
 - Keyboard navigation with arrow keys
 - Autoplay pauses on hover and focus
-- Respects `prefers-reduced-motion`
+- Implements `IAsyncDisposable` for proper timer cleanup

@@ -50,7 +50,7 @@ Or with two-way binding:
 Combine calendar with a date picker input:
 
 ```razor
-<Button Variant="outline" OnClick="() => showCalendar = !showCalendar">
+<Button Variant="ButtonVariant.Outline" OnClick="() => showCalendar = !showCalendar">
   @(selectedDate?.ToString("MM/dd/yyyy") ?? "Pick a date")
 </Button>
 
