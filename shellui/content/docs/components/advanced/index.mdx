@@ -12,7 +12,7 @@ ShellUI's advanced components handle complex scenarios like charts and data visu
 ## Available Components
 
 <Cards>
-  <Card title="Charts" href="/docs/components/advanced/charts" description="Data visualization with ApexCharts - Bar, Line, Area, Pie, and Multi-Series charts" />
+  <Card title="Charts" href="/docs/components/advanced/charts" description="Data visualization with ApexCharts - Bar, Line, Area, Pie, and Multi-Series charts (5 subpages)" />
   <Card title="Calendar" href="/docs/components/advanced/calendar" description="Date selection calendar" />
   <Card title="Date Picker" href="/docs/components/advanced/date-picker" description="Date input with calendar popup" />
   <Card title="Date Range Picker" href="/docs/components/advanced/date-range-picker" description="Date range selection" />
@@ -89,21 +89,22 @@ shellui add chart bar-chart line-chart pie-chart area-chart multi-series-chart
 
 ### Alert Dialog
 ```razor
-<AlertDialog>
-  <AlertDialogTrigger>
-    <Button Variant="destructive">Delete</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-      <AlertDialogDescription>
-        This action cannot be undone.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Delete</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
+<Button Variant="ButtonVariant.Destructive"
+        OnClick="() => showConfirm = true">
+  Delete Account
+</Button>
+
+<AlertDialog IsOpen="@showConfirm"
+             IsOpenChanged="@((v) => showConfirm = v)"
+             Title="Are you sure?"
+             Description="This action cannot be undone."
+             ConfirmText="Delete"
+             ConfirmVariant="ButtonVariant.Destructive"
+             OnConfirm="HandleDelete"
+             OnCancel="() => showConfirm = false" />
+
+@code {
+    private bool showConfirm = false;
+    private void HandleDelete() { showConfirm = false; }
+}
 ```
