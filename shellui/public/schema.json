@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shellui.dev/schema.json",
+  "title": "ShellUI Configuration",
+  "description": "Configuration schema for shellui.json - ShellUI Blazor component library configuration file",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema URL for editor validation (VS Code, etc.)"
+    },
+    "Schema": {
+      "type": "string",
+      "description": "URL of this JSON Schema for editor validation",
+      "default": "https://shellui.dev/schema.json"
+    },
+    "Style": {
+      "type": "string",
+      "description": "Visual style preset: default, new-york, or minimal",
+      "enum": ["default", "new-york", "minimal"],
+      "default": "default"
+    },
+    "ComponentsPath": {
+      "type": "string",
+      "description": "Path where ShellUI components are installed (e.g. Components/UI)",
+      "default": "Components/UI"
+    },
+    "Tailwind": {
+      "type": "object",
+      "description": "Tailwind CSS configuration",
+      "properties": {
+        "Enabled": {
+          "type": "boolean",
+          "description": "Whether Tailwind is enabled",
+          "default": true
+        },
+        "Version": {
+          "type": "string",
+          "description": "Tailwind version (e.g. 4.1.0, 4.1.18)",
+          "default": "4.1.18"
+        },
+        "Method": {
+          "type": "string",
+          "description": "Tailwind setup method: standalone or npm",
+          "enum": ["standalone", "npm"],
+          "default": "standalone"
+        },
+        "ConfigPath": {
+          "type": "string",
+          "description": "Path to Tailwind config file",
+          "default": "tailwind.config.js"
+        },
+        "CssPath": {
+          "type": "string",
+          "description": "Path to CSS input/output file",
+          "default": "wwwroot/app.css"
+        }
+      },
+      "additionalProperties": false
+    },
+    "InstalledComponents": {
+      "type": "array",
+      "description": "List of installed ShellUI components (managed by CLI)",
+      "items": {
+        "type": "object",
+        "required": ["Name", "Version"],
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Component name (e.g. button, input, card)"
+          },
+          "Version": {
+            "type": "string",
+            "description": "Component version (e.g. 0.1.0)"
+          },
+          "InstalledAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when component was installed"
+          },
+          "IsCustomized": {
+            "type": "boolean",
+            "description": "Whether the component has been customized",
+            "default": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ProjectType": {
+      "type": "integer",
+      "description": "Blazor project type: 0=Unknown, 1=BlazorServer, 2=BlazorWebAssembly, 3=BlazorServerSideRendering, 4=BlazorUnited",
+      "enum": [0, 1, 2, 3, 4]
+    }
+  },
+  "additionalProperties": false
+}
