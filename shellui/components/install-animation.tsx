@@ -43,7 +43,7 @@ export function InstallAnimation() {
     <span key="command_type" className="text-green-400">
       {installCmd.substring(0, tick)}
       {tick < timeCommandEnter && (
-        <span className="inline-block h-3 w-1 animate-pulse bg-white" />
+        <span className="inline-block h-3 w-1 animate-pulse bg-foreground dark:bg-white" />
       )}
     </span>,
   );
@@ -76,13 +76,18 @@ export function InstallAnimation() {
     lines.push(
       <Fragment key="detected">
         <span className="text-blue-400">
-          Detected: <span className="text-white font-semibold">BlazorServer</span>
+          Detected:{" "}
+          <span className="font-semibold text-foreground dark:text-white">
+            BlazorServer
+          </span>
         </span>
         <span className="text-blue-400">
-          Project: <span className="text-white">MyApp</span>
+          Project:{" "}
+          <span className="text-foreground dark:text-white">MyApp</span>
         </span>
         <span className="text-blue-400">
-          Namespace: <span className="text-white">MyApp</span>
+          Namespace:{" "}
+          <span className="text-foreground dark:text-white">MyApp</span>
         </span>
       </Fragment>,
     );
@@ -96,7 +101,10 @@ export function InstallAnimation() {
           Checking for Bootstrap files to clean up...
         </span>
         <span className="text-red-400">
-          Deleted: <span className="text-white">wwwroot/lib/bootstrap folder</span>
+          Deleted:{" "}
+          <span className="text-foreground dark:text-white">
+            wwwroot/lib/bootstrap folder
+          </span>
         </span>
         <span className="text-green-400">Removed 1 Bootstrap items.</span>
       </Fragment>,
@@ -108,7 +116,9 @@ export function InstallAnimation() {
     lines.push(
       <Fragment key="tailwind-setup">
         <span className="text-yellow-400">Setting up Tailwind CSS...</span>
-        <span className="text-white">Which Tailwind CSS method do you prefer?</span>
+        <span className="text-foreground dark:text-white">
+          Which Tailwind CSS method do you prefer?
+        </span>
         <span className="text-green-400">
           {">"} standalone - Use Tailwind CLI (no Node.js required, automatic
           builds)
@@ -130,7 +140,7 @@ export function InstallAnimation() {
         </span>
         <span className="text-blue-400">
           Downloading Tailwind CLI{" "}
-          <span className="text-white">v4.1.18</span>...
+          <span className="text-foreground dark:text-white">v4.1.18</span>...
         </span>
         <span className="text-green-400">
           Tailwind CLI downloaded successfully!
@@ -145,10 +155,14 @@ export function InstallAnimation() {
       <Fragment key="files">
         <span className="text-yellow-400">Creating component folders...</span>
         <span className="text-green-400">
-          Created: <span className="text-white">Components/UI/</span>
+          Created:{" "}
+          <span className="text-foreground dark:text-white">
+            Components/UI/
+          </span>
         </span>
         <span className="text-green-400">
-          Created: <span className="text-white">shellui.json</span>
+          Created:{" "}
+          <span className="text-foreground dark:text-white">shellui.json</span>
         </span>
       </Fragment>,
     );
@@ -160,14 +174,21 @@ export function InstallAnimation() {
       <Fragment key="css">
         <span className="text-yellow-400">Creating CSS files...</span>
         <span className="text-green-400">
-          Created: <span className="text-white">wwwroot/input.css</span>
+          Created:{" "}
+          <span className="text-foreground dark:text-white">
+            wwwroot/input.css
+          </span>
         </span>
         <span className="text-green-400">
-          Created: <span className="text-white">wwwroot/app.css</span>
+          Created:{" "}
+          <span className="text-foreground dark:text-white">
+            wwwroot/app.css
+          </span>
         </span>
         <span className="text-yellow-400">Building Tailwind CSS...</span>
         <span className="text-green-400">
-          Built: <span className="text-white">Tailwind CSS</span>
+          Built:{" "}
+          <span className="text-foreground dark:text-white">Tailwind CSS</span>
         </span>
       </Fragment>,
     );
@@ -183,17 +204,17 @@ export function InstallAnimation() {
         </span>
         <span> </span>
         <span className="text-yellow-400">Next steps:</span>
-        <span className="text-white">
+        <span className="text-foreground dark:text-white">
           {" "}
           1. Add components:{" "}
           <span className="text-green-400">shellui add button card input</span>
         </span>
-        <span className="text-white">
+        <span className="text-foreground dark:text-white">
           {" "}
           2. Browse all:{" "}
           <span className="text-green-400">shellui list</span>
         </span>
-        <span className="text-white">
+        <span className="text-foreground dark:text-white">
           {" "}
           3. Run your app:{" "}
           <span className="text-green-400">dotnet run</span>
