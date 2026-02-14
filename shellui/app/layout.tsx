@@ -1,4 +1,5 @@
 import { RootProvider } from "fumadocs-ui/provider/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./global.css";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
@@ -13,13 +14,18 @@ const inter = Inter({
 export const metadata: Metadata = createMetadata({
   title: {
     template: "%s | ShellUI",
-    default: "ShellUI – CLI-first, shadcn-inspired Blazor components",
+    default:
+      "ShellUI – ShellUI components: Blazor UI library, shadcn-inspired, Tailwind CSS",
   },
   description:
-    "ShellUI is a CLI-first, shadcn/ui-inspired Blazor component library for building production-ready applications with Tailwind CSS.",
+    "ShellUI components: CLI-first Blazor UI library inspired by shadcn/ui. 80+ ShellUI components, Tailwind CSS, copy-paste. Get started at shellui.dev.",
   metadataBase: baseUrl,
+  openGraph: {
+    type: "website",
+  },
   keywords: [
     "shellui",
+    "shellui components",
     "shell ui",
     "shellui.dev",
     "blazor components",
@@ -89,6 +95,16 @@ export default function Layout({ children }: LayoutProps<"/">) {
     },
   };
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "ShellUI",
+    alternateName: ["ShellUI components", "shellui.dev"],
+    url: "https://shellui.dev",
+    description:
+      "ShellUI components: Blazor UI library, shadcn-inspired, Tailwind CSS. CLI-first, 80+ copy-paste components.",
+  };
+
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
@@ -110,12 +126,16 @@ export default function Layout({ children }: LayoutProps<"/">) {
         ) : null}
 
         <RootProvider>{children}</RootProvider>
+        <SpeedInsights />
 
         <script
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
+            __html: JSON.stringify([
+              organizationJsonLd,
+              websiteJsonLd,
+            ]),
           }}
         />
       </body>
