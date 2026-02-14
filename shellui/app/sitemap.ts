@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { baseUrl } from "@/lib/metadata";
 import { source } from "@/lib/source";
+import { blogPosts } from "@/lib/blog";
 
 export const revalidate = false;
 
@@ -32,6 +33,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    ...blogPosts.map((post) => ({
+      url: toUrl(`/blog/${post.slug}`),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     {
       url: toUrl("/showcase"),
       changeFrequency: "monthly",
