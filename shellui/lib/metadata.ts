@@ -10,7 +10,9 @@ export function createMetadata(override: Metadata): Metadata {
         override.description ??
         "ShellUI is a CLI-first, shadcn/ui-inspired Blazor component library for building production-ready, Tailwind CSS-powered applications.",
       url: "https://shellui.dev",
-      images: "/shellui-light.svg",
+      images: [
+        { url: "https://shellui.dev/shellui-light.svg", width: 512, height: 512, alt: "ShellUI" },
+      ],
       siteName: "ShellUI",
       ...override.openGraph,
     },
@@ -21,7 +23,7 @@ export function createMetadata(override: Metadata): Metadata {
       description:
         override.description ??
         "ShellUI is a CLI-first, shadcn/ui-inspired Blazor component library for building production-ready, Tailwind CSS-powered applications.",
-      images: "/shellui-light.svg",
+      images: ["https://shellui.dev/shellui-light.svg"],
       ...override.twitter,
     },
   };

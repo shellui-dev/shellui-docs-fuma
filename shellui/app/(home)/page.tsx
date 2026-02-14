@@ -10,8 +10,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Suspense } from "react";
 import { CodeBlock } from "@/components/code-block";
-import { InstallAnimation } from "@/components/install-animation";
+import { LazyInstallAnimation } from "@/components/lazy-install-animation";
+import { createMetadata } from "@/lib/metadata";
+
+const CodeBlockFallback = () => (
+  <div className="mx-auto w-full max-w-[800px] min-h-[80px] animate-pulse rounded-xl border bg-muted/50" />
+);
+
+export const metadata = createMetadata({
+  title: "ShellUI – ShellUI components: Blazor UI library, shadcn-inspired",
+  description:
+    "ShellUI components: CLI-first Blazor UI library. 80+ ShellUI components, Tailwind CSS, shadcn-inspired. Get started at shellui.dev.",
+});
 
 export default function HomePage() {
   return (
@@ -48,9 +60,8 @@ export default function HomePage() {
           <div className="relative flex flex-col justify-center z-10 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
             {/* Main Heading */}
             <h1 className="text-4xl leading-tighter font-medium xl:text-5xl max-md:text-center mb-4">
-              Build production-ready{" "}
-              <span className="text-primary">Blazor components</span> with a few
-              clicks
+              <span className="text-primary">ShellUI</span> – Build
+              production-ready Blazor components with a few clicks
             </h1>
 
             {/* Version Badge */}
@@ -99,15 +110,17 @@ export default function HomePage() {
           <h2 className="text-xl text-center text-primary font-mono font-bold uppercase mb-2">
             Try it out.
           </h2>
-          <CodeBlock
-            code="shellui init"
-            lang="bash"
-            wrapper={{
-              className: "mx-auto w-full max-w-[800px] bg-transparent",
-            }}
-          />
+          <Suspense fallback={<CodeBlockFallback />}>
+            <CodeBlock
+              code="shellui init"
+              lang="bash"
+              wrapper={{
+                className: "mx-auto w-full max-w-[800px] bg-transparent",
+              }}
+            />
+          </Suspense>
           <div className="[&_pre]:bg-transparent [&_pre]:border-border/50">
-            <InstallAnimation />
+            <LazyInstallAnimation />
           </div>
         </div>
       </section>
@@ -190,7 +203,8 @@ export default function HomePage() {
 
             {/* Right: Code Block */}
             <div className="relative">
-              <CodeBlock
+              <Suspense fallback={<CodeBlockFallback />}>
+                <CodeBlock
                 code={`dotnet tool install -g ShellUI.CLI
 
 # Installing ShellUI CLI...
@@ -207,6 +221,7 @@ shellui add button card input
                   title: "Terminal",
                 }}
               />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -336,7 +351,8 @@ shellui add button card input
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 items-center">
             {/* Left: Code Block */}
             <div className="relative order-2 lg:order-1">
-              <CodeBlock
+              <Suspense fallback={<CodeBlockFallback />}>
+                <CodeBlock
                 code={`<Dialog Open="@isOpen"
        OpenChanged="@((bool v) => isOpen = v)">
   <DialogTrigger>
@@ -388,6 +404,7 @@ shellui add button card input
                   title: "EditProfile.razor",
                 }}
               />
+              </Suspense>
             </div>
 
             {/* Right: Content */}
@@ -534,7 +551,7 @@ shellui add button card input
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-2">
-                      Type-Safe Variants ✨
+                      Type-Safe Variants
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       Enum-based variants with Class Variance Authority (CVA)
