@@ -2,12 +2,55 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import "./global.css";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
+import Script from "next/script";
+import { baseUrl, createMetadata } from "@/lib/metadata";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
 });
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
+  title: {
+    template: "%s | ShellUI",
+    default: "ShellUI – CLI-first, shadcn-inspired Blazor components",
+  },
+  description:
+    "ShellUI is a CLI-first, shadcn/ui-inspired Blazor component library for building production-ready applications with Tailwind CSS.",
+  metadataBase: baseUrl,
+  keywords: [
+    "shellui",
+    "shell ui",
+    "shellui.dev",
+    "blazor components",
+    "blazor ui library",
+    "shadcn inspired",
+    "shadcn ui for blazor",
+    "tailwind css components",
+    "blazor tailwind",
+    "cli-first ui library",
+    "blazor component library",
+    "dotnet blazor ui",
+    "csharp ui components",
+    "copy paste components blazor",
+    "blazor dashboard",
+    "blazor admin panel",
+    "tailwind v4 blazor",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    canonical: baseUrl,
+  },
   icons: {
     icon: [
       { url: "/shellui-light.svg", type: "image/svg+xml" },
@@ -25,13 +68,56 @@ export const metadata: Metadata = {
     shortcut: "/shellui-light.svg",
     apple: "/shellui-light.svg",
   },
-};
+});
+
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function Layout({ children }: LayoutProps<"/">) {
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "ShellUI",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Any",
+    description:
+      "ShellUI is a CLI-first, shadcn/ui-inspired Blazor component library for building production-ready, Tailwind CSS-powered applications.",
+    url: "https://shellui.dev",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
+        {gaId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-4" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `}
+            </Script>
+          </>
+        ) : null}
+
         <RootProvider>{children}</RootProvider>
+
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
       </body>
     </html>
   );
