@@ -1,5 +1,6 @@
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import "./global.css";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
@@ -127,6 +128,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
 
         <RootProvider>{children}</RootProvider>
         <SpeedInsights />
+        <Analytics />
 
         <script
           type="application/ld+json"
