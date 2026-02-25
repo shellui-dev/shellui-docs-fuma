@@ -19,6 +19,16 @@ export default function Layout({ children }: { children: ReactNode }) {
       {...base}
       tree={source.pageTree}
       links={linkItems.filter((item) => item.type === "icon")}
+      sidebar={{
+        tabs: {
+          transform(option, node) {
+            return {
+              ...option,
+              icon: undefined,
+            };
+          },
+        },
+      }}
       nav={{
         ...base.nav,
         title: (
