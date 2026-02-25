@@ -1,0 +1,149 @@
+---
+title: Stepper
+description: Multi-step wizard with a new compositional StepperList, StepperStep, and StepperContent API.
+---
+
+v0.3.0-alpha.2 overhauled the Stepper. `@bind-CurrentStep` is now `@bind-Value`, and a new **compositional mode** lets you place step headers and content manually. The old data-driven `StepItems` mode still works.
+
+## What changed from v0.2.x
+
+| v0.2.x | v0.3.0-alpha.2 |
+|--------|-------------|
+| `@bind-CurrentStep` | `@bind-Value` |
+| Data-driven only | Data-driven **or** compositional mode |
+| No sub-components | `StepperList`, `StepperStep`, `StepperContent` |
+
+<Callout type="warn" title="Known issue">
+Active-state highlighting may not always reflect the current step in some edge cases. This is a known issue shipped as-is in v0.3.0-alpha.2.
+</Callout>
+
+## Installation
+
+```bash
+shellui add stepper stepper-list stepper-step stepper-content
+```
+
+## Usage
+
+### Compositional mode (new — recommended)
+
+```razor
+<Stepper @bind-Value="_step">
+    <StepperList>
+        <StepperStep Step="0" Title="Account" Description="Create your account" />
+        <StepperStep Step="1" Title="Profile" Description="Set up your profile" />
+        <StepperStep Step="2" Title="Review" Description="Review and submit" />
+    </StepperList>
+
+    <StepperContent Step="0">
+        <div class="space-y-3 mt-6">
+            <Input Placeholder="Email" />
+            <Input Type="password" Placeholder="Password" />
+        </div>
+    </StepperContent>
+
+    <StepperContent Step="1">
+        <div class="space-y-3 mt-6">
+            <Input Placeholder="Full Name" />
+            <Textarea Placeholder="Bio" />
+        </div>
+    </StepperContent>
+
+    <StepperContent Step="2">
+        <div class="mt-6 rounded-md border p-4 text-sm">
+            <p>Review your information and click Finish.</p>
+        </div>
+    </StepperContent>
+</Stepper>
+
+@code {
+    private int _step = 0;
+}
+```
+
+### Data-driven mode (still works)
+
+```razor
+<Stepper StepItems="@_steps" @bind-Value="_step" />
+
+@code {
+    private int _step = 0;
+
+    private List<StepItem> _steps = new()
+    {
+        new()
+        {
+            Title = "Account",
+            Description = "Set up your account",
+            Content = @<div><Input Placeholder="Email" /></div>
+        },
+        new()
+        {
+            Title = "Profile",
+            Description = "Complete your profile",
+            Content = @<div><Input Placeholder="Full Name" /></div>
+        },
+        new()
+        {
+            Title = "Done",
+            Content = @<p>All set!</p>
+        }
+    };
+}
+```
+
+### Stepper inside a Dialog
+
+```razor
+<Dialog>
+    <DialogTrigger>Start wizard</DialogTrigger>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>Setup wizard</DialogTitle>
+        </DialogHeader>
+        <Stepper @bind-Value="_step">
+            <StepperList>
+                <StepperStep Step="0" Title="Step 1" />
+                <StepperStep Step="1" Title="Step 2" />
+            </StepperList>
+            <StepperContent Step="0"><p>Step 1 content</p></StepperContent>
+            <StepperContent Step="1"><p>Step 2 content</p></StepperContent>
+        </Stepper>
+    </DialogContent>
+</Dialog>
+
+@code { private int _step = 0; }
+```
+
+## API Reference
+
+### `<Stepper>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `int` | `0` | Active step index (use `@bind-Value`) |
+| `ValueChanged` | `EventCallback<int>` | — | Fired on step change |
+| `StepItems` | `List<StepItem>?` | `null` | Data-driven mode items |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment?` | `null` | Compositional mode content |
+
+### `<StepperList>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `StepperStep` headers |
+
+### `<StepperStep>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Step` | `int` | — | Zero-based step index |
+| `Title` | `string` | — | Step label |
+| `Description` | `string?` | `null` | Secondary label |
+
+### `<StepperContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Step` | `int` | — | Shown when parent `Stepper.Value` matches |
+| `ChildContent` | `RenderFragment` | — | Step panel content |

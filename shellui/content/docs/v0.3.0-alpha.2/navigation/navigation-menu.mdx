@@ -1,0 +1,123 @@
+---
+title: Navigation Menu
+description: Top navigation bar with new NavItem, NavList, NavTrigger, and NavContent subcomponents.
+---
+
+v0.3.0-alpha.2 adds `NavList`, `NavItem`, `NavTrigger`, and `NavContent` subcomponents for a fully compositional navigation pattern.
+
+## What changed from v0.2.x
+
+| v0.2.x | v0.3.0-alpha.2 |
+|--------|-------------|
+| `<NavigationMenuItem Title="..." HasContent="true">` items | `<NavItem><NavTrigger>...</NavTrigger><NavContent>...</NavContent></NavItem>` |
+| Title string parameter | `NavTrigger` takes any `RenderFragment` |
+
+## Installation
+
+```bash
+shellui add navigation-menu nav-item nav-list nav-trigger nav-content
+```
+
+## Usage
+
+### Basic navigation with dropdowns
+
+```razor
+<NavigationMenu>
+    <NavList>
+        <NavItem>
+            <NavTrigger>Products</NavTrigger>
+            <NavContent>
+                <div class="grid gap-2 p-2 w-48">
+                    <a href="/components" class="block rounded-md p-2 hover:bg-accent text-sm">Components</a>
+                    <a href="/templates" class="block rounded-md p-2 hover:bg-accent text-sm">Templates</a>
+                    <a href="/examples" class="block rounded-md p-2 hover:bg-accent text-sm">Examples</a>
+                </div>
+            </NavContent>
+        </NavItem>
+        <NavItem>
+            <NavTrigger>Docs</NavTrigger>
+            <NavContent>
+                <div class="grid gap-2 p-2 w-48">
+                    <a href="/docs/quickstart" class="block rounded-md p-2 hover:bg-accent text-sm">Quick Start</a>
+                    <a href="/docs/installation" class="block rounded-md p-2 hover:bg-accent text-sm">Installation</a>
+                </div>
+            </NavContent>
+        </NavItem>
+    </NavList>
+</NavigationMenu>
+```
+
+### Simple link items (no dropdown)
+
+```razor
+<NavigationMenu>
+    <NavList>
+        <NavItem>
+            <NavTrigger>Features</NavTrigger>
+            <NavContent>
+                <a href="/features/cli" class="block p-2 hover:bg-accent text-sm">CLI</a>
+                <a href="/features/themes" class="block p-2 hover:bg-accent text-sm">Themes</a>
+            </NavContent>
+        </NavItem>
+    </NavList>
+</NavigationMenu>
+```
+
+### Header nav bar
+
+```razor
+<header class="sticky top-0 z-50 border-b bg-background">
+    <div class="container flex h-14 items-center gap-4">
+        <a href="/" class="font-semibold">ShellUI</a>
+        <NavigationMenu>
+            <NavList>
+                <NavItem>
+                    <NavTrigger>Components</NavTrigger>
+                    <NavContent>
+                        <div class="grid grid-cols-2 gap-1 p-2 w-80">
+                            <a href="/docs/components/form" class="rounded-md p-2 hover:bg-accent text-sm">Form</a>
+                            <a href="/docs/components/layout" class="rounded-md p-2 hover:bg-accent text-sm">Layout</a>
+                            <a href="/docs/components/navigation" class="rounded-md p-2 hover:bg-accent text-sm">Navigation</a>
+                            <a href="/docs/components/advanced" class="rounded-md p-2 hover:bg-accent text-sm">Advanced</a>
+                        </div>
+                    </NavContent>
+                </NavItem>
+            </NavList>
+        </NavigationMenu>
+    </div>
+</header>
+```
+
+## API Reference
+
+### `<NavigationMenu>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `NavList` |
+
+### `<NavList>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `NavItem` children |
+
+### `<NavItem>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `NavTrigger` + `NavContent` |
+| `ClassName` | `string` | `""` | Additional CSS classes |
+
+### `<NavTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Trigger button label |
+
+### `<NavContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Dropdown panel content |

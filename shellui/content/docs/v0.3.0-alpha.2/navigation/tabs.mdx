@@ -1,0 +1,121 @@
+---
+title: Tabs
+description: Tabbed content with the new compositional TabsList, TabsTrigger, and TabsContent subcomponents.
+---
+
+v0.3.0-alpha.2 adds `TabsList`, `TabsTrigger`, and `TabsContent` subcomponents. The old `Items` / `TabItems` data-driven API still works, but the compositional pattern is now recommended for full markup control.
+
+## What changed from v0.2.x
+
+| v0.2.x | v0.3.0-alpha.2 |
+|--------|-------------|
+| `<Tabs Items="@tabs" ActiveTab="@tab" ActiveTabChanged="..." />` | `<Tabs @bind-Value="tab"><TabsList>...</TabsList><TabsContent ...>` |
+| Tab content via `TabItem.Content` | `<TabsContent Value="...">` children |
+
+## Installation
+
+```bash
+shellui add tabs tabs-list tabs-trigger tabs-content
+```
+
+## Usage
+
+### Compositional (recommended)
+
+```razor
+<Tabs @bind-Value="_tab">
+    <TabsList>
+        <TabsTrigger Value="account">Account</TabsTrigger>
+        <TabsTrigger Value="password">Password</TabsTrigger>
+        <TabsTrigger Value="notifications">Notifications</TabsTrigger>
+    </TabsList>
+    <TabsContent Value="account">
+        <div class="space-y-3 pt-4">
+            <h3 class="text-sm font-medium">Account settings</h3>
+            <Input Placeholder="Display name" />
+        </div>
+    </TabsContent>
+    <TabsContent Value="password">
+        <div class="space-y-3 pt-4">
+            <h3 class="text-sm font-medium">Change password</h3>
+            <Input Type="password" Placeholder="Current password" />
+            <Input Type="password" Placeholder="New password" />
+        </div>
+    </TabsContent>
+    <TabsContent Value="notifications">
+        <div class="pt-4 text-sm text-muted-foreground">
+            Manage your notification preferences.
+        </div>
+    </TabsContent>
+</Tabs>
+
+@code {
+    private string _tab = "account";
+}
+```
+
+### Disabled tab
+
+```razor
+<Tabs @bind-Value="_tab">
+    <TabsList>
+        <TabsTrigger Value="overview">Overview</TabsTrigger>
+        <TabsTrigger Value="analytics">Analytics</TabsTrigger>
+        <TabsTrigger Value="reports" Disabled="true">Reports</TabsTrigger>
+    </TabsList>
+    <TabsContent Value="overview"><p>Overview content</p></TabsContent>
+    <TabsContent Value="analytics"><p>Analytics content</p></TabsContent>
+    <TabsContent Value="reports"><p>Reports content</p></TabsContent>
+</Tabs>
+
+@code { private string _tab = "overview"; }
+```
+
+### Default active tab
+
+Set the initial `@bind-Value` to the desired tab `Value`:
+
+```razor
+<Tabs @bind-Value="_tab">
+    <TabsList>
+        <TabsTrigger Value="a">A</TabsTrigger>
+        <TabsTrigger Value="b">B</TabsTrigger>
+    </TabsList>
+    <TabsContent Value="a">Content A</TabsContent>
+    <TabsContent Value="b">Content B</TabsContent>
+</Tabs>
+
+@code { private string _tab = "b"; }  @* "b" is active on load *@
+```
+
+## API Reference
+
+### `<Tabs>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string` | `""` | Active tab value (use `@bind-Value`) |
+| `ValueChanged` | `EventCallback<string>` | — | Fired when active tab changes |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | `TabsList` + `TabsContent` elements |
+
+### `<TabsList>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `TabsTrigger` children |
+
+### `<TabsTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string` | — | Unique identifier matching a `TabsContent` |
+| `Disabled` | `bool` | `false` | Prevents selection |
+| `ChildContent` | `RenderFragment` | — | Tab label |
+
+### `<TabsContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string` | — | Shown when parent `Tabs.Value` matches |
+| `ChildContent` | `RenderFragment` | — | Panel content |

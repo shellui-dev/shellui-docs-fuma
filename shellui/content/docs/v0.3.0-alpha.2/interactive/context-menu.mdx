@@ -1,0 +1,85 @@
+---
+title: Context Menu
+description: Right-click context menu using the new compositional ContextMenuTrigger and ContextMenuContent subcomponents.
+---
+
+`ContextMenu` is **new in v0.3.0-alpha.2**. Wrap any element — it will show a right-click floating menu. Menu items are passed as a `List<ContextMenuItem>` via the `Items` parameter. The wrapped `ChildContent` is the right-click target.
+
+## Installation
+
+```bash
+shellui add context-menu
+```
+
+## Usage
+
+### Basic
+
+```razor
+<ContextMenu Items="MenuItems" OnItemSelected="HandleItemSelected">
+    <Button>Right-click me to see the context menu!</Button>
+</ContextMenu>
+
+@code {
+    private List<ContextMenuItem> MenuItems = new()
+    {
+        new ContextMenuItem { Label = "Edit", Value = "edit" },
+        new ContextMenuItem { Label = "Duplicate", Value = "duplicate" },
+        new ContextMenuItem { Label = "Copy link", Value = "copy" },
+        new ContextMenuItem { Label = "Delete", Value = "delete" },
+    };
+
+    private void HandleItemSelected(ContextMenuItem item)
+    {
+        Console.WriteLine($"Selected: {item.Value}");
+    }
+}
+```
+
+### Any trigger element
+
+```razor
+<ContextMenu Items="MenuItems" OnItemSelected="HandleItemSelected">
+    <div class="flex h-32 w-full items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground">
+        Right-click anywhere in this area
+    </div>
+</ContextMenu>
+```
+
+### With icons
+
+```razor
+<ContextMenu Items="MenuItems" OnItemSelected="HandleItemSelected">
+    <div class="rounded-md border p-8 select-none">
+        Right-click this card
+    </div>
+</ContextMenu>
+
+@code {
+    private List<ContextMenuItem> MenuItems = new()
+    {
+        new ContextMenuItem { Label = "Edit", Value = "edit", Icon = "edit" },
+        new ContextMenuItem { Label = "Duplicate", Value = "duplicate", Icon = "content_copy" },
+        new ContextMenuItem { Label = "Delete", Value = "delete", Icon = "delete", Destructive = true },
+    };
+}
+```
+
+## API Reference
+
+### `<ContextMenu>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Items` | `List<ContextMenuItem>` | — | The list of menu items to display |
+| `OnItemSelected` | `EventCallback<ContextMenuItem>` | — | Called when the user clicks an item |
+| `ChildContent` | `RenderFragment` | — | The element that receives the right-click event |
+
+### `ContextMenuItem` class
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Label` | `string` | Displayed text |
+| `Value` | `string` | Identifier passed back in `OnItemSelected` |
+| `Icon` | `string?` | Material symbol icon name (optional) |
+| `Destructive` | `bool` | Renders item in destructive (red) style |

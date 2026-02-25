@@ -1,0 +1,109 @@
+---
+title: Quickstart
+description: Get started with ShellUI in minutes
+icon: Rocket
+---
+
+Get up and running with ShellUI v0.2.0 in just a few minutes. This guide will walk you through installing and using your first components from our 80-component library.
+
+## Prerequisites
+
+- .NET 8.0 or higher
+- A Blazor project (Server, WebAssembly, or Hybrid)
+
+## Installation
+
+ShellUI v0.2.0 offers a **hybrid workflow** - use CLI for customization, NuGet for speed:
+
+### Option 1: CLI Tool (Recommended for Customization)
+
+```bash
+# Install CLI globally (one-time)
+dotnet tool install -g ShellUI.CLI
+
+# Initialize in your Blazor project (choose npm or standalone)
+shellui init
+
+# Add components directly to your codebase
+shellui add button input card dialog
+
+# List all 80 available components
+shellui list
+```
+
+### Option 2: NuGet Package (Quick Start)
+
+```bash
+# Install components package
+dotnet add package ShellUI.Components
+
+# Manual Tailwind CSS v4.1.18 setup required
+# See installation guide for details
+```
+
+**Why choose CLI?** Components are copied to your project for full control and customization.
+
+## Your First Component
+
+Let's create a simple button and card combination:
+
+```razor
+@page "/"
+
+<Card>
+  <Header>
+    <h3 class="text-lg font-semibold">Welcome to ShellUI</h3>
+    <p class="text-sm text-muted-foreground">Your first ShellUI components</p>
+  </Header>
+  <ChildContent>
+    <div class="space-y-4">
+      <Input Placeholder="Enter your name" />
+      <Button OnClick="HandleClick">Get Started</Button>
+    </div>
+  </ChildContent>
+</Card>
+
+@code {
+    private void HandleClick(MouseEventArgs args)
+    {
+        // Your logic here
+    }
+}
+```
+
+## Try the New Charts
+
+New in v0.2.0 - add data visualization to your app:
+
+```bash
+shellui add chart bar-chart line-chart pie-chart
+```
+
+```razor
+@page "/dashboard"
+
+<BarChart TItem="SalesData"
+    Data="@salesData"
+    Title="Monthly Revenue"
+    XValue="@(e => e.Month)"
+    YValue="@(e => (decimal?)e.Revenue)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<SalesData> salesData = new()
+    {
+        new("Jan", 12000), new("Feb", 19000),
+        new("Mar", 15000), new("Apr", 25000)
+    };
+
+    record SalesData(string Month, decimal Revenue);
+}
+```
+
+## What's Next?
+
+- [Installation Guide](/docs/installation) - Detailed setup instructions
+- [Browse Components](/docs/components) - Explore all available components
+- [Charts](/docs/components/advanced/charts) - Data visualization with ApexCharts
+- [Comparison](/docs/comparison) - See how ShellUI compares to other libraries

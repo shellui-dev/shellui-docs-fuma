@@ -1,0 +1,163 @@
+---
+title: Select
+description: Searchable dropdown select built on the compositional Trigger + Content pattern — redesigned in v0.3.0-alpha.2.
+---
+
+`Select` was **redesigned in v0.3.0-alpha.2** with a compositional `SelectTrigger` / `SelectContent` / `SelectItem` pattern, replacing the old single-component API.
+
+## Installation
+
+```bash
+shellui add select select-trigger select-content select-item
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Select @bind-Value="_framework">
+    <SelectTrigger Placeholder="Pick a framework..." />
+    <SelectContent>
+        <SelectItem Value="blazor">Blazor</SelectItem>
+        <SelectItem Value="next">Next.js</SelectItem>
+        <SelectItem Value="nuxt">Nuxt</SelectItem>
+        <SelectItem Value="sveltekit">SvelteKit</SelectItem>
+    </SelectContent>
+</Select>
+
+@code {
+    private string _framework = "";
+}
+```
+
+### Bound to a model property
+
+```razor
+<EditForm Model="_form">
+    <div class="space-y-4 w-60">
+        <Label For="role">Role</Label>
+        <Select @bind-Value="_form.Role">
+            <SelectTrigger Placeholder="Select a role..." />
+            <SelectContent>
+                <SelectItem Value="admin">Admin</SelectItem>
+                <SelectItem Value="editor">Editor</SelectItem>
+                <SelectItem Value="viewer">Viewer</SelectItem>
+            </SelectContent>
+        </Select>
+    </div>
+</EditForm>
+
+@code {
+    private MyFormModel _form = new();
+    public class MyFormModel { public string Role { get; set; } = ""; }
+}
+```
+
+### With grouped items
+
+```razor
+<Select @bind-Value="_language">
+    <SelectTrigger Placeholder="Choose a language..." />
+    <SelectContent>
+        <p class="px-2 py-1 text-xs font-semibold text-muted-foreground">.NET</p>
+        <SelectItem Value="csharp">C#</SelectItem>
+        <SelectItem Value="fsharp">F#</SelectItem>
+        <p class="mt-1 px-2 py-1 text-xs font-semibold text-muted-foreground">JavaScript</p>
+        <SelectItem Value="ts">TypeScript</SelectItem>
+        <SelectItem Value="js">JavaScript</SelectItem>
+    </SelectContent>
+</Select>
+
+@code {
+    private string _language = "";
+}
+```
+
+### Pre-selected value
+
+```razor
+<Select @bind-Value="_theme">
+    <SelectTrigger />
+    <SelectContent>
+        <SelectItem Value="system">System</SelectItem>
+        <SelectItem Value="light">Light</SelectItem>
+        <SelectItem Value="dark">Dark</SelectItem>
+    </SelectContent>
+</Select>
+
+@code {
+    private string _theme = "system";
+}
+```
+
+### Read the selected value
+
+```razor
+<Select @bind-Value="_plan" @bind-Value:after="OnPlanChanged">
+    <SelectTrigger Placeholder="Select plan..." />
+    <SelectContent>
+        <SelectItem Value="free">Free</SelectItem>
+        <SelectItem Value="pro">Pro</SelectItem>
+        <SelectItem Value="enterprise">Enterprise</SelectItem>
+    </SelectContent>
+</Select>
+<p class="text-sm text-muted-foreground">Selected: @_plan</p>
+
+@code {
+    private string _plan = "";
+    private void OnPlanChanged() => Console.WriteLine($"Plan changed to {_plan}");
+}
+```
+
+## Migration from v0.2.x
+
+In v0.2.x `Select` was a single component with `Items` and `@bind-SelectedValue`. Replace it with the new compositional pattern:
+
+```razor
+@* v0.2.x — OLD *@
+<Select Items="_options" @bind-SelectedValue="_selected" Placeholder="Pick one..." />
+
+@* v0.30-alpha1 — NEW *@
+<Select @bind-Value="_selected">
+    <SelectTrigger Placeholder="Pick one..." />
+    <SelectContent>
+        @foreach (var opt in _options)
+        {
+            <SelectItem Value="@opt.Value">@opt.Label</SelectItem>
+        }
+    </SelectContent>
+</Select>
+```
+
+## API Reference
+
+### `<Select>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string?` | `null` | The currently selected value |
+| `ValueChanged` | `EventCallback<string?>` | — | Fires when the user selects an item |
+| `Class` | `string?` | `null` | Additional CSS classes on the root element |
+
+### `<SelectTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Placeholder` | `string?` | `null` | Shown when no value is selected |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### `<SelectContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `<SelectItem>` elements |
+| `Class` | `string?` | `null` | Additional CSS classes on the dropdown panel |
+
+### `<SelectItem>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string` | — | The raw value submitted when this item is selected |
+| `ChildContent` | `RenderFragment` | — | Display label |
+| `Class` | `string?` | `null` | Additional CSS classes |

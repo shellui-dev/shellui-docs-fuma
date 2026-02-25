@@ -1,0 +1,88 @@
+---
+title: Collapsible
+description: Toggle-able content section with the new CollapsibleTrigger and CollapsibleContent subcomponents.
+---
+
+v0.3.0-alpha.2 adds `CollapsibleTrigger` and `CollapsibleContent` subcomponents for a fully compositional pattern, replacing the previous parameter-driven open state management.
+
+## What changed from v0.2.x
+
+| v0.2.x | v0.3.0-alpha.2 |
+|--------|-------------|
+| External `IsOpen` + `IsOpenChanged` binding required | `CollapsibleTrigger` manages toggle internally |
+| Content always in `ChildContent` | `CollapsibleContent` only renders when open |
+
+## Installation
+
+```bash
+shellui add collapsible collapsible-trigger collapsible-content
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Collapsible>
+    <CollapsibleTrigger>Show details</CollapsibleTrigger>
+    <CollapsibleContent>
+        <p class="pt-2 text-sm text-muted-foreground">
+            Hidden content revealed on click.
+        </p>
+    </CollapsibleContent>
+</Collapsible>
+```
+
+### With custom trigger styling
+
+```razor
+<Collapsible>
+    <CollapsibleTrigger>
+        <div class="flex items-center gap-2">
+            <span class="font-medium">Advanced options</span>
+            <Badge Variant="BadgeVariant.Secondary">3</Badge>
+        </div>
+    </CollapsibleTrigger>
+    <CollapsibleContent>
+        <div class="mt-2 space-y-2 rounded-md border p-3 text-sm">
+            <p>Option 1</p>
+            <p>Option 2</p>
+            <p>Option 3</p>
+        </div>
+    </CollapsibleContent>
+</Collapsible>
+```
+
+### Default open
+
+```razor
+<Collapsible IsOpen="true">
+    <CollapsibleTrigger>Already expanded</CollapsibleTrigger>
+    <CollapsibleContent>
+        <p class="pt-2 text-sm">This starts visible.</p>
+    </CollapsibleContent>
+</Collapsible>
+```
+
+## API Reference
+
+### `<Collapsible>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Initial open state |
+| `Disabled` | `bool` | `false` | Prevents toggling |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | `CollapsibleTrigger` + `CollapsibleContent` |
+
+### `<CollapsibleTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Button label / content |
+
+### `<CollapsibleContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Content shown when open |

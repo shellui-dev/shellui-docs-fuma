@@ -1,0 +1,25 @@
+{
+  "title": "v0.3.0-alpha.2",
+  "description": "Latest alpha — new components and compositional trigger pattern",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "quickstart",
+    "comparison",
+    "installation",
+    "---Components---",
+    "---Layout---",
+    "layout",
+    "---Interactive---",
+    "interactive",
+    "---Navigation---",
+    "navigation",
+    "---Advanced---",
+    "advanced",
+    "---Form---",
+    "form",
+    "---Customization---",
+    "contributing"
+  ]
+}

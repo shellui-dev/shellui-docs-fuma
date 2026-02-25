@@ -1,0 +1,73 @@
+---
+title: LinkCard
+description: Card-style navigation link — new in v0.3.0-alpha.2.
+---
+
+`LinkCard` is **new in v0.3.0-alpha.2**. It renders a styled `<a>` tag that looks like a Card — perfect for "see also" grids, related docs sections, or feature link lists.
+
+## Installation
+
+```bash
+shellui add link-card
+```
+
+## Usage
+
+### Basic
+
+```razor
+<LinkCard Href="/docs/installation" Title="Installation">
+    Get started in minutes with the CLI or NuGet.
+</LinkCard>
+```
+
+### Grid of links
+
+```razor
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <LinkCard Href="/docs/quickstart" Title="Quick Start">
+        Build your first ShellUI component in under 5 minutes.
+    </LinkCard>
+    <LinkCard Href="/docs/components" Title="Components">
+        Browse all 80+ available components.
+    </LinkCard>
+    <LinkCard Href="/docs/theming" Title="Theming">
+        Customise colors, radius, and shadows with CSS variables.
+    </LinkCard>
+    <LinkCard Href="/docs/contributing" Title="Contributing">
+        Help improve ShellUI by contributing components or fixes.
+    </LinkCard>
+</div>
+```
+
+### Open in new tab
+
+```razor
+<LinkCard
+    Href="https://github.com/shellui-dev/shellui"
+    Title="GitHub Repository"
+    OpenInNewTab="true">
+    View the source code, open issues, or star the project.
+</LinkCard>
+```
+
+### Custom styling
+
+```razor
+<LinkCard
+    Href="/docs/components/advanced/sonner"
+    Title="Sonner — Toast Notifications"
+    Class="border-primary/30 hover:border-primary/60">
+    Modern shadcn-style stacked toasts.
+</LinkCard>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Href` | `string?` | `null` | Navigation destination |
+| `Title` | `string?` | `null` | Bold heading inside the card |
+| `OpenInNewTab` | `bool` | `false` | Adds `target="_blank" rel="noopener noreferrer"` |
+| `ChildContent` | `RenderFragment?` | `null` | Description text below the title |
+| `Class` | `string?` | `null` | Additional CSS classes |

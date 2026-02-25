@@ -1,0 +1,135 @@
+---
+title: Accordion
+description: Expandable content sections with the new compositional Trigger + Content pattern.
+---
+
+v0.3.0-alpha.2 refactors Accordion to a fully compositional subcomponent model. The old `Title` parameter on `AccordionItem` still works, but the new `AccordionTrigger` / `AccordionContent` pattern is recommended. A new `AccordionType` enum controls single vs multiple open mode.
+
+## What changed from v0.2.x
+
+| v0.2.x | v0.3.0-alpha.2 |
+|--------|-------------|
+| `<AccordionItem Title="...">content</AccordionItem>` | `<AccordionItem><AccordionTrigger>...</AccordionTrigger><AccordionContent>...</AccordionContent></AccordionItem>` |
+| No mode control | `Type="AccordionType.Single"` or `AccordionType.Multiple` |
+
+## Installation
+
+```bash
+shellui add accordion accordion-item accordion-trigger accordion-content
+```
+
+## Usage
+
+### Simple (also supported)
+
+The v0.2.x `Title=` parameter on `AccordionItem` still works. Use this when you don't need custom trigger markup:
+
+```razor
+<Accordion Type="AccordionType.Single" Collapsible="true" DefaultValue="item-0">
+    <AccordionItem Title="Is it accessible?">
+        <p class="text-sm text-muted-foreground">Yes. It adheres to the WAI-ARIA design pattern.</p>
+    </AccordionItem>
+    <AccordionItem Title="Is it styled?">
+        <p class="text-sm text-muted-foreground">Yes. It comes with default styles.</p>
+    </AccordionItem>
+    <AccordionItem Title="Is it animated?">
+        <p class="text-sm text-muted-foreground">Yes. Animated with Tailwind CSS transitions.</p>
+    </AccordionItem>
+</Accordion>
+```
+
+### Compositional (recommended)
+
+```razor
+<Accordion Type="AccordionType.Single">
+    <AccordionItem>
+        <AccordionTrigger>What is ShellUI?</AccordionTrigger>
+        <AccordionContent>
+            A CLI-first Blazor component library inspired by shadcn/ui.
+        </AccordionContent>
+    </AccordionItem>
+    <AccordionItem>
+        <AccordionTrigger>How do I install?</AccordionTrigger>
+        <AccordionContent>
+            Run <code>shellui init</code> in your Blazor project.
+        </AccordionContent>
+    </AccordionItem>
+    <AccordionItem>
+        <AccordionTrigger>Does it support dark mode?</AccordionTrigger>
+        <AccordionContent>
+            Yes, all components use CSS variables and support dark mode out of the box.
+        </AccordionContent>
+    </AccordionItem>
+</Accordion>
+```
+
+### Multiple open at once
+
+```razor
+<Accordion Type="AccordionType.Multiple">
+    <AccordionItem>
+        <AccordionTrigger>Section A</AccordionTrigger>
+        <AccordionContent>Content A</AccordionContent>
+    </AccordionItem>
+    <AccordionItem>
+        <AccordionTrigger>Section B</AccordionTrigger>
+        <AccordionContent>Content B</AccordionContent>
+    </AccordionItem>
+</Accordion>
+```
+
+### Default open item
+
+```razor
+<Accordion Type="AccordionType.Single">
+    <AccordionItem IsOpen="true">
+        <AccordionTrigger>Open by default</AccordionTrigger>
+        <AccordionContent>This item starts expanded.</AccordionContent>
+    </AccordionItem>
+    <AccordionItem>
+        <AccordionTrigger>Collapsed by default</AccordionTrigger>
+        <AccordionContent>Click to expand.</AccordionContent>
+    </AccordionItem>
+</Accordion>
+```
+
+## API Reference
+
+### `<Accordion>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Type` | `AccordionType` | `Single` | `Single` — only one item open at a time. `Multiple` — many can be open. |
+| `DefaultValue` | `string?` | `null` | Value of the item open by default (matches `AccordionItem.Value` or index for `Title=` items) |
+| `Collapsible` | `bool` | `false` | When `true`, clicking an open single item closes it |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | `AccordionItem` children |
+
+### `<AccordionItem>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string?` | `null` | Identifier used with `DefaultValue` and `Type.Single` tracking |
+| `Title` | `string?` | `null` | Simple trigger label — use instead of `AccordionTrigger` when full markup control is not needed |
+| `IsOpen` | `bool` | `false` | Initial open state |
+| `Disabled` | `bool` | `false` | Prevents toggling |
+| `ChildContent` | `RenderFragment` | — | `AccordionTrigger` + `AccordionContent`, or plain content when using `Title=` |
+
+### `<AccordionTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Trigger label content |
+
+### `<AccordionContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Revealed content |
+
+### `AccordionType` enum
+
+| Value | Description |
+|-------|-------------|
+| `Single` | Only one item can be open at a time (default) |
+| `Multiple` | Any number of items can be open simultaneously |
