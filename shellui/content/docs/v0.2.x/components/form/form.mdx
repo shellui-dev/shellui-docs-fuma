@@ -1,0 +1,105 @@
+---
+title: Form
+description: Form wrapper component with validation and submission handling.
+---
+
+The Form component provides a styled wrapper for forms with built-in support for Blazor validation and submission handling.
+
+## Installation
+
+```bash
+shellui add form
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Form OnValidSubmit="HandleSubmit">
+  <div class="space-y-4">
+    <div>
+      <Label>Name</Label>
+      <Input @bind-Value="name" />
+    </div>
+    <div>
+      <Label>Email</Label>
+      <Input @bind-Value="email" Type="email" />
+    </div>
+    <Button Type="submit">Submit</Button>
+  </div>
+</Form>
+
+@code {
+    private string name = "";
+    private string email = "";
+
+    private void HandleSubmit() { }
+}
+```
+
+### With Validation
+
+```razor
+<EditForm Model="@model" OnValidSubmit="HandleValid" OnInvalidSubmit="HandleInvalid">
+  <DataAnnotationsValidator />
+  <Form>
+    <div class="space-y-4">
+      <div>
+        <Label>Email</Label>
+        <Input @bind-Value="model.Email" Type="email" />
+        <ValidationMessage For="@(() => model.Email)" />
+      </div>
+      <div>
+        <Label>Password</Label>
+        <Input @bind-Value="model.Password" Type="password" />
+        <ValidationMessage For="@(() => model.Password)" />
+      </div>
+      <Button Type="submit">Sign In</Button>
+    </div>
+  </Form>
+</EditForm>
+
+@code {
+    private LoginModel model = new();
+
+    private void HandleValid() { }
+    private void HandleInvalid() { }
+
+    private class LoginModel
+    {
+        [Required, EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required, MinLength(8)]
+        public string Password { get; set; } = "";
+    }
+}
+```
+
+### Custom ClassName
+
+```razor
+<Form ClassName="space-y-8 max-w-md">
+  <div class="space-y-2">
+    <Label>Username</Label>
+    <Input />
+  </div>
+  <Button Type="submit" Class="w-full">Login</Button>
+</Form>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | `null` | Form content |
+| `OnValidSubmit` | `EventCallback` | — | Fires when form is valid on submit |
+| `OnInvalidSubmit` | `EventCallback` | — | Fires when form has validation errors |
+| `ClassName` | `string` | `"space-y-6"` | CSS classes for the form element |
+
+## Accessibility
+
+- Uses semantic `<form>` element
+- Integrates with Blazor DataAnnotationsValidator
+- Proper form submission handling

@@ -1,0 +1,92 @@
+---
+title: Textarea
+description: Multi-line text input component with two-way binding.
+---
+
+The Textarea component provides a multi-line text input for longer content like descriptions, comments, or messages.
+
+## Installation
+
+```bash
+shellui add textarea
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Textarea Placeholder="Enter your message..." />
+```
+
+### With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Message</Label>
+  <Textarea Placeholder="Enter your message..." />
+</div>
+```
+
+### Two-way Binding
+
+```razor
+<Textarea @bind-Value="message" Placeholder="Enter your message..." />
+
+@code {
+    private string message = "";
+}
+```
+
+### ValueChanged Callback
+
+```razor
+<Textarea Value="@message" ValueChanged="@HandleChanged" Placeholder="Enter your message..." />
+
+@code {
+    private string message = "";
+
+    private void HandleChanged(string value)
+    {
+        message = value;
+    }
+}
+```
+
+### Disabled and ReadOnly
+
+```razor
+<Textarea Placeholder="Disabled textarea" Disabled="true" />
+<Textarea Value="This is read-only content" ReadOnly="true" />
+```
+
+### With Character Count
+
+```razor
+<div class="space-y-2">
+  <Textarea @bind-Value="message" Placeholder="Enter your message..." />
+  <p class="text-sm text-muted-foreground">@message.Length / 500 characters</p>
+</div>
+
+@code {
+    private string message = "";
+}
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `InputVariant` | `Default` | Visual style variant |
+| `Value` | `string` | `""` | Current textarea value |
+| `Placeholder` | `string` | `""` | Placeholder text |
+| `Disabled` | `bool` | `false` | Disables the textarea |
+| `ReadOnly` | `bool` | `false` | Makes textarea read-only |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when value changes |
+
+## Accessibility
+
+- Proper label association via `For` / `Id` attributes
+- Keyboard navigation support
+- Screen reader compatible

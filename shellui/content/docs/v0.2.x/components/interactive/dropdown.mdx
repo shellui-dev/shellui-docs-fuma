@@ -1,0 +1,128 @@
+---
+title: Dropdown
+description: Toggleable dropdown menu with trigger render fragment and two-way open state binding.
+---
+
+## Overview
+
+The Dropdown component displays a menu of actions or options when triggered. It manages open state via `IsOpen` / `IsOpenChanged` two-way binding and renders the trigger element through a `Trigger` render fragment. Classes are merged with `Shell.Cn()`.
+
+## Installation
+
+```bash
+shellui add dropdown
+```
+
+## Usage
+
+### Basic Dropdown
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Outline">Options</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">Edit</button>
+    <button @onclick="HandleDuplicate" class="w-full text-left px-2 py-1.5 hover:bg-accent">Duplicate</button>
+    <Separator />
+    <button @onclick="HandleDelete" class="w-full text-left px-2 py-1.5 text-destructive hover:bg-destructive/10">Delete</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+    private void HandleEdit() { isOpen = false; }
+    private void HandleDuplicate() { isOpen = false; }
+    private void HandleDelete() { isOpen = false; }
+}
+```
+
+### With Icons
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Outline">Actions</Button>
+  </Trigger>
+  <ChildContent>
+    <button @onclick="HandleEdit" class="w-full text-left px-2 py-1.5 hover:bg-accent">
+      <span class="mr-2">✏️</span> Edit
+    </button>
+    <button @onclick="HandleCopy" class="w-full text-left px-2 py-1.5 hover:bg-accent">
+      <span class="mr-2">📋</span> Copy
+    </button>
+    <Separator />
+    <button @onclick="HandleDelete" class="w-full text-left px-2 py-1.5 text-destructive hover:bg-destructive/10">
+      <span class="mr-2">🗑️</span> Delete
+    </button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+    private void HandleEdit() { isOpen = false; }
+    private void HandleCopy() { isOpen = false; }
+    private void HandleDelete() { isOpen = false; }
+}
+```
+
+### User Menu
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Ghost" Class="flex items-center gap-2">
+      <Avatar Src="@user.AvatarUrl" Fallback="@user.Initials" Size="AvatarSize.Sm" />
+      <span>@user.Name</span>
+    </Button>
+  </Trigger>
+  <ChildContent>
+    <div class="px-2 py-1.5 text-sm font-semibold">My Account</div>
+    <Separator />
+    <button @onclick="GoToProfile" class="w-full text-left px-2 py-1.5 hover:bg-accent">Profile</button>
+    <button @onclick="GoToSettings" class="w-full text-left px-2 py-1.5 hover:bg-accent">Settings</button>
+    <Separator />
+    <button @onclick="HandleLogout" class="w-full text-left px-2 py-1.5 hover:bg-accent">Logout</button>
+  </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+    private void GoToProfile() { isOpen = false; }
+    private void GoToSettings() { isOpen = false; }
+    private void HandleLogout() { isOpen = false; }
+}
+```
+
+### Custom Styling
+
+```razor
+<Dropdown IsOpen="@isOpen" IsOpenChanged="@((bool v) => isOpen = v)" Class="w-56">
+  <Trigger>
+    <Button>Wide Menu</Button>
+  </Trigger>
+  <ChildContent>
+    <button class="w-full text-left px-2 py-1.5 hover:bg-accent">Option A</button>
+    <button class="w-full text-left px-2 py-1.5 hover:bg-accent">Option B</button>
+  </ChildContent>
+</Dropdown>
+
+@code { private bool isOpen = false; }
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Trigger` | `RenderFragment?` | `null` | Element that toggles the dropdown |
+| `ChildContent` | `RenderFragment` | — | Menu items |
+| `IsOpen` | `bool` | `false` | Controls open state |
+| `IsOpenChanged` | `EventCallback<bool>` | — | Callback when open state changes |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
+
+## Accessibility
+
+- The trigger has `aria-expanded` and `aria-haspopup="menu"` attributes.
+- Menu items are keyboard navigable with Arrow keys, Enter to select, and Escape to close.
+- Focus management returns to the trigger when the menu closes.

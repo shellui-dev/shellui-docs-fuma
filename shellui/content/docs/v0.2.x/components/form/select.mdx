@@ -1,0 +1,114 @@
+---
+title: Select
+description: Dropdown selection component with two-way binding.
+---
+
+The Select component provides a styled dropdown menu for selecting from a list of options.
+
+## Installation
+
+```bash
+shellui add select
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Select Value="@selectedValue" ValueChanged="@HandleChanged">
+  <option value="">Choose an option...</option>
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</Select>
+
+@code {
+    private string? selectedValue;
+
+    private void HandleChanged(string value)
+    {
+        selectedValue = value;
+    }
+}
+```
+
+### Two-way Binding
+
+```razor
+<Select @bind-Value="selectedFruit">
+  <option value="">Select a fruit...</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="orange">Orange</option>
+</Select>
+
+@code {
+    private string? selectedFruit;
+}
+```
+
+### With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Choose a fruit</Label>
+  <Select @bind-Value="selectedFruit">
+    <option value="">Select...</option>
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+  </Select>
+</div>
+
+@code {
+    private string? selectedFruit;
+}
+```
+
+### Dynamic Options
+
+```razor
+<Select @bind-Value="selectedCountry">
+  <option value="">Select a country...</option>
+  @foreach (var country in countries)
+  {
+    <option value="@country.Code">@country.Name</option>
+  }
+</Select>
+
+@code {
+    private string? selectedCountry;
+    private List<Country> countries = new()
+    {
+        new() { Code = "us", Name = "United States" },
+        new() { Code = "uk", Name = "United Kingdom" },
+        new() { Code = "ca", Name = "Canada" }
+    };
+
+    private record Country { public string Code { get; set; } = ""; public string Name { get; set; } = ""; }
+}
+```
+
+### Disabled
+
+```razor
+<Select Disabled="true">
+  <option value="option1">Option 1</option>
+</Select>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string?` | `null` | Currently selected value |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when selection changes |
+| `Disabled` | `bool` | `false` | Disables the select |
+| `ChildContent` | `RenderFragment` | `null` | Option elements |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+- Proper label association
+- Keyboard navigation support
+- Screen reader compatible

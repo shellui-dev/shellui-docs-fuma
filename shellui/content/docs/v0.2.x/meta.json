@@ -1,0 +1,17 @@
+{
+  "title": "v0.2.x",
+  "description": "Stable release — 80 production-ready components",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "quickstart",
+    "comparison",
+    "installation",
+    "---Components---",
+    "components",
+    "---Customization---",
+    "theming",
+    "contributing"
+  ]
+}

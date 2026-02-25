@@ -1,0 +1,104 @@
+---
+title: Popover
+description: Floating content container triggered by a button or element
+---
+
+The Popover component displays rich floating content anchored to a trigger element. Use it for settings panels, filter dropdowns, or any interactive content that should appear inline.
+
+## Installation
+
+```bash
+shellui add popover
+```
+
+## Basic Usage
+
+```razor
+<Popover IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Outline">Open Popover</Button>
+  </Trigger>
+  <ChildContent>
+    <div class="space-y-2">
+      <h4 class="font-medium leading-none">Dimensions</h4>
+      <p class="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+    </div>
+  </ChildContent>
+</Popover>
+
+@code {
+    private bool isOpen = false;
+}
+```
+
+## Placement
+
+Control where the popover appears relative to the trigger:
+
+```razor
+<Popover IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)" Placement="top">
+  <Trigger><Button>Top</Button></Trigger>
+  <ChildContent><p>Appears above the trigger.</p></ChildContent>
+</Popover>
+
+<Popover IsOpen="@isOpen2" IsOpenChanged="@((v) => isOpen2 = v)" Placement="bottom">
+  <Trigger><Button>Bottom</Button></Trigger>
+  <ChildContent><p>Appears below the trigger.</p></ChildContent>
+</Popover>
+```
+
+## Settings Popover
+
+A common pattern for inline settings or filter panels:
+
+```razor
+<Popover IsOpen="@isOpen" IsOpenChanged="@((v) => isOpen = v)">
+  <Trigger>
+    <Button Variant="ButtonVariant.Outline">Settings</Button>
+  </Trigger>
+  <ChildContent>
+    <div class="grid gap-4 p-4">
+      <div class="space-y-2">
+        <h4 class="font-medium leading-none">Display</h4>
+        <p class="text-sm text-muted-foreground">Configure display settings.</p>
+      </div>
+      <div class="grid gap-2">
+        <div class="flex items-center justify-between">
+          <Label>Compact mode</Label>
+          <Switch @bind-Value="compact" />
+        </div>
+        <div class="flex items-center justify-between">
+          <Label>Show icons</Label>
+          <Switch @bind-Value="showIcons" />
+        </div>
+      </div>
+    </div>
+  </ChildContent>
+</Popover>
+
+@code {
+    private bool isOpen = false;
+    private bool compact = false;
+    private bool showIcons = true;
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls popover visibility |
+| `IsOpenChanged` | `EventCallback<bool>` | — | Callback when open state changes |
+| `Trigger` | `RenderFragment?` | `null` | Element that triggers the popover |
+| `ChildContent` | `RenderFragment` | `null` | Popover body content |
+| `Placement` | `string` | `"bottom"` | Position relative to trigger (`top`, `bottom`, `left`, `right`) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Popover component includes:
+- Escape key to close
+- Click outside to close
+- Proper `aria-expanded` on trigger
+- Focus management between trigger and content
+- Screen reader announcements

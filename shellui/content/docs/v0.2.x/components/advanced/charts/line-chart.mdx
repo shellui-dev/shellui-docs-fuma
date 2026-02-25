@@ -1,0 +1,166 @@
+---
+title: Line Chart
+description: Smooth line charts for showing trends over time
+---
+
+The `LineChart` component renders smooth line charts ideal for showing trends, progress, and changes over time. Built on **ApexCharts.Blazor** with `Curve.Smooth` and rounded line caps.
+
+## Installation
+
+```bash
+shellui add chart line-chart
+dotnet add package Blazor-ApexCharts
+```
+
+## Basic Usage
+
+```razor
+<LineChart TItem="TrafficData"
+    Data="@trafficData"
+    Title="Website Traffic"
+    Name="Visitors"
+    XValue="@(e => e.Date)"
+    YValue="@(e => (decimal?)e.Visitors)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<TrafficData> trafficData = new()
+    {
+        new("Mon", 1200), new("Tue", 1900),
+        new("Wed", 1500), new("Thu", 2100),
+        new("Fri", 1800), new("Sat", 900),
+        new("Sun", 750)
+    };
+
+    record TrafficData(string Date, int Visitors);
+}
+```
+
+## Performance Metrics
+
+Track application performance over time:
+
+```razor
+<LineChart TItem="PerformanceData"
+    Data="@perfData"
+    Title="API Response Times"
+    Subtitle="Last 7 days (ms)"
+    Name="Avg Response Time"
+    XValue="@(e => e.Day)"
+    YValue="@(e => (decimal?)e.ResponseMs)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<PerformanceData> perfData = new()
+    {
+        new("Mon", 120), new("Tue", 95),
+        new("Wed", 180), new("Thu", 110),
+        new("Fri", 88), new("Sat", 65),
+        new("Sun", 72)
+    };
+
+    record PerformanceData(string Day, int ResponseMs);
+}
+```
+
+## Stock Price Trend
+
+Display financial data with the Colorful theme:
+
+```razor
+<LineChart TItem="StockPrice"
+    Data="@stockData"
+    Title="Stock Price (ACME)"
+    Subtitle="30-day trend"
+    Name="Price (USD)"
+    XValue="@(e => e.Date)"
+    YValue="@(e => (decimal?)e.Price)"
+    Theme="ChartTheme.Colorful"
+    Height="400px" />
+
+@code {
+    private List<StockPrice> stockData = new()
+    {
+        new("Week 1", 142.50m), new("Week 2", 148.20m),
+        new("Week 3", 145.80m), new("Week 4", 155.30m),
+        new("Week 5", 152.10m), new("Week 6", 161.40m)
+    };
+
+    record StockPrice(string Date, decimal Price);
+}
+```
+
+## Temperature Tracking
+
+Use Monochrome for clean, minimal data presentation:
+
+```razor
+<LineChart TItem="TempReading"
+    Data="@tempData"
+    Title="Server Room Temperature"
+    Name="Temperature (°C)"
+    XValue="@(e => e.Time)"
+    YValue="@(e => (decimal?)e.TempC)"
+    Theme="ChartTheme.Monochrome"
+    Height="300px" />
+
+@code {
+    private List<TempReading> tempData = new()
+    {
+        new("06:00", 21.2), new("09:00", 22.5),
+        new("12:00", 24.1), new("15:00", 25.8),
+        new("18:00", 23.4), new("21:00", 21.9)
+    };
+
+    record TempReading(string Time, double TempC);
+}
+```
+
+## Comparing with Multi-Series
+
+For multiple lines on the same chart, use [MultiSeriesChart](/docs/components/advanced/charts/multi-series-chart) with `SeriesType.Line`:
+
+```razor
+<MultiSeriesChart TItem="ComparisonData"
+    Title="Revenue vs Expenses"
+    Theme="ChartTheme.Default"
+    Height="400px">
+
+    <ChartSeries TItem="ComparisonData"
+        Data="@data" Name="Revenue"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Revenue)" />
+
+    <ChartSeries TItem="ComparisonData"
+        Data="@data" Name="Expenses"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Expenses)" />
+</MultiSeriesChart>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | Generic type | - | The data item type |
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Data"` | Series name shown in legend/tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Function to extract X-axis value |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Function to extract Y-axis value |
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## When to Use
+
+- **Trends over time**: Website traffic, stock prices, temperature readings
+- **Continuous data**: When X-axis values represent a progression (time, sequence)
+- **Single series**: For one data line — use [MultiSeriesChart](/docs/components/advanced/charts/multi-series-chart) for comparing multiple lines
+- **Progress tracking**: Build velocity, user growth, performance metrics

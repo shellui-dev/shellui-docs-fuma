@@ -1,0 +1,105 @@
+---
+title: Tooltip
+description: Contextual hover information display
+---
+
+The Tooltip component displays brief informational text when users hover over or focus on an element. Use tooltips for icon-only buttons, truncated text, or any element that benefits from additional context.
+
+## Installation
+
+```bash
+shellui add tooltip
+```
+
+## Basic Usage
+
+```razor
+<Tooltip>
+  <Trigger>
+    <Button Variant="ButtonVariant.Outline">Hover me</Button>
+  </Trigger>
+  <Content>
+    <p>This is a tooltip</p>
+  </Content>
+</Tooltip>
+```
+
+## Placement
+
+Control where the tooltip appears relative to the trigger:
+
+```razor
+<Tooltip Placement="top">
+  <Trigger><Button>Top</Button></Trigger>
+  <Content><p>Tooltip on top</p></Content>
+</Tooltip>
+
+<Tooltip Placement="bottom">
+  <Trigger><Button>Bottom</Button></Trigger>
+  <Content><p>Tooltip on bottom</p></Content>
+</Tooltip>
+
+<Tooltip Placement="left">
+  <Trigger><Button>Left</Button></Trigger>
+  <Content><p>Tooltip on left</p></Content>
+</Tooltip>
+
+<Tooltip Placement="right">
+  <Trigger><Button>Right</Button></Trigger>
+  <Content><p>Tooltip on right</p></Content>
+</Tooltip>
+```
+
+## Icon Button Tooltip
+
+A common pattern for explaining icon-only buttons:
+
+```razor
+<Tooltip>
+  <Trigger>
+    <Button Size="ButtonSize.Icon" Variant="ButtonVariant.Ghost">
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+    </Button>
+  </Trigger>
+  <Content><p>Add new item</p></Content>
+</Tooltip>
+```
+
+## Toolbar with Tooltips
+
+```razor
+<div class="flex gap-1">
+  <Tooltip>
+    <Trigger><Button Size="ButtonSize.Icon" Variant="ButtonVariant.Ghost">B</Button></Trigger>
+    <Content><p>Bold</p></Content>
+  </Tooltip>
+  <Tooltip>
+    <Trigger><Button Size="ButtonSize.Icon" Variant="ButtonVariant.Ghost">I</Button></Trigger>
+    <Content><p>Italic</p></Content>
+  </Tooltip>
+  <Tooltip>
+    <Trigger><Button Size="ButtonSize.Icon" Variant="ButtonVariant.Ghost">U</Button></Trigger>
+    <Content><p>Underline</p></Content>
+  </Tooltip>
+</div>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Trigger` | `RenderFragment?` | `null` | Element that activates the tooltip |
+| `Content` | `RenderFragment?` | `null` | Tooltip content |
+| `Placement` | `string` | `"top"` | Position relative to trigger (`top`, `bottom`, `left`, `right`) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The Tooltip component includes:
+- Shows on hover and focus
+- Hides on Escape key press
+- Proper `role="tooltip"` and `aria-describedby`
+- Respects `prefers-reduced-motion`
+- Keyboard accessible via focus
