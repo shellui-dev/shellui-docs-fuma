@@ -18,11 +18,6 @@ const config = {
         permanent: true,
       },
       {
-        source: "/docs/v0.30-alpha1/:path*",
-        destination: "/docs/v0.3.0-alpha.2/:path*",
-        permanent: true,
-      },
-      {
         source: "/docs/v0.3.0-alpha.1/:path*",
         destination: "/docs/v0.3.0-alpha.2/:path*",
         permanent: true,
