@@ -9,8 +9,13 @@ const config = {
     return [
       {
         source: "/docs",
-        destination: "/docs/v0.2.x",
+        destination: "/docs/v0.3.0-alpha.2",
         permanent: false,
+      },
+      {
+        source: "/docs/v0.2.x/:path*",
+        destination: "/docs/v0.2.1/:path*",
+        permanent: true,
       },
       {
         source: "/docs/v0.30-alpha1/:path*",
