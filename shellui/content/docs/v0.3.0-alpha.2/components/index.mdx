@@ -1,0 +1,33 @@
+---
+title: Components
+description: Browse all ShellUI v0.3.0-alpha.2 components organized by category
+---
+
+Explore ShellUI v0.3.0-alpha.2's component library, organized by category. Each component is fully accessible, type-safe, and customizable via the CLI.
+
+## Component Categories
+
+<Cards>
+  <Card title="Form Components" href="/docs/v0.3.0-alpha.2/components/form" description="Button, Input, Textarea, Select, Checkbox, RadioGroup, Switch, Toggle, Label, Slider" />
+  <Card title="Layout Components" href="/docs/v0.3.0-alpha.2/components/layout" description="Card, Dialog, Sheet, Drawer, Popover, Tooltip, Separator, ScrollArea, Collapsible, Accordion" />
+  <Card title="Navigation Components" href="/docs/v0.3.0-alpha.2/components/navigation" description="Navbar, Sidebar, NavigationMenu, Menubar, Pagination, Tabs, Breadcrumb" />
+  <Card title="Interactive Components" href="/docs/v0.3.0-alpha.2/components/interactive" description="Dropdown, Command, ContextMenu, HoverCard, ThemeToggle, EmptyState, FileUpload" />
+  <Card title="Advanced Components" href="/docs/v0.3.0-alpha.2/components/advanced" description="Calendar, DatePicker, Combobox, AlertDialog, Carousel, Stepper, Charts" />
+</Cards>
+
+## What's New in v0.3.0-alpha.2
+
+- **Drawer/Sheet compositional pattern**: `DrawerTrigger`, `DrawerContent`, `SheetTrigger`, `SheetContent` — no external open state required
+- **CLI registry fix**: `shellui add drawer` and `shellui add sheet` now auto-install all subcomponent files
+- **New components**: Callout, CopyButton, LinkCard, PrevNextNav, Sonner, Stepper — all installable via CLI
+- **Compositional APIs**: NavigationMenu, Tabs, Dropdown, Popover, Collapsible, Accordion all have new subcomponent patterns
+
+## Getting Started
+
+```bash
+# Install alpha CLI
+dotnet tool install -g ShellUI.CLI --version 0.3.0-alpha.2
+
+# Add components
+shellui add button input card drawer sheet
+```
