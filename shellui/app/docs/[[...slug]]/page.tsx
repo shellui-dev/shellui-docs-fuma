@@ -48,7 +48,7 @@ export async function generateMetadata(props: {
   if (!page) return {};
 
   return {
-    title: page.data.title,
+    title: { absolute: `${page.data.title} | ShellUI` },
     description: page.data.description,
   };
 }
