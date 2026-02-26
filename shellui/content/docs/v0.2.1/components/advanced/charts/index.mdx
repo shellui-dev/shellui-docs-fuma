@@ -4,7 +4,7 @@ description: Data visualization components built on ApexCharts.Blazor with theme
 icon: ChartBar
 ---
 
-ShellUI v0.2.0 introduces **7 chart components** built on **ApexCharts.Blazor**, offering beautiful, responsive, and theme-aware data visualizations for your Blazor applications.
+ShellUI v0.2.1 includes **7 chart components** built on **ApexCharts.Blazor**, offering beautiful, responsive, and theme-aware data visualizations for your Blazor applications.
 
 ## Overview
 
@@ -18,18 +18,21 @@ Chart components are built with:
 ## Chart Components
 
 <Cards>
-  <Card title="Bar Chart" href="/docs/components/advanced/charts/bar-chart" description="Vertical bar charts for comparing values across categories" />
-  <Card title="Line Chart" href="/docs/components/advanced/charts/line-chart" description="Smooth line charts for showing trends over time" />
-  <Card title="Area Chart" href="/docs/components/advanced/charts/area-chart" description="Filled area charts for showing volume and trends" />
-  <Card title="Pie Chart" href="/docs/components/advanced/charts/pie-chart" description="Pie charts with custom tooltips for proportions" />
-  <Card title="Multi-Series Chart" href="/docs/components/advanced/charts/multi-series-chart" description="Multiple data series with mixed chart types" />
+  <Card title="Bar Chart" href="/docs/v0.2.1/components/advanced/charts/bar-chart" description="Vertical bar charts for comparing values across categories" />
+  <Card title="Line Chart" href="/docs/v0.2.1/components/advanced/charts/line-chart" description="Smooth line charts for showing trends over time" />
+  <Card title="Area Chart" href="/docs/v0.2.1/components/advanced/charts/area-chart" description="Filled area charts for showing volume and trends" />
+  <Card title="Pie Chart" href="/docs/v0.2.1/components/advanced/charts/pie-chart" description="Pie charts with custom tooltips for proportions" />
+  <Card title="Multi-Series Chart" href="/docs/v0.2.1/components/advanced/charts/multi-series-chart" description="Multiple data series with mixed chart types" />
 </Cards>
 
 ## Installation
 
 ```bash
-# Via CLI - install all chart components
-shellui add chart bar-chart line-chart area-chart pie-chart multi-series-chart
+# Via CLI — installs Chart, ChartVariants, chart-styles (charts.css → wwwroot/css/) + auto-injects <link> into App.razor
+shellui add chart
+
+# Add individual chart types
+shellui add bar-chart line-chart area-chart pie-chart multi-series-chart
 
 # Charts require ApexCharts.Blazor
 dotnet add package Blazor-ApexCharts

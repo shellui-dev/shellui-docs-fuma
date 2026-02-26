@@ -4,12 +4,11 @@ description: CLI-first Blazor component library inspired by shadcn/ui
 icon: Book
 ---
 
-Welcome to ShellUI v0.2.0, a modern, CLI-first Blazor component library inspired by shadcn/ui. Build beautiful, accessible, and performant web applications with our comprehensive collection of 80 production-ready components.
+Welcome to ShellUI v0.2.1, a modern, CLI-first Blazor component library inspired by shadcn/ui. Build beautiful, accessible, and performant web applications with our production-ready component library.
 
 <div className="flex gap-2 my-4">
-  <span className="bg-emerald-500 text-white px-3 py-1 rounded-md text-sm font-medium">v0.2.0 - Production Ready</span>
-  <span className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm font-medium">80 Components</span>
-  <span className="bg-violet-500 text-white px-3 py-1 rounded-md text-sm font-medium">New: Charts</span>
+  <span className="bg-emerald-500 text-white px-3 py-1 rounded-md text-sm font-medium">v0.2.1 - Latest Stable</span>
+  <span className="bg-violet-500 text-white px-3 py-1 rounded-md text-sm font-medium">Charts Fixed</span>
 </div>
 
 ## Getting Started
@@ -54,17 +53,24 @@ dotnet add package ShellUI.Components
 Explore our comprehensive component library, organized by category:
 
 <Cards>
-  <Card title="Form Components" href="/docs/components/form" description="Buttons, inputs, selects, and form controls" />
-  <Card title="Layout Components" href="/docs/components/layout" description="Cards, dialogs, sheets, and structural elements" />
-  <Card title="Navigation Components" href="/docs/components/navigation" description="Menus, breadcrumbs, tabs, and navigation elements" />
-  <Card title="Data Display" href="/docs/components/data-display" description="Tables, badges, avatars, and data presentation" />
-  <Card title="Interactive Components" href="/docs/components/interactive" description="Dropdowns, tooltips, and interactive elements" />
-  <Card title="Advanced Components" href="/docs/components/advanced" description="Calendars, charts, carousels, and complex UI elements" />
+  <Card title="Form Components" href="/docs/v0.2.1/components/form" description="Buttons, inputs, selects, and form controls" />
+  <Card title="Layout Components" href="/docs/v0.2.1/components/layout" description="Cards, dialogs, sheets, and structural elements" />
+  <Card title="Navigation Components" href="/docs/v0.2.1/components/navigation" description="Menus, breadcrumbs, tabs, and navigation elements" />
+  <Card title="Data Display" href="/docs/v0.2.1/components/data-display" description="Tables, badges, avatars, and data presentation" />
+  <Card title="Interactive Components" href="/docs/v0.2.1/components/interactive" description="Dropdowns, tooltips, and interactive elements" />
+  <Card title="Advanced Components" href="/docs/v0.2.1/components/advanced" description="Calendars, charts, carousels, and complex UI elements" />
 </Cards>
 
-## What's New in v0.2.0
+## What's New in v0.2.1
 
-- **Charts & Data Visualization**: 7 new chart components built on ApexCharts.Blazor
+- **Chart tooltip fix**: Custom tooltip HTML now generates correctly in installed files
+- **ChartVariants namespace fix**: `ChartVariants` now correctly under `ShellUI.Components.Variants`
+- **`chart-styles` auto-install**: `shellui add chart` automatically installs `charts.css` to `wwwroot/css/` and injects the `<link>` tag into your App.razor
+- **wwwroot file support**: CLI now correctly installs files with `wwwroot/` paths relative to project root
+
+### v0.2.0 Highlights
+
+- **Charts & Data Visualization**: 7 chart components built on ApexCharts.Blazor
 - **Chart Themes**: Three built-in themes (Default, Colorful, Monochrome)
 - **Theme-Aware Charts**: Charts automatically use your theme's CSS variables
 - **Custom Tooltips**: Compact, shadcn-inspired chart tooltips with dark mode support
@@ -75,7 +81,7 @@ Explore our comprehensive component library, organized by category:
 - **CLI-First**: Copy components directly to your codebase for full control
 - **Hybrid Workflow**: CLI + NuGet packages for maximum flexibility
 - **Tailwind CSS v4.1.18**: Modern styling with standalone CLI (no Node.js required)
-- **80 Production-Ready Components**: Comprehensive component library
+- **Production-Ready Components**: Comprehensive component library
 - **Type-Safe Variants**: CVA patterns with full C# type safety
 - **Accessible**: WCAG 2.1 AA compliant by default
 - **Performance Optimized**: Built for both Server and WASM scenarios

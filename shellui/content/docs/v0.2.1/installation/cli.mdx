@@ -52,7 +52,7 @@ This creates a `.config/dotnet-tools.json` file — commit it to source control:
   "isRoot": true,
   "tools": {
     "shellui.cli": {
-      "version": "0.2.0",
+      "version": "0.2.1",
       "commands": ["shellui"]
     }
   }
@@ -141,7 +141,7 @@ This uses standalone Tailwind with default options — no prompts.
 # Add individual components
 shellui add button input card dialog
 
-# Add chart components (new in v0.2.0)
+# Add chart components
 shellui add chart bar-chart line-chart pie-chart area-chart
 
 # Add multiple components at once
@@ -158,7 +158,7 @@ shellui list
 # Add individual components
 dotnet shellui add button input card dialog
 
-# Add chart components (new in v0.2.0)
+# Add chart components
 dotnet shellui add chart bar-chart line-chart pie-chart area-chart
 
 # Add multiple components at once
@@ -173,7 +173,7 @@ dotnet shellui list
 
 ### Chart Components Dependency
 
-Chart components (new in v0.2.0) require the ApexCharts NuGet package:
+Chart components require the ApexCharts NuGet package:
 
 ```bash
 dotnet add package Blazor-ApexCharts
@@ -250,10 +250,10 @@ dotnet tool update ShellUI.CLI
 
 ```bash
 # Global — specific version
-dotnet tool install -g ShellUI.CLI --version 0.2.0
+dotnet tool install -g ShellUI.CLI --version 0.2.1
 
 # Local — specific version
-dotnet tool install ShellUI.CLI --version 0.2.0
+dotnet tool install ShellUI.CLI --version 0.2.1
 ```
 
 ### Downgrade to Previous Version

@@ -1,0 +1,51 @@
+---
+title: Form Components
+description: Essential form components for user input and interaction
+---
+
+Form components are the building blocks for user input and interaction in your Blazor applications. These components provide a consistent and accessible way to collect data from users.
+
+## Overview
+
+ShellUI provides a comprehensive set of form components that work seamlessly together, built on top of Tailwind CSS for beautiful styling and accessibility features out of the box.
+
+## Available Components
+
+<Cards>
+  <Card title="Button" href="/docs/v0.2.1/components/form/button" description="Interactive button component with multiple variants" />
+  <Card title="Input" href="/docs/v0.2.1/components/form/input" description="Text input field with validation support" />
+  <Card title="Textarea" href="/docs/v0.2.1/components/form/textarea" description="Multi-line text input component" />
+  <Card title="Select" href="/docs/v0.2.1/components/form/select" description="Dropdown selection component" />
+  <Card title="Checkbox" href="/docs/v0.2.1/components/form/checkbox" description="Boolean input with checkbox styling" />
+  <Card title="Radio Group" href="/docs/v0.2.1/components/form/radio-group" description="Radio button group for single selection" />
+  <Card title="Switch" href="/docs/v0.2.1/components/form/switch" description="Toggle switch component" />
+  <Card title="Toggle" href="/docs/v0.2.1/components/form/toggle" description="Pressable toggle button" />
+  <Card title="Label" href="/docs/v0.2.1/components/form/label" description="Accessible form labels" />
+  <Card title="Slider" href="/docs/v0.2.1/components/form/slider" description="Range input slider" />
+  <Card title="Form" href="/docs/v0.2.1/components/form/form" description="Form wrapper with validation" />
+  <Card title="Input OTP" href="/docs/v0.2.1/components/form/input-otp" description="One-time password input field" />
+</Cards>
+
+## Getting Started
+
+To use form components in your project, install ShellUI via CLI or NuGet package:
+
+```bash
+# CLI Installation (Recommended)
+dotnet tool install -g ShellUI.CLI
+shellui init
+shellui add button input textarea
+
+# Or via NuGet
+dotnet add package ShellUI.Components
+```
+
+## Common Patterns
+
+Form components in ShellUI follow consistent patterns:
+
+- **Accessibility First**: All components include proper ARIA attributes
+- **Validation Ready**: Built-in support for Blazor validation
+- **Themeable**: Easy customization with CSS variables
+- **Responsive**: Mobile-friendly by default
+- **Type-Safe**: Full C# type safety

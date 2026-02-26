@@ -1,6 +1,6 @@
 {
-  "title": "v0.2.x",
-  "description": "Stable release — 80 production-ready components",
+  "title": "v0.2.1",
+  "description": "Latest stable — chart fixes & CSS auto-install",
   "root": true,
   "pages": [
     "---Introduction---",
