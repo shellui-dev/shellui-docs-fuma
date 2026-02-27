@@ -1,4 +1,4 @@
 {
   "title": "Navigation",
-  "pages": ["navigation-menu", "tabs", "prev-next-nav"]
+  "pages": ["navbar", "navigation-menu", "pagination", "prev-next-nav", "tabs"]
 }

@@ -1,0 +1,71 @@
+---
+title: Separator
+description: Visual divider for separating content sections horizontally or vertically.
+---
+
+## Overview
+
+The Separator component renders a thin line to visually divide content. It supports both horizontal and vertical orientations and uses `Shell.Cn()` for class merging.
+
+## Installation
+
+```bash
+shellui add separator
+```
+
+## Usage
+
+### Horizontal Separator (Default)
+
+```razor
+<div class="space-y-4">
+  <div>Section 1</div>
+  <Separator />
+  <div>Section 2</div>
+  <Separator />
+  <div>Section 3</div>
+</div>
+```
+
+### Vertical Separator
+
+```razor
+<div class="flex items-center gap-4 h-5">
+  <span>Left</span>
+  <Separator Orientation="vertical" />
+  <span>Center</span>
+  <Separator Orientation="vertical" />
+  <span>Right</span>
+</div>
+```
+
+### In Navigation
+
+```razor
+<nav class="flex items-center gap-4 h-5">
+  <a href="/">Home</a>
+  <Separator Orientation="vertical" />
+  <a href="/docs">Docs</a>
+  <Separator Orientation="vertical" />
+  <a href="/about">About</a>
+</nav>
+```
+
+### Custom Styling
+
+```razor
+<Separator Class="my-6" />
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Orientation` | `string` | `"horizontal"` | `"horizontal"` or `"vertical"` |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
+
+## Accessibility
+
+- Renders with `role="separator"` for screen readers.
+- `aria-orientation` is set based on the `Orientation` parameter.
+- Purely decorative — does not receive keyboard focus.

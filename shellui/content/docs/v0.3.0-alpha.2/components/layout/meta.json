@@ -1,4 +1,4 @@
 {
   "title": "Layout",
-  "pages": ["accordion", "collapsible", "drawer", "popover", "sheet"]
+  "pages": ["breadcrumb", "card", "accordion", "collapsible", "dialog", "drawer", "popover", "separator", "sheet", "tooltip"]
 }

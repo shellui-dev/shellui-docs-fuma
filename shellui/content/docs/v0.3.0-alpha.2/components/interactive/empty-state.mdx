@@ -1,0 +1,124 @@
+---
+title: Empty State
+description: Placeholder for empty content areas with optional actions
+---
+
+The EmptyState component provides a clear visual indicator when there is no content to display. Use it for empty lists, search results with no matches, or onboarding prompts.
+
+## Installation
+
+```bash
+shellui add empty-state
+```
+
+## Basic Usage
+
+```razor
+<EmptyState Title="No results found"
+            Description="Try adjusting your search or filters." />
+```
+
+## With Icon
+
+```razor
+<EmptyState Icon="inbox"
+            Title="No messages"
+            Description="Your inbox is empty. New messages will appear here." />
+```
+
+## With Action
+
+Provide a call-to-action for the empty state:
+
+```razor
+<EmptyState Icon="file"
+            Title="No documents"
+            Description="Get started by creating your first document.">
+  <Action>
+    <Button OnClick="HandleCreate">Create Document</Button>
+  </Action>
+</EmptyState>
+
+@code {
+    private void HandleCreate()
+    {
+        // Navigate or open creation flow
+    }
+}
+```
+
+## Search Empty State
+
+For filtered or searched content:
+
+```razor
+@if (!filteredItems.Any())
+{
+  <EmptyState Icon="search"
+              Title="No results found"
+              Description="@($"No items match \"{searchQuery}\". Try a different search term.")">
+    <Action>
+      <Button Variant="ButtonVariant.Outline" OnClick="ClearSearch">Clear Search</Button>
+    </Action>
+  </EmptyState>
+}
+```
+
+## Custom Content
+
+Use `ChildContent` for fully custom empty states:
+
+```razor
+<EmptyState>
+  <div class="flex flex-col items-center gap-4">
+    <img src="/illustrations/empty-cart.svg" alt="Empty cart" class="h-32 w-32" />
+    <h3 class="text-lg font-semibold">Your cart is empty</h3>
+    <p class="text-sm text-muted-foreground">Browse our products to find something you love.</p>
+    <Button OnClick="GoToShop">Browse Products</Button>
+  </div>
+</EmptyState>
+```
+
+## Table Empty State
+
+Use inside a table when there are no rows:
+
+```razor
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Status</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    @if (!users.Any())
+    {
+      <TableRow>
+        <TableCell ColSpan="2">
+          <EmptyState Title="No users" Description="Add your first team member to get started." />
+        </TableCell>
+      </TableRow>
+    }
+  </TableBody>
+</Table>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Icon` | `string?` | `null` | Icon name to display |
+| `Title` | `string?` | `null` | Heading text |
+| `Description` | `string?` | `null` | Supporting description |
+| `Action` | `RenderFragment?` | `null` | Action buttons or links |
+| `ChildContent` | `RenderFragment` | `null` | Fully custom content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+The EmptyState component includes:
+- Semantic heading hierarchy
+- Descriptive text for screen readers
+- Focusable action elements
+- Decorative icons hidden via `aria-hidden`
