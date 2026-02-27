@@ -22,6 +22,31 @@ const config = {
         destination: "/docs/v0.3.0-alpha.2/:path*",
         permanent: true,
       },
+      {
+        source: "/docs/installation/:path*",
+        destination: "/docs/v0.3.0-alpha.2/installation/:path*",
+        permanent: false,
+      },
+      {
+        source: "/docs/quickstart",
+        destination: "/docs/v0.3.0-alpha.2/quickstart",
+        permanent: false,
+      },
+      {
+        source: "/docs/components/:path*",
+        destination: "/docs/v0.3.0-alpha.2/components/:path*",
+        permanent: false,
+      },
+      {
+        source: "/docs/theming",
+        destination: "/docs/v0.3.0-alpha.2/theming",
+        permanent: false,
+      },
+      {
+        source: "/docs/contributing",
+        destination: "/docs/v0.3.0-alpha.2/contributing",
+        permanent: false,
+      },
     ];
   },
 };
