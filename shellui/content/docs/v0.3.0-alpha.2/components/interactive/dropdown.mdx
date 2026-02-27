@@ -1,0 +1,144 @@
+---
+title: Dropdown
+description: Dropdown menu with new DropdownTrigger, DropdownContent, and DropdownItem subcomponents.
+---
+
+v0.3.0-alpha.2 adds `DropdownTrigger`, `DropdownContent`, and `DropdownItem` subcomponents. `DropdownItem` automatically closes the menu after clicking. The old `Trigger` render fragment + `IsOpen` binding API is still supported.
+
+## What changed from v0.2.x
+
+| v0.2.1 | v0.3.0-alpha.2 |
+|--------|-------------|
+| `<Trigger>` render fragment + `IsOpen` binding | `<DropdownTrigger>` subcomponent, no external state |
+| Manual close on item click | `DropdownItem` auto-closes parent on click |
+
+## Installation
+
+```bash
+shellui add dropdown
+```
+
+`dropdown-trigger`, `dropdown-content`, and `dropdown-item` are auto-installed as dependencies.
+
+## Usage
+
+### Compositional (recommended)
+
+```razor
+<Dropdown>
+    <DropdownTrigger>
+        <Button Variant="ButtonVariant.Outline">Options</Button>
+    </DropdownTrigger>
+    <DropdownContent>
+        <DropdownItem>Profile</DropdownItem>
+        <DropdownItem>Settings</DropdownItem>
+        <Separator />
+        <DropdownItem Class="text-destructive">Log out</DropdownItem>
+    </DropdownContent>
+</Dropdown>
+```
+
+### With click handlers
+
+```razor
+<Dropdown>
+    <DropdownTrigger>Actions</DropdownTrigger>
+    <DropdownContent>
+        <DropdownItem OnClick="HandleEdit">Edit</DropdownItem>
+        <DropdownItem OnClick="HandleDuplicate">Duplicate</DropdownItem>
+        <Separator />
+        <DropdownItem OnClick="HandleDelete" Class="text-destructive">Delete</DropdownItem>
+    </DropdownContent>
+</Dropdown>
+
+@code {
+    private void HandleEdit() { }
+    private void HandleDuplicate() { }
+    private void HandleDelete() { }
+}
+```
+
+### User menu
+
+```razor
+<Dropdown>
+    <DropdownTrigger>
+        <Button Variant="ButtonVariant.Ghost" Class="flex items-center gap-2">
+            <Avatar Fallback="JD" Size="AvatarSize.Sm" />
+            John Doe
+        </Button>
+    </DropdownTrigger>
+    <DropdownContent>
+        <DropdownItem>My profile</DropdownItem>
+        <DropdownItem>Billing</DropdownItem>
+        <DropdownItem>Team settings</DropdownItem>
+        <Separator />
+        <DropdownItem Class="text-destructive">Sign out</DropdownItem>
+    </DropdownContent>
+</Dropdown>
+```
+
+### Disabled item
+
+```razor
+<Dropdown>
+    <DropdownTrigger>Menu</DropdownTrigger>
+    <DropdownContent>
+        <DropdownItem>Available</DropdownItem>
+        <DropdownItem Disabled="true">Unavailable</DropdownItem>
+    </DropdownContent>
+</Dropdown>
+```
+
+### Legacy (also supported)
+
+The v0.2.x `<Trigger>` + `<ChildContent>` pattern with external `@bind-IsOpen` still works:
+
+```razor
+<Dropdown @bind-IsOpen="isOpen">
+    <Trigger>
+        <span>Open Menu</span>
+    </Trigger>
+    <ChildContent>
+        <button class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent">
+            Profile
+        </button>
+        <button class="relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent">
+            Settings
+        </button>
+    </ChildContent>
+</Dropdown>
+
+@code {
+    private bool isOpen = false;
+}
+```
+
+## API Reference
+
+### `<Dropdown>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `DropdownTrigger` + `DropdownContent` |
+
+### `<DropdownTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Trigger button content |
+
+### `<DropdownContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `DropdownItem` list |
+
+### `<DropdownItem>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Item label |
+| `Disabled` | `bool` | `false` | Prevents selection |
+| `OnClick` | `EventCallback` | — | Callback — menu closes automatically after firing |
+| `Class` | `string?` | `null` | Additional CSS classes |

@@ -1,0 +1,95 @@
+---
+title: Drawer
+description: Bottom/side drawer panel with new DrawerTrigger and DrawerContent subcomponents.
+---
+
+v0.3.0-alpha.2 adds `DrawerTrigger` and `DrawerContent` subcomponents. `Side` is set on `<Drawer>` itself. You can also bind `@bind-Open` to control open state externally — useful when you need a close button inside the content.
+
+## What changed from v0.2.x
+
+| v0.2.1 | v0.3.0-alpha.2 |
+|--------|-------------|
+| External `IsOpen` + button required | `<DrawerTrigger>` lives inside `<Drawer>` |
+| Manual open state field | State fully encapsulated (or opt-in via `@bind-Open`) |
+
+## Installation
+
+```bash
+shellui add drawer
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Drawer Side="DrawerSide.Bottom">
+    <DrawerTrigger>
+        <Button Variant="ButtonVariant.Outline">Open Drawer</Button>
+    </DrawerTrigger>
+    <DrawerContent>
+        <div class="p-4 space-y-4">
+            <h3 class="text-lg font-semibold">Cart</h3>
+            <p class="text-sm text-muted-foreground">Your cart is empty.</p>
+            <Button Class="w-full">Continue Shopping</Button>
+        </div>
+    </DrawerContent>
+</Drawer>
+```
+
+### With external open control (`@bind-Open`)
+
+Use `@bind-Open` when you need a close button inside the content, or to control the drawer from outside:
+
+```razor
+<Drawer @bind-Open="_drawerOpen" Side="DrawerSide.Bottom">
+    <DrawerTrigger>
+        <Button Variant="ButtonVariant.Outline">Open Drawer</Button>
+    </DrawerTrigger>
+    <DrawerContent>
+        <h4 class="font-semibold">Drawer Title</h4>
+        <p class="text-sm text-muted-foreground">Drawer content here.</p>
+        <Button @onclick="() => _drawerOpen = false">Close</Button>
+    </DrawerContent>
+</Drawer>
+
+@code {
+    private bool _drawerOpen = false;
+}
+```
+
+### Side variants
+
+```razor
+<Drawer Side="DrawerSide.Right">
+    <DrawerTrigger><Button>Open Right</Button></DrawerTrigger>
+    <DrawerContent><p>Slides from the right.</p></DrawerContent>
+</Drawer>
+```
+
+## API Reference
+
+### `<Drawer>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Side` | `DrawerSide` | `Bottom` | Which edge the drawer slides from |
+| `Open` | `bool` | `false` | Bind with `@bind-Open` to control open state externally |
+| `OpenChanged` | `EventCallback<bool>` | — | Fires when open state changes |
+| `ChildContent` | `RenderFragment` | — | `DrawerTrigger` + `DrawerContent` |
+
+### `<DrawerTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Trigger button content |
+
+### `<DrawerContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Drawer body content |
+
+### `DrawerSide` enum
+
+`Top` · `Bottom` · `Left` · `Right`

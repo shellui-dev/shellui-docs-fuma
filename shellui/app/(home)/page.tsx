@@ -67,14 +67,9 @@ export default function HomePage() {
             {/* Version Badge */}
             <div className="flex items-center justify-center gap-2 mb-4 max-md:justify-center">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border">
-                v0.2.0 - Production Ready
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-500/10 text-green-600 border border-green-500/20">
-                80 Components
+                v0.3.0-alpha.2 &mdash; Latest
               </span>
             </div>
-
-            {/* Description */}
             <p className="text-lg text-muted-foreground max-w-2xl mb-8 max-md:mx-auto">
               CLI-first Blazor component library inspired by shadcn/ui. Now with
               charts &amp; data visualization, type-safe variants, and CVA patterns. Copy
@@ -227,65 +222,56 @@ shellui add button card input
         </div>
       </section>
 
-      {/* What's New in v0.2.0 Section */}
+      {/* What's New Section */}
       <section className="container mx-auto px-4 py-20 max-w-7xl bg-muted/30">
         <div className="text-center space-y-8">
           <div className="space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold">
-              What&apos;s New in v0.2.0
+              What&apos;s New in v0.3.0-alpha.2
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Charts &amp; data visualization, theme-aware chart containers, and
-              Tailwind CSS v4.1.18 with 80 production-ready components.
+              Compositional subcomponents, CLI registry fixes, new utility components, and more.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* New Feature 1 */}
-            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Code2Icon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">7 Chart Components</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Bar, Line, Area, Pie, and Multi-Series charts built on
-                ApexCharts.Blazor
-              </p>
-            </div>
-
-            {/* New Feature 2 */}
-            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <PaletteIcon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">Chart Themes</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Three built-in themes: Default, Colorful, and Monochrome with
-                dark mode support
-              </p>
-            </div>
-
-            {/* New Feature 3 */}
             <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <BoxesIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Theme-Aware Containers</h3>
+              <h3 className="font-semibold">Compositional Patterns</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Charts automatically use your CSS variables for borders,
-                shadows, and colors
+                DrawerTrigger, SheetTrigger, and more subcomponents — no external open state required
               </p>
             </div>
 
-            {/* New Feature 4 */}
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <TerminalIcon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">CLI Registry Fixed</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                shellui add drawer and shellui add sheet now correctly install all subcomponent files
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <Code2Icon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">New Components</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                Callout, CopyButton, LinkCard, PrevNextNav, Sonner, and Stepper — all CLI-installable
+              </p>
+            </div>
+
             <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <ZapIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Custom Tooltips</h3>
+              <h3 className="font-semibold">Chart Fixes</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Compact, shadcn-inspired HTML tooltips with multi-series and
-                dark mode support
+                Tooltip generation fixed, chart-styles auto-installs to wwwroot and injects the link tag
               </p>
             </div>
           </div>
@@ -631,12 +617,10 @@ shellui add button card input
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold mb-2">
-                      80 Components
+                      Comprehensive Library
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Comprehensive library covering forms, layouts, navigation,
-                      data display, interactive elements, and advanced
-                      components
+                      Forms, layouts, navigation, data display, interactive elements, charts, and advanced components
                     </p>
                   </div>
                 </div>
@@ -701,7 +685,7 @@ shellui add button card input
               </p>
               <div className="mt-2">
                 <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-                  v0.2.0 Released
+                  v0.3.0-alpha.2
                 </span>
               </div>
               <div className="flex gap-4">

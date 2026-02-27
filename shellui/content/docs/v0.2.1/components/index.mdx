@@ -1,0 +1,48 @@
+---
+title: Components
+description: Browse all ShellUI components organized by category
+---
+
+Explore ShellUI v0.2.1's component library, organized by category. Each component is fully accessible, type-safe, and customizable.
+
+## Component Categories
+
+<Cards>
+  <Card title="Form Components (11)" href="/docs/v0.2.1/components/form" description="Button, Input, Textarea, Select, Checkbox, RadioGroup, Switch, Toggle, Label, Slider" />
+  <Card title="Layout Components (17)" href="/docs/v0.2.1/components/layout" description="Card, Tabs, Navbar, Sidebar, Separator, Accordion, Breadcrumb, Collapsible, Resizable" />
+  <Card title="Navigation Components (8)" href="/docs/v0.2.1/components/navigation" description="NavigationMenu, Menubar, Dropdown, Pagination, ScrollArea, Sheet" />
+  <Card title="Data Display (10)" href="/docs/v0.2.1/components/data-display" description="Table, DataTable, Badge, Avatar, Alert, Toast, Skeleton, Progress, Loading" />
+  <Card title="Interactive Components (7)" href="/docs/v0.2.1/components/interactive" description="Dropdown, Command, ContextMenu, HoverCard, ThemeToggle, EmptyState, FileUpload" />
+  <Card title="Advanced Components (19)" href="/docs/v0.2.1/components/advanced" description="Calendar, DatePicker, TimePicker, Combobox, AlertDialog, Carousel, Charts" />
+</Cards>
+
+## What's New in v0.2.1
+
+- **Chart tooltip fix**: Custom tooltip HTML now generates correctly in installed files
+- **ChartVariants namespace fix**: Correctly under `ShellUI.Components.Variants`
+- **`chart-styles` auto-install**: `shellui add chart` installs `charts.css` to `wwwroot/css/` and injects the `<link>` into App.razor automatically
+
+[View Charts Documentation](/docs/v0.2.1/components/advanced/charts)
+
+## Getting Started
+
+To use components in your project:
+
+```bash
+# Add components via CLI
+shellui add button input card table chart
+
+# Or install via NuGet
+dotnet add package ShellUI.Components
+```
+
+## Component Features
+
+All ShellUI components include:
+
+- **Accessibility**: WCAG 2.1 AA compliant
+- **Type Safety**: Full C# type safety with CVA patterns
+- **Customizable**: Modify components directly in your codebase
+- **Responsive**: Mobile-first design
+- **Performance**: Optimized for Server and WASM
+- **Theme-Aware**: Automatic light/dark mode support

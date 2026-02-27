@@ -1,0 +1,110 @@
+---
+title: Advanced Components
+description: Complex components for advanced use cases
+---
+
+Advanced components provide sophisticated functionality for complex user interfaces, including data visualization, date selection, and rich interactions.
+
+## Overview
+
+ShellUI's advanced components handle complex scenarios like charts and data visualization (new in v0.2.0), date/time selection, data tables with sorting and filtering, and rich content display. These components are production-ready and fully customizable.
+
+## Available Components
+
+<Cards>
+  <Card title="Charts" href="/docs/v0.2.1/components/advanced/charts" description="Data visualization with ApexCharts - Bar, Line, Area, Pie, and Multi-Series charts (5 subpages)" />
+  <Card title="Calendar" href="/docs/v0.2.1/components/advanced/calendar" description="Date selection calendar" />
+  <Card title="Date Picker" href="/docs/v0.2.1/components/advanced/date-picker" description="Date input with calendar popup" />
+  <Card title="Date Range Picker" href="/docs/v0.2.1/components/advanced/date-range-picker" description="Date range selection" />
+  <Card title="Time Picker" href="/docs/v0.2.1/components/advanced/time-picker" description="Time selection component" />
+  <Card title="Combobox" href="/docs/v0.2.1/components/advanced/combobox" description="Autocomplete input with dropdown" />
+  <Card title="Alert Dialog" href="/docs/v0.2.1/components/advanced/alert-dialog" description="Confirmation dialog component" />
+  <Card title="Carousel" href="/docs/v0.2.1/components/advanced/carousel" description="Image/content carousel with navigation" />
+  <Card title="DataTable" href="/docs/v0.2.1/components/advanced/data-table" description="Advanced table with sorting and filtering" />
+</Cards>
+
+## New in v0.2.0: Charts
+
+7 new chart components built on **ApexCharts.Blazor** with full ShellUI theme integration:
+
+| Component | Description |
+|-----------|-------------|
+| `Chart` | Base chart component with theme-aware styling |
+| `BarChart` | Vertical bar charts |
+| `LineChart` | Smooth line charts |
+| `AreaChart` | Filled area charts |
+| `PieChart` | Pie charts with custom tooltips |
+| `MultiSeriesChart` | Multiple data series on one chart |
+| `ChartSeries` | Flexible series composition |
+
+### Quick Example
+
+```razor
+<BarChart TItem="SalesData"
+    Data="@salesData"
+    Title="Revenue by Quarter"
+    XValue="@(e => e.Quarter)"
+    YValue="@(e => (decimal?)e.Revenue)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<SalesData> salesData = new()
+    {
+        new("Q1", 12000), new("Q2", 19000),
+        new("Q3", 15000), new("Q4", 25000)
+    };
+
+    record SalesData(string Quarter, decimal Revenue);
+}
+```
+
+[View full Charts documentation](/docs/components/advanced/charts)
+
+## Getting Started
+
+```bash
+# Add advanced components
+shellui add calendar date-picker combobox carousel
+
+# Add chart components (new in v0.2.0)
+shellui add chart bar-chart line-chart pie-chart area-chart multi-series-chart
+```
+
+## Common Patterns
+
+### Date Picker
+```razor
+<DatePicker @bind-Value="selectedDate" />
+```
+
+### Data Table with Sorting
+```razor
+<DataTable Items="@users" Sortable="true">
+  <Column Title="Name" Field="Name" Sortable="true" />
+  <Column Title="Email" Field="Email" Sortable="true" />
+  <Column Title="Status" Field="Status" />
+</DataTable>
+```
+
+### Alert Dialog
+```razor
+<Button Variant="ButtonVariant.Destructive"
+        OnClick="() => showConfirm = true">
+  Delete Account
+</Button>
+
+<AlertDialog IsOpen="@showConfirm"
+             IsOpenChanged="@((v) => showConfirm = v)"
+             Title="Are you sure?"
+             Description="This action cannot be undone."
+             ConfirmText="Delete"
+             ConfirmVariant="ButtonVariant.Destructive"
+             OnConfirm="HandleDelete"
+             OnCancel="() => showConfirm = false" />
+
+@code {
+    private bool showConfirm = false;
+    private void HandleDelete() { showConfirm = false; }
+}
+```

@@ -1,0 +1,4 @@
+{
+  "title": "Charts",
+  "pages": ["bar-chart", "line-chart", "area-chart", "pie-chart", "multi-series-chart"]
+}

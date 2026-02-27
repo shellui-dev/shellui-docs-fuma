@@ -1,0 +1,154 @@
+---
+title: Dialog
+description: Compound modal dialog overlay for displaying content that requires user attention.
+---
+
+## Overview
+
+The Dialog component is a compound component that provides a modal overlay for forms, confirmations, and important content. It uses `CascadingParameter` to share open state between sub-components and `Shell.Cn()` for class merging.
+
+## Installation
+
+```bash
+shellui add dialog
+```
+
+## Usage
+
+### Basic Dialog
+
+```razor
+<Dialog Open="@isOpen" OpenChanged="@((bool v) => isOpen = v)">
+  <DialogTrigger>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Dialog Title</DialogTitle>
+      <DialogDescription>This is a description of the dialog.</DialogDescription>
+    </DialogHeader>
+    <p>Your content goes here.</p>
+    <DialogFooter>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
+      <Button OnClick="HandleSave">Save</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+
+@code {
+    private bool isOpen = false;
+    private void HandleSave() { isOpen = false; }
+}
+```
+
+### Confirmation Dialog
+
+```razor
+<Dialog Open="@showConfirm" OpenChanged="@((bool v) => showConfirm = v)">
+  <DialogTrigger>
+    <Button Variant="ButtonVariant.Destructive">Delete Item</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you sure?</DialogTitle>
+      <DialogDescription>This action cannot be undone.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
+      <Button Variant="ButtonVariant.Destructive" OnClick="HandleDelete">Delete</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+
+@code {
+    private bool showConfirm = false;
+    private void HandleDelete() { showConfirm = false; }
+}
+```
+
+### Form Dialog
+
+```razor
+<Dialog Open="@isOpen" OpenChanged="@((bool v) => isOpen = v)">
+  <DialogTrigger>
+    <Button>Add User</Button>
+  </DialogTrigger>
+  <DialogContent Class="sm:max-w-[425px]">
+    <DialogHeader>
+      <DialogTitle>Add New User</DialogTitle>
+      <DialogDescription>Enter the user details below.</DialogDescription>
+    </DialogHeader>
+    <div class="space-y-4 py-4">
+      <div class="space-y-2">
+        <Label>Name</Label>
+        <Input @bind-Value="name" />
+      </div>
+      <div class="space-y-2">
+        <Label>Email</Label>
+        <Input @bind-Value="email" Type="email" />
+      </div>
+    </div>
+    <DialogFooter>
+      <DialogClose><Button Variant="ButtonVariant.Outline">Cancel</Button></DialogClose>
+      <Button OnClick="HandleSubmit">Add User</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+
+@code {
+    private bool isOpen = false;
+    private string name = "";
+    private string email = "";
+    private void HandleSubmit() { isOpen = false; }
+}
+```
+
+## API Reference
+
+### Dialog
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Open` | `bool` | `false` | Controls the dialog open state |
+| `OpenChanged` | `EventCallback<bool>` | — | Callback when open state changes |
+| `ChildContent` | `RenderFragment` | — | Dialog sub-components |
+
+### DialogTrigger
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Element that opens the dialog on click |
+
+### DialogContent
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Modal body content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### DialogHeader / DialogFooter
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Section content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### DialogTitle / DialogDescription
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Text content |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### DialogClose
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Element that closes the dialog on click |
+
+## Accessibility
+
+- Focus is trapped inside the dialog while open.
+- Pressing Escape closes the dialog.
+- Proper `role="dialog"` and `aria-labelledby` / `aria-describedby` attributes are applied.
+- Focus returns to the trigger element when the dialog closes.

@@ -1,0 +1,123 @@
+---
+title: Popover
+description: Floating content panel with the new PopoverTrigger and PopoverContent subcomponents.
+---
+
+v0.3.0-alpha.2 introduces `PopoverTrigger` and `PopoverContent` subcomponents. The old `IsOpen` / `Trigger` render fragment API still works but the compositional pattern is now recommended.
+
+## What changed from v0.2.x
+
+| v0.2.1 | v0.3.0-alpha.2 |
+|--------|-------------|
+| `<Trigger>` render fragment | `<PopoverTrigger>` subcomponent |
+| External `IsOpen` binding | State managed by `Popover` internally |
+
+## Installation
+
+```bash
+shellui add popover
+```
+
+`popover-trigger` and `popover-content` are auto-installed as dependencies.
+
+## Usage
+
+### Basic
+
+```razor
+<Popover>
+    <PopoverTrigger>Open Popover</PopoverTrigger>
+    <PopoverContent>
+        <div class="space-y-2">
+            <h4 class="font-medium leading-none">Dimensions</h4>
+            <p class="text-sm text-muted-foreground">Set the dimensions for the layer.</p>
+        </div>
+    </PopoverContent>
+</Popover>
+```
+
+### With form content
+
+```razor
+<Popover>
+    <PopoverTrigger>
+        <Button Variant="ButtonVariant.Outline">Edit profile</Button>
+    </PopoverTrigger>
+    <PopoverContent>
+        <div class="space-y-3">
+            <h4 class="font-medium">Edit profile</h4>
+            <div class="space-y-1">
+                <Label For="name">Name</Label>
+                <Input Id="name" Placeholder="Your name" />
+            </div>
+            <div class="space-y-1">
+                <Label For="username">Username</Label>
+                <Input Id="username" Placeholder="@username" />
+            </div>
+        </div>
+    </PopoverContent>
+</Popover>
+```
+
+### With icon trigger
+
+```razor
+<Popover>
+    <PopoverTrigger>
+        <Button Variant="ButtonVariant.Ghost" Size="ButtonSize.Icon">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </Button>
+    </PopoverTrigger>
+    <PopoverContent>
+        <p class="text-sm">This action cannot be undone.</p>
+    </PopoverContent>
+</Popover>
+```
+
+### Legacy (also supported)
+
+The v0.2.x `<Trigger>` + `<ChildContent>` pattern with external `@bind-IsOpen` still works:
+
+```razor
+<Popover @bind-IsOpen="isPopoverOpen">
+    <Trigger>
+        <Button Variant="ButtonVariant.Outline">Open Popover</Button>
+    </Trigger>
+    <ChildContent>
+        <div class="space-y-2">
+            <h4 class="font-semibold">Dimensions</h4>
+            <div class="space-y-2">
+                <Label>Width</Label>
+                <Input Placeholder="100%" />
+            </div>
+        </div>
+    </ChildContent>
+</Popover>
+
+@code {
+    private bool isPopoverOpen = false;
+}
+```
+
+## API Reference
+
+### `<Popover>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | `PopoverTrigger` + `PopoverContent` |
+
+### `<PopoverTrigger>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `ChildContent` | `RenderFragment` | — | Trigger button content |
+
+### `<PopoverContent>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | Floating panel content |

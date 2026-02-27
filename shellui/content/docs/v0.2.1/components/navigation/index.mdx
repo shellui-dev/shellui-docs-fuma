@@ -1,0 +1,68 @@
+---
+title: Navigation Components
+description: Components for navigation, menus, and routing
+---
+
+Navigation components help users move through your application and access different sections. These components provide intuitive ways to organize and present navigation structures.
+
+## Overview
+
+ShellUI's navigation components are designed to work seamlessly with Blazor routing, providing accessible and responsive navigation patterns that work across all device sizes.
+
+## Available Components
+
+<Cards>
+  <Card title="Navbar" href="/docs/v0.2.1/components/navigation/navbar" description="Top navigation bar component" />
+  <Card title="Sidebar" href="/docs/v0.2.1/components/navigation/sidebar" description="Collapsible sidebar navigation" />
+  <Card title="Navigation Menu" href="/docs/v0.2.1/components/navigation/navigation-menu" description="Dropdown navigation menu" />
+  <Card title="Menubar" href="/docs/v0.2.1/components/navigation/menubar" description="Horizontal menu bar" />
+  <Card title="Pagination" href="/docs/v0.2.1/components/navigation/pagination" description="Page navigation controls" />
+  <Card title="Tabs" href="/docs/v0.2.1/components/navigation/tabs" description="Tabbed content navigation" />
+  <Card title="Stepper" href="/docs/v0.2.1/components/navigation/stepper" description="Multi-step form navigation" />
+  <Card title="Breadcrumb" href="/docs/v0.2.1/components/navigation/breadcrumb" description="Breadcrumb trail navigation" />
+</Cards>
+
+## Navigation Principles
+
+### Accessibility
+All navigation components include proper ARIA attributes, keyboard navigation, and screen reader support.
+
+### Responsive Design
+Navigation components adapt to different screen sizes, with mobile-friendly patterns built-in.
+
+### Routing Integration
+Components work seamlessly with Blazor's routing system and `NavLink` components.
+
+## Getting Started
+
+```bash
+# Add navigation components
+shellui add navbar sidebar tabs pagination breadcrumb
+```
+
+## Common Patterns
+
+### Top Navigation
+```razor
+<Navbar>
+  <a href="/" class="font-bold text-lg">My App</a>
+  <div class="flex-1" />
+  <a href="/docs" class="text-sm">Docs</a>
+  <a href="/about" class="text-sm">About</a>
+  <ThemeToggle />
+</Navbar>
+```
+
+### Tabbed Content
+```razor
+<Tabs Items="@tabs" ActiveTab="tab1">
+</Tabs>
+
+@code {
+    private List<TabItem> tabs = new()
+    {
+        new() { Id = "tab1", Label = "Overview", Content = builder => builder.AddContent(0, "Overview content") },
+        new() { Id = "tab2", Label = "Settings", Content = builder => builder.AddContent(0, "Settings content") }
+    };
+}
+```

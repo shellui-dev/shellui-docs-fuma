@@ -1,0 +1,83 @@
+---
+title: Hover Card
+description: Hover-triggered floating card with new HoverCardTrigger and HoverCardContent subcomponents.
+---
+
+v0.3.0-alpha.2 keeps the same `<ChildContent>` + `<CardContent>` render fragment API, with `ChildContent` being the hover trigger and `CardContent` being the floating card body.
+
+## Installation
+
+```bash
+shellui add hover-card
+```
+
+## Usage
+
+### Basic
+
+```razor
+<HoverCard>
+    <ChildContent>
+        <Button Variant="ButtonVariant.Outline">Hover me!</Button>
+    </ChildContent>
+    <CardContent>
+        <div class="space-y-2">
+            <h4 class="text-sm font-semibold">Shewart Shepherd</h4>
+            <p class="text-sm">Software Engineer at Shell Technologies</p>
+            <div class="flex items-center pt-2">
+                <span class="material-symbols-outlined text-sm mr-2 opacity-70">mail</span>
+                <span class="text-xs text-muted-foreground">shep@shell-tech.dev</span>
+            </div>
+        </div>
+    </CardContent>
+</HoverCard>
+```
+
+### Link preview
+
+```razor
+<HoverCard>
+    <ChildContent>
+        <a href="https://shellui.dev" class="text-primary hover:underline">ShellUI Docs</a>
+    </ChildContent>
+    <CardContent>
+        <div class="space-y-2">
+            <h4 class="text-sm font-semibold">ShellUI Documentation</h4>
+            <p class="text-sm text-muted-foreground">
+                CLI-first Blazor component library inspired by shadcn/ui.
+            </p>
+            <p class="text-xs text-muted-foreground">shellui.dev</p>
+        </div>
+    </CardContent>
+</HoverCard>
+```
+
+### Custom card content
+
+```razor
+<HoverCard>
+    <ChildContent>
+        <Button Variant="ButtonVariant.Ghost">@username</Button>
+    </ChildContent>
+    <CardContent>
+        <div class="flex gap-3">
+            <Avatar Fallback="SW" />
+            <div class="space-y-1">
+                <h4 class="text-sm font-semibold">@username</h4>
+                <p class="text-sm text-muted-foreground">Building the future of Blazor UI.</p>
+                <p class="text-xs text-muted-foreground">Joined February 2024</p>
+            </div>
+        </div>
+    </CardContent>
+</HoverCard>
+```
+
+## API Reference
+
+### `<HoverCard>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Class` | `string` | `""` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | The element that receives the hover — acts as the trigger |
+| `CardContent` | `RenderFragment` | — | The floating card body shown on hover |

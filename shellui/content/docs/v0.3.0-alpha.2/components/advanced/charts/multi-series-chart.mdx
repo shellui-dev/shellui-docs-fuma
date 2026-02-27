@@ -1,0 +1,160 @@
+---
+title: Multi-Series Chart
+description: Display multiple data series with mixed chart types on a single chart
+---
+
+The `MultiSeriesChart` component allows you to compose multiple data series on a single chart, each with its own chart type. This enables visualizations like revenue vs expenses (lines), tasks vs story points (bar + line), and more.
+
+## Installation
+
+```bash
+shellui add chart multi-series-chart
+dotnet add package Blazor-ApexCharts
+```
+
+`chart` and `chart-variants` are auto-installed as dependencies.
+
+## Basic Usage
+
+Two line series comparing revenue and expenses:
+
+```razor
+<MultiSeriesChart TItem="FinancialData"
+    Title="Revenue vs Expenses"
+    Subtitle="Last 6 months"
+    Theme="ChartTheme.Default"
+    Height="400px">
+
+    <ChartSeries TItem="FinancialData"
+        Data="@financialData"
+        Name="Revenue"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Revenue)" />
+
+    <ChartSeries TItem="FinancialData"
+        Data="@financialData"
+        Name="Expenses"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Expenses)" />
+
+</MultiSeriesChart>
+
+@code {
+    private List<FinancialData> financialData = new()
+    {
+        new("Jan", 45000, 32000), new("Feb", 52000, 38000),
+        new("Mar", 48000, 35000), new("Apr", 61000, 40000),
+        new("May", 55000, 42000), new("Jun", 67000, 45000)
+    };
+
+    record FinancialData(string Month, decimal Revenue, decimal Expenses);
+}
+```
+
+## Mixed Chart Types
+
+Combine bar and line series:
+
+```razor
+<MultiSeriesChart TItem="ProjectData"
+    Title="Project Overview"
+    Theme="ChartTheme.Default"
+    Height="400px">
+
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Tasks Completed"
+        SeriesType="SeriesType.Bar"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.Completed)" />
+
+    <ChartSeries TItem="ProjectData"
+        Data="@projectData"
+        Name="Story Points"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Sprint)"
+        YValue="@(e => (decimal?)e.StoryPoints)" />
+
+</MultiSeriesChart>
+
+@code {
+    private List<ProjectData> projectData = new()
+    {
+        new("Sprint 1", 12, 34), new("Sprint 2", 18, 42),
+        new("Sprint 3", 15, 38), new("Sprint 4", 22, 56)
+    };
+
+    record ProjectData(string Sprint, int Completed, int StoryPoints);
+}
+```
+
+## Three Series (Area)
+
+```razor
+<MultiSeriesChart TItem="TrafficData"
+    Title="Traffic Sources"
+    Subtitle="Monthly breakdown"
+    Theme="ChartTheme.Colorful"
+    Height="400px">
+
+    <ChartSeries TItem="TrafficData"
+        Data="@trafficData"
+        Name="Organic"
+        SeriesType="SeriesType.Area"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Organic)" />
+
+    <ChartSeries TItem="TrafficData"
+        Data="@trafficData"
+        Name="Paid"
+        SeriesType="SeriesType.Area"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Paid)" />
+
+    <ChartSeries TItem="TrafficData"
+        Data="@trafficData"
+        Name="Referral"
+        SeriesType="SeriesType.Line"
+        XValue="@(e => e.Month)"
+        YValue="@(e => (decimal?)e.Referral)" />
+
+</MultiSeriesChart>
+
+@code {
+    private List<TrafficData> trafficData = new()
+    {
+        new("Jan", 12000, 4500, 2100), new("Feb", 14000, 5200, 2400),
+        new("Mar", 11000, 6100, 1900), new("Apr", 16000, 5800, 2800),
+        new("May", 18000, 7200, 3100), new("Jun", 21000, 6500, 3500)
+    };
+
+    record TrafficData(string Month, int Organic, int Paid, int Referral);
+}
+```
+
+## API Reference
+
+### MultiSeriesChart
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | Generic type | — | The data item type shared across series |
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `ChildContent` | `RenderFragment` | — | One or more `<ChartSeries>` components |
+
+### ChartSeries
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | Generic type | — | Data item type (must match parent) |
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection for this series |
+| `Name` | `string` | `"Series"` | Series name shown in legend |
+| `SeriesType` | `SeriesType` | — | `SeriesType.Bar`, `SeriesType.Line`, or `SeriesType.Area` |
+| `XValue` | `Func<TItem, object>?` | `null` | X-axis value accessor |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Y-axis value accessor |

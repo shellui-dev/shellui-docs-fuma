@@ -1,0 +1,70 @@
+---
+title: CopyButton
+description: One-click clipboard copy button — new in v0.3.0-alpha.2.
+---
+
+`CopyButton` is **new in v0.3.0-alpha.2**. It copies text to the clipboard via the browser's Clipboard API and gives visual feedback with a checkmark icon for ~2 seconds after copying.
+
+## Installation
+
+```bash
+shellui add copy-button
+```
+
+## Usage
+
+### Basic
+
+```razor
+<CopyButton Text="npm install shellui" />
+```
+
+### In a code block header
+
+```razor
+<div class="flex items-center justify-between rounded-t-md bg-muted px-4 py-2">
+    <span class="text-xs text-muted-foreground font-mono">bash</span>
+    <CopyButton Text="dotnet tool install -g ShellUI.CLI" />
+</div>
+<pre class="rounded-b-md bg-muted px-4 py-3 text-sm font-mono">
+    dotnet tool install -g ShellUI.CLI
+</pre>
+```
+
+### With callback
+
+```razor
+<CopyButton Text="@_apiKey" OnCopied="HandleCopied" />
+
+@code {
+    private string _apiKey = "sk-abc123...";
+    private void HandleCopied() => SonnerService.Show("API key copied!", variant: "success");
+}
+```
+
+### With custom icon
+
+Replace the default clipboard icon by providing `ChildContent`:
+
+```razor
+<CopyButton Text="@value">
+    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+</CopyButton>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Text` | `string?` | `null` | The text to copy to clipboard |
+| `ChildContent` | `RenderFragment?` | `null` | Custom icon (default clipboard SVG used if omitted) |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `OnCopied` | `EventCallback` | — | Fired after successful copy |
+
+## Notes
+
+- Requires a secure context (HTTPS or localhost) — the browser Clipboard API is unavailable on plain HTTP.
+- The button is automatically disabled while the copy is in progress to prevent double-clicks.

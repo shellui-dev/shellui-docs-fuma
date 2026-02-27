@@ -1,0 +1,96 @@
+---
+title: Sonner
+description: Modern toast notifications — new in v0.3.0-alpha.2.
+---
+
+`Sonner` is **new in v0.3.0-alpha.2**. It provides shadcn-style stacked toast notifications via a `SonnerService` injectable service.
+
+## Installation
+
+```bash
+shellui add sonner
+```
+
+`sonner-variants` and `sonner-service` are auto-installed as dependencies.
+
+## Setup
+
+### 1. Register the service
+
+In `Program.cs`:
+
+```csharp
+using ShellUI.Components.Services;
+
+builder.Services.AddSonner();
+```
+
+### 2. Add `<Sonner>` to your layout
+
+Place it once at the top level, e.g. `MainLayout.razor`:
+
+```razor
+@using ShellUI.Components
+
+<main>@Body</main>
+
+<Sonner Position="SonnerPosition.TopCenter" />
+```
+
+## Usage
+
+Inject `SonnerService` in any component:
+
+```razor
+@inject SonnerService SonnerService
+
+<div class="flex flex-wrap gap-2">
+    <Button @onclick='() => SonnerService.Show("Saved successfully!")'>Default</Button>
+    <Button @onclick='() => SonnerService.Show("All done", variant: "success")'>Success</Button>
+    <Button @onclick='() => SonnerService.Show("Something went wrong", variant: "destructive")'>Error</Button>
+    <Button @onclick='() => SonnerService.Show("Update available", description: "A new version is ready to install.")'>With description</Button>
+</div>
+```
+
+### Dismiss all toasts
+
+```razor
+<Button Variant="ButtonVariant.Ghost" @onclick="SonnerService.Clear">Clear all</Button>
+```
+
+## Position options
+
+```razor
+@* Bottom right (common for apps) *@
+<Sonner Position="SonnerPosition.BottomRight" />
+
+@* Top center (common for docs/alerts) *@
+<Sonner Position="SonnerPosition.TopCenter" />
+```
+
+## API Reference
+
+### `<Sonner>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Position` | `SonnerPosition` | `TopCenter` | Where toasts appear on screen |
+
+### `SonnerPosition` enum
+
+| Value | Position |
+|-------|----------|
+| `TopLeft` | Top-left corner |
+| `TopCenter` | Top-center |
+| `TopRight` | Top-right corner |
+| `BottomLeft` | Bottom-left corner |
+| `BottomCenter` | Bottom-center |
+| `BottomRight` | Bottom-right corner |
+
+### `SonnerService` methods
+
+| Method | Description |
+|--------|-------------|
+| `Show(message, description?, variant?)` | Display a toast. Variant: `""` · `"success"` · `"destructive"` |
+| `Remove(id)` | Dismiss a specific toast by ID |
+| `Clear()` | Dismiss all toasts |

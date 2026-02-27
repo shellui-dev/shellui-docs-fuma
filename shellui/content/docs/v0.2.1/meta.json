@@ -1,0 +1,17 @@
+{
+  "title": "v0.2.1",
+  "description": "Latest stable — chart fixes & CSS auto-install",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index",
+    "quickstart",
+    "comparison",
+    "installation",
+    "---Components---",
+    "components",
+    "---Customization---",
+    "theming",
+    "contributing"
+  ]
+}

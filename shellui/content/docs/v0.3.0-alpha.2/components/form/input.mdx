@@ -1,0 +1,101 @@
+---
+title: Input
+description: Text input field component with variant support and two-way binding.
+---
+
+The Input component provides a styled text input field with support for all standard HTML input types, two-way binding, and focus/blur events.
+
+## Installation
+
+```bash
+shellui add input
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Input Placeholder="Enter your name" />
+```
+
+### Input Types
+
+```razor
+<Input Placeholder="email@example.com" Type="email" />
+<Input Placeholder="Enter password" Type="password" />
+<Input Placeholder="Enter amount" Type="number" />
+<Input Placeholder="Search..." Type="search" />
+```
+
+### With Label
+
+```razor
+<div class="space-y-2">
+  <Label For="email">Email</Label>
+  <Input Placeholder="email@example.com" Type="email" />
+</div>
+```
+
+### Two-way Binding
+
+```razor
+<Input @bind-Value="email" Placeholder="Enter email" Type="email" />
+
+@code {
+    private string email = "";
+}
+```
+
+### ValueChanged Callback
+
+```razor
+<Input Value="@email" ValueChanged="@HandleEmailChanged" Placeholder="Enter email" />
+
+@code {
+    private string email = "";
+
+    private void HandleEmailChanged(string value)
+    {
+        email = value;
+    }
+}
+```
+
+### Disabled and ReadOnly
+
+```razor
+<Input Placeholder="Disabled input" Disabled="true" />
+<Input Value="Read-only value" ReadOnly="true" />
+```
+
+### Custom Class
+
+```razor
+<div class="relative">
+  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">@</span>
+  <Input Class="pl-10" Placeholder="Email" Type="email" />
+</div>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `InputVariant` | `Default` | Visual style variant |
+| `Type` | `string` | `"text"` | HTML input type attribute |
+| `Value` | `string` | `""` | Current input value |
+| `Placeholder` | `string` | `""` | Placeholder text |
+| `Disabled` | `bool` | `false` | Disables the input |
+| `ReadOnly` | `bool` | `false` | Makes input read-only |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when value changes |
+| `OnFocus` | `EventCallback<FocusEventArgs>` | — | Fires when input gains focus |
+| `OnBlur` | `EventCallback<FocusEventArgs>` | — | Fires when input loses focus |
+
+## Accessibility
+
+- Proper label association via `For` / `Id` attributes
+- ARIA attributes for validation states
+- Keyboard navigation support
+- Screen reader compatible

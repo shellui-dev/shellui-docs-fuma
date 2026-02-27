@@ -1,0 +1,95 @@
+---
+title: Button
+description: Interactive button component with type-safe variants, sizes, and loading state.
+---
+
+The Button component provides a flexible, accessible button for Blazor applications with enum-based variants and sizes following shadcn/ui patterns.
+
+## Installation
+
+```bash
+shellui add button
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Button>Click me</Button>
+```
+
+### Variants
+
+```razor
+<Button Variant="ButtonVariant.Default">Default</Button>
+<Button Variant="ButtonVariant.Secondary">Secondary</Button>
+<Button Variant="ButtonVariant.Destructive">Delete</Button>
+<Button Variant="ButtonVariant.Outline">Outline</Button>
+<Button Variant="ButtonVariant.Ghost">Ghost</Button>
+<Button Variant="ButtonVariant.Link">Link</Button>
+```
+
+### Sizes
+
+```razor
+<Button Size="ButtonSize.Sm">Small</Button>
+<Button Size="ButtonSize.Default">Default</Button>
+<Button Size="ButtonSize.Lg">Large</Button>
+<Button Size="ButtonSize.Icon">
+  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+</Button>
+```
+
+### Loading and Disabled
+
+```razor
+<Button IsLoading="true">Saving...</Button>
+<Button Disabled="true">Disabled</Button>
+```
+
+### With Icon
+
+```razor
+<Button>
+  <svg class="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+  Add Item
+</Button>
+```
+
+### Event Handling
+
+```razor
+<Button OnClick="HandleClick">Click me</Button>
+
+@code {
+    private void HandleClick(MouseEventArgs args)
+    {
+        // Handle button click
+    }
+}
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `ButtonVariant` | `Default` | Visual style: `Default`, `Secondary`, `Destructive`, `Outline`, `Ghost`, `Link` |
+| `Size` | `ButtonSize` | `Default` | Button size: `Default`, `Sm`, `Lg`, `Icon` |
+| `Type` | `string` | `"button"` | HTML button type attribute |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `Disabled` | `bool` | `false` | Disables the button |
+| `IsLoading` | `bool` | `false` | Shows loading spinner and disables interaction |
+| `OnClick` | `EventCallback<MouseEventArgs>` | — | Click event callback |
+| `ChildContent` | `RenderFragment` | `null` | Button content |
+
+## Accessibility
+
+- Uses native `<button>` element with semantic HTML
+- `aria-disabled` applied when disabled or loading
+- Full keyboard navigation with visible focus indicators
+- Screen reader compatible

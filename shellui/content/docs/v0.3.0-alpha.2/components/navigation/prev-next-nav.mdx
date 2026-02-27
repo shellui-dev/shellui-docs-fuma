@@ -1,0 +1,63 @@
+---
+title: PrevNextNav
+description: Previous/Next page navigation links — new in v0.3.0-alpha.2.
+---
+
+`PrevNextNav` is **new in v0.3.0-alpha.2**. It renders a pair of bordered navigation links for moving between doc pages. Perfect for adding at the bottom of any page.
+
+## Installation
+
+```bash
+shellui add prev-next-nav
+```
+
+## Usage
+
+### Basic
+
+```razor
+<PrevNextNav
+    PrevLabel="Installation"
+    PrevHref="/docs/v0.3.0-alpha.2/installation"
+    NextLabel="Components"
+    NextHref="/docs/v0.3.0-alpha.2/components" />
+```
+
+### Next only
+
+Omit `PrevHref` to show only the Next link with an empty placeholder on the left:
+
+```razor
+<PrevNextNav
+    NextLabel="Quick Start"
+    NextHref="/docs/v0.3.0-alpha.2/quickstart" />
+```
+
+### Prev only
+
+```razor
+<PrevNextNav
+    PrevLabel="Quick Start"
+    PrevHref="/docs/v0.3.0-alpha.2/quickstart" />
+```
+
+### In a docs page layout
+
+```razor
+@* At the bottom of any .razor or .mdx page *@
+<PrevNextNav
+    PrevLabel="@prevPage.Title"
+    PrevHref="@prevPage.Href"
+    NextLabel="@nextPage.Title"
+    NextHref="@nextPage.Href" />
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `PrevLabel` | `string?` | `null` | Label for the previous link |
+| `PrevHref` | `string?` | `null` | URL for the previous page. Omit to hide prev link. |
+| `NextLabel` | `string?` | `null` | Label for the next link |
+| `NextHref` | `string?` | `null` | URL for the next page. Omit to hide next link. |
+| `Class` | `string?` | `null` | Additional CSS classes on the `<nav>` element |

@@ -1,0 +1,174 @@
+---
+title: Charts
+description: Data visualization components built on ApexCharts.Blazor with theme-aware styling
+icon: ChartBar
+---
+
+ShellUI v0.2.1 includes **7 chart components** built on **ApexCharts.Blazor**, offering beautiful, responsive, and theme-aware data visualizations for your Blazor applications.
+
+## Overview
+
+Chart components are built with:
+- **ApexCharts.Blazor**: Professional charting library with rich interactivity
+- **Generic Type System**: `TItem` type parameter for strongly-typed data binding
+- **Theme-Aware Containers**: Charts use your CSS variables (`--border`, `--card`, `--radius`, `--shadow`)
+- **Three Built-in Themes**: Default, Colorful, and Monochrome color palettes
+- **Custom Tooltips**: Compact, shadcn-inspired tooltips with dark mode support
+
+## Chart Components
+
+<Cards>
+  <Card title="Bar Chart" href="/docs/v0.2.1/components/advanced/charts/bar-chart" description="Vertical bar charts for comparing values across categories" />
+  <Card title="Line Chart" href="/docs/v0.2.1/components/advanced/charts/line-chart" description="Smooth line charts for showing trends over time" />
+  <Card title="Area Chart" href="/docs/v0.2.1/components/advanced/charts/area-chart" description="Filled area charts for showing volume and trends" />
+  <Card title="Pie Chart" href="/docs/v0.2.1/components/advanced/charts/pie-chart" description="Pie charts with custom tooltips for proportions" />
+  <Card title="Multi-Series Chart" href="/docs/v0.2.1/components/advanced/charts/multi-series-chart" description="Multiple data series with mixed chart types" />
+</Cards>
+
+## Installation
+
+```bash
+# Via CLI — installs Chart, ChartVariants, chart-styles (charts.css → wwwroot/css/) + auto-injects <link> into App.razor
+shellui add chart
+
+# Add individual chart types
+shellui add bar-chart line-chart area-chart pie-chart multi-series-chart
+
+# Charts require ApexCharts.Blazor
+dotnet add package Blazor-ApexCharts
+```
+
+Or via NuGet:
+```bash
+dotnet add package ShellUI.Components
+dotnet add package Blazor-ApexCharts
+```
+
+## Quick Example
+
+```razor
+<BarChart TItem="SalesData"
+    Data="@salesData"
+    Title="Revenue by Quarter"
+    XValue="@(e => e.Quarter)"
+    YValue="@(e => (decimal?)e.Revenue)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<SalesData> salesData = new()
+    {
+        new("Q1", 12000), new("Q2", 19000),
+        new("Q3", 15000), new("Q4", 25000)
+    };
+
+    record SalesData(string Quarter, decimal Revenue);
+}
+```
+
+## Chart Themes
+
+ShellUI provides three built-in color themes via the `ChartTheme` enum:
+
+| Theme | Description | Colors |
+|-------|-------------|--------|
+| `ChartTheme.Default` | Professional palette for light/dark modes | Blue, Red, Green, Yellow, Purple |
+| `ChartTheme.Colorful` | Vibrant multi-color palette for emphasis | Blue, Red, Green, Yellow, Purple, Pink, Cyan |
+| `ChartTheme.Monochrome` | Minimal, understated aesthetic | Various shades of slate gray |
+
+```razor
+@* Switch themes easily *@
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Default" ... />
+
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Colorful" ... />
+
+<BarChart TItem="SalesData"
+    Theme="ChartTheme.Monochrome" ... />
+```
+
+## Theme-Aware Styling
+
+Chart containers automatically integrate with your ShellUI theme:
+
+```css
+/* Charts use these CSS variables from your theme */
+var(--border)          /* Container border */
+var(--card)            /* Background color */
+var(--card-foreground) /* Text color */
+var(--radius)          /* Border radius */
+var(--shadow)          /* Box shadow */
+```
+
+Charts render with transparent backgrounds, inheriting your card styling. The container class is:
+```
+border border-border bg-card text-card-foreground overflow-hidden
+[border-radius:var(--radius)] [box-shadow:var(--shadow)]
+```
+
+## Shared API Reference
+
+### Base Chart Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment?` | `null` | Child content (for Chart base) |
+
+### Typed Chart Properties (BarChart, LineChart, AreaChart, PieChart)
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Data"` | Series name shown in legend/tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Function to extract X-axis value |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Function to extract Y-axis value |
+
+### ChartTheme Enum
+
+| Value | Description |
+|-------|-------------|
+| `ChartTheme.Default` | Blue, Red, Green, Yellow, Purple |
+| `ChartTheme.Colorful` | Blue, Red, Green, Yellow, Purple, Pink, Cyan |
+| `ChartTheme.Monochrome` | Slate gray variations |
+
+### SeriesType Enum
+
+| Value | Description |
+|-------|-------------|
+| `SeriesType.Line` | Line chart series |
+| `SeriesType.Bar` | Bar chart series |
+| `SeriesType.Area` | Area chart series |
+| `SeriesType.Pie` | Pie chart series |
+
+## Built-in Features
+
+All chart components include:
+
+- **Toolbar**: Download, zoom, pan, and reset controls
+- **Smooth Curves**: `Curve.Smooth` with rounded line caps
+- **Custom Tooltips**: Multi-series tooltips with color markers
+- **Responsive Legend**: Bottom-positioned with styled markers
+- **Grid Lines**: Dashed grid lines for readability
+- **Category Axis**: Proper string label display on X-axis
+
+## Accessibility
+
+Chart components include:
+- **ARIA Labels**: Descriptive labels for screen readers
+- **Keyboard Navigation**: Full keyboard support for interactive elements
+- **Color Contrast**: Theme colors meet WCAG contrast guidelines
+- **Chart Data Attributes**: `data-chart-theme` attribute for styling hooks
+
+## Performance
+
+- **Efficient Rendering**: ApexCharts handles efficient DOM updates
+- **Smart Data Binding**: Generic type system with delegate-based value extraction
+- **Lazy Options**: Chart options are computed once and cached
+- **Transparent Backgrounds**: Charts blend seamlessly with card containers

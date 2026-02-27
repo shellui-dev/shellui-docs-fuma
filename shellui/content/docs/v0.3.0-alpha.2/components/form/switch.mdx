@@ -1,0 +1,99 @@
+---
+title: Switch
+description: Toggle switch component for boolean selections.
+---
+
+The Switch component provides a toggle switch with a modern, animated design for on/off states.
+
+## Installation
+
+```bash
+shellui add switch
+```
+
+## Usage
+
+### Basic
+
+```razor
+<Switch Checked="@isEnabled" CheckedChanged="@HandleChanged" />
+
+@code {
+    private bool isEnabled = false;
+
+    private void HandleChanged(bool value)
+    {
+        isEnabled = value;
+    }
+}
+```
+
+### Two-way Binding
+
+```razor
+<Switch @bind-Checked="notificationsEnabled" />
+
+@code {
+    private bool notificationsEnabled = false;
+}
+```
+
+### With Label
+
+```razor
+<div class="flex items-center space-x-2">
+  <Switch @bind-Checked="notificationsEnabled" />
+  <Label>Enable notifications</Label>
+</div>
+
+@code {
+    private bool notificationsEnabled = false;
+}
+```
+
+### Settings Example
+
+```razor
+<div class="space-y-4">
+  <div class="flex items-center justify-between">
+    <div class="space-y-0.5">
+      <Label>Email Notifications</Label>
+      <p class="text-sm text-muted-foreground">Receive email updates</p>
+    </div>
+    <Switch @bind-Checked="emailNotifications" />
+  </div>
+  <div class="flex items-center justify-between">
+    <div class="space-y-0.5">
+      <Label>Push Notifications</Label>
+      <p class="text-sm text-muted-foreground">Receive push updates</p>
+    </div>
+    <Switch @bind-Checked="pushNotifications" />
+  </div>
+</div>
+
+@code {
+    private bool emailNotifications = false;
+    private bool pushNotifications = false;
+}
+```
+
+### Disabled
+
+```razor
+<Switch Checked="true" Disabled="true" />
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Checked` | `bool` | `false` | Checked state |
+| `CheckedChanged` | `EventCallback<bool>` | — | Fires when checked state changes |
+| `Disabled` | `bool` | `false` | Disables the switch |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+- Proper ARIA attributes (`role="switch"`, `aria-checked`)
+- Keyboard navigation support (Space to toggle)
+- Screen reader compatible

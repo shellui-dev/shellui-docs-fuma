@@ -1,0 +1,117 @@
+---
+title: ShellUI Documentation
+description: CLI-first Blazor component library inspired by shadcn/ui
+icon: Book
+---
+
+Welcome to ShellUI v0.3.0-alpha.2, the latest pre-release of the CLI-first Blazor component library inspired by shadcn/ui. Includes new compositional components, chart improvements, and CLI registry fixes.
+
+<div className="flex gap-2 my-4">
+  <span className="bg-amber-500 text-white px-3 py-1 rounded-md text-sm font-medium">v0.3.0-alpha.2 — Pre-release</span>
+  <span className="bg-violet-500 text-white px-3 py-1 rounded-md text-sm font-medium">New Components</span>
+  <span className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm font-medium">CLI Registry Fixed</span>
+</div>
+
+## Getting Started
+
+### Installation
+
+Choose your preferred installation method:
+
+**CLI Installation (Recommended)**
+```bash
+# Install alpha CLI
+dotnet tool install -g ShellUI.CLI --version 0.3.0-alpha.2
+
+# Or upgrade from alpha.1
+dotnet tool update -g ShellUI.CLI --version 0.3.0-alpha.2
+
+# Initialize in your Blazor project
+shellui init
+
+# Add components
+shellui add button input card table chart drawer sheet
+```
+
+**NuGet Package**
+```bash
+dotnet add package ShellUI.Components
+```
+
+### Quick Example
+
+```razor
+<Card>
+  <CardHeader>
+    <CardTitle>Welcome to ShellUI</CardTitle>
+    <CardDescription>Build beautiful Blazor applications</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Your content goes here.</p>
+  </CardContent>
+</Card>
+```
+
+## Component Categories
+
+Explore our comprehensive component library, organized by category:
+
+<Cards>
+  <Card title="Form Components" href="/docs/v0.3.0-alpha.2/components/form" description="Buttons, inputs, selects, and form controls" />
+  <Card title="Layout Components" href="/docs/v0.3.0-alpha.2/components/layout" description="Cards, dialogs, sheets, and structural elements" />
+  <Card title="Navigation Components" href="/docs/v0.3.0-alpha.2/components/navigation" description="Menus, breadcrumbs, tabs, and navigation elements" />
+  <Card title="Interactive Components" href="/docs/v0.3.0-alpha.2/components/interactive" description="Dropdowns, tooltips, and interactive elements" />
+  <Card title="Advanced Components" href="/docs/v0.3.0-alpha.2/components/advanced" description="Calendars, charts, carousels, steppers, and complex UI elements" />
+</Cards>
+
+## What's New in v0.3.0-alpha.2
+
+- **Drawer/Sheet compositional pattern**: `DrawerTrigger`, `DrawerContent`, `SheetTrigger`, `SheetContent` — no external open state required
+- **CLI registry fix**: `shellui add drawer` and `shellui add sheet` now auto-install all subcomponent files
+- **New components**: Callout, CopyButton, LinkCard, PrevNextNav, Sonner, Stepper — all installable via CLI
+- **Chart fixes**: tooltip generation, `ChartVariants` namespace, and `chart-styles` auto-install (v0.2.1 backport)
+- **Compositional APIs**: NavigationMenu, Tabs, Dropdown, Popover, Collapsible, Accordion all have new subcomponent patterns
+
+## Key Features
+
+- **CLI-First**: Copy components directly to your codebase for full control
+- **Hybrid Workflow**: CLI + NuGet packages for maximum flexibility
+- **Tailwind CSS v4.1.18**: Modern styling with standalone CLI (no Node.js required)
+- **Production-Ready Components**: Comprehensive component library
+- **Type-Safe Variants**: CVA patterns with full C# type safety
+- **Accessible**: WCAG 2.1 AA compliant by default
+- **Performance Optimized**: Built for both Server and WASM scenarios
+- **Customizable**: Easy theme customization with CSS variables
+
+## Architecture
+
+ShellUI offers a unique hybrid approach:
+
+- **Copy Components**: Like shadcn/ui, components are copied to your project
+- **NuGet Option**: Traditional package installation for quick starts
+- **Tailwind Integration**: Standalone CLI or npm setup options
+- **Build Integration**: Automatic CSS compilation on project build
+
+## Theming
+
+Customize your theme instantly with [tweakcn](https://tweakcn.com) or modify CSS variables:
+
+```css
+:root {
+  --background: oklch(0.9900 0 0);
+  --foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9400 0 0);
+  --secondary-foreground: oklch(0 0 0);
+  /* ... more variables */
+}
+```
+
+## Learn More
+
+- [GitHub Repository](https://github.com/shellui-dev/shellui)
+- [Installation Guide](/docs/v0.3.0-alpha.2/installation)
+- [Component API](/docs/v0.3.0-alpha.2/components)
+- [Theming Guide](/docs/v0.2.1/theming)
+- [Contributing](/docs/v0.3.0-alpha.2/contributing)

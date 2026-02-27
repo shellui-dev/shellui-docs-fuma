@@ -3,16 +3,16 @@ import Link from "next/link";
 import { BlogPostLayout } from "@/components/blog-post-layout";
 
 export const metadata = createMetadata({
-  title: "ShellUI v0.2.0 – Production ready, 80 components, charts & more",
+  title: "ShellUI v0.2.0 – Production ready, charts & more",
   description:
-    "Charts and data visualization, theme-aware containers, Tailwind CSS v4.1.18, and 80 production-ready ShellUI components.",
+    "Charts and data visualization, theme-aware containers, Tailwind CSS v4.1.18, and production-ready ShellUI components.",
 });
 
 export default function ReleaseV020Page() {
   return (
     <BlogPostLayout
-      title="ShellUI v0.2.0 – Production ready, 80 components, charts & more"
-      date="February 10, 2025"
+      title="ShellUI v0.2.0 – Production ready, charts & more"
+      date="February 10, 2026"
       meta="Release · ShellUI"
     >
           <p className="text-lg text-muted-foreground">

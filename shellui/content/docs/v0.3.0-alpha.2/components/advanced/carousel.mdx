@@ -1,0 +1,107 @@
+---
+title: Carousel
+description: Content carousel using TotalSlides + CarouselItem. Subcomponents auto-installed as dependencies.
+---
+
+Carousel uses a `TotalSlides` + `<CarouselItem>` API. Items are passed as direct children via `<CarouselItem>` — each item must declare `TotalSlides` so it can calculate its own width.
+
+## Installation
+
+```bash
+shellui add carousel
+```
+
+`carousel-item`, `carousel-content`, `carousel-previous`, `carousel-next`, and `carousel-dots` are auto-installed as dependencies.
+
+## Usage
+
+### Basic (text/content)
+
+```razor
+<Carousel TotalSlides="3" CurrentSlide="@_slide" CurrentSlideChanged="v => _slide = v">
+    <CarouselItem TotalSlides="3">
+        <div class="rounded-lg p-8 text-center">
+            <h4 class="text-2xl font-bold mb-2">Slide 1</h4>
+            <p>Welcome to ShellUI Carousel</p>
+        </div>
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <div class="rounded-lg p-8 text-center">
+            <h4 class="text-2xl font-bold mb-2">Slide 2</h4>
+            <p>Beautiful components for Blazor</p>
+        </div>
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <div class="rounded-lg p-8 text-center">
+            <h4 class="text-2xl font-bold mb-2">Slide 3</h4>
+            <p>Built with Tailwind CSS</p>
+        </div>
+    </CarouselItem>
+</Carousel>
+
+@code {
+    private int _slide = 0;
+}
+```
+
+### Auto-play
+
+```razor
+<Carousel TotalSlides="3" CurrentSlide="@_slide" CurrentSlideChanged="v => _slide = v"
+          AutoPlay="true" AutoPlayInterval="3000" AspectRatio="16/9">
+    <CarouselItem TotalSlides="3">
+        <div class="text-center"><h4>Slide 1</h4></div>
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <div class="text-center"><h4>Slide 2</h4></div>
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <div class="text-center"><h4>Slide 3</h4></div>
+    </CarouselItem>
+</Carousel>
+```
+
+### Image carousel with dots
+
+```razor
+<Carousel TotalSlides="3" CurrentSlide="@_slide" CurrentSlideChanged="v => _slide = v"
+          AutoPlay="true" AutoPlayInterval="5000" AspectRatio="21/9" ShowDots="true">
+    <CarouselItem TotalSlides="3">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop"
+             alt="Landscape 1" class="w-full h-full object-cover rounded-lg" />
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=400&fit=crop"
+             alt="Landscape 2" class="w-full h-full object-cover rounded-lg" />
+    </CarouselItem>
+    <CarouselItem TotalSlides="3">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop"
+             alt="Landscape 3" class="w-full h-full object-cover rounded-lg" />
+    </CarouselItem>
+</Carousel>
+```
+
+## API Reference
+
+### `<Carousel>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `TotalSlides` | `int` | — | Total number of slides |
+| `CurrentSlide` | `int` | `0` | Index of the currently visible slide |
+| `CurrentSlideChanged` | `EventCallback<int>` | — | Fires when the active slide changes |
+| `AutoPlay` | `bool` | `false` | Enables automatic slide advancement |
+| `AutoPlayInterval` | `int` | `3000` | Milliseconds between auto-advances |
+| `AspectRatio` | `string?` | `null` | CSS aspect-ratio value, e.g. `"16/9"`, `"21/9"` |
+| `ShowDots` | `bool` | `false` | Show dot indicators below the carousel |
+| `Class` | `string?` | `null` | Additional CSS classes |
+| `ChildContent` | `RenderFragment` | — | `CarouselItem` children |
+
+### `<CarouselItem>`
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `TotalSlides` | `int` | — | Must match the parent `Carousel.TotalSlides` — used for width calculation |
+| `ChildContent` | `RenderFragment` | — | Slide content |
+
+Render previous/next arrow buttons. No parameters required.

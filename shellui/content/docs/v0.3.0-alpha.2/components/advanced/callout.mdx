@@ -1,0 +1,88 @@
+---
+title: Callout
+description: Admonition boxes for info, warnings, tips, and danger notices — new in v0.3.0-alpha.2.
+---
+
+`Callout` is **new in v0.3.0-alpha.2**. It renders styled admonition boxes using the `CalloutVariant` enum — useful for documentation, inline warnings, and instructional content.
+
+## Installation
+
+```bash
+shellui add callout
+```
+
+`callout-variants` is auto-installed as a dependency.
+
+## Usage
+
+### All variants
+
+```razor
+<Callout Variant="CalloutVariant.Info" Title="Good to know">
+    Components are copied to your project, not installed as a black-box library.
+</Callout>
+
+<Callout Variant="CalloutVariant.Tip" Title="Pro tip">
+    Use <code>shellui add --all</code> to install every component at once.
+</Callout>
+
+<Callout Variant="CalloutVariant.Warning" Title="Heads up">
+    This API is in alpha. Breaking changes may occur before stable release.
+</Callout>
+
+<Callout Variant="CalloutVariant.Danger" Title="Danger">
+    Deleting your account is irreversible. All data will be permanently removed.
+</Callout>
+```
+
+### Without a title
+
+```razor
+<Callout Variant="CalloutVariant.Info">
+    ShellUI requires Tailwind CSS v4.x.
+</Callout>
+```
+
+### With a custom icon
+
+```razor
+<Callout Variant="CalloutVariant.Tip" Title="Keyboard shortcut">
+    <Icon>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+    </Icon>
+    Press <kbd>Ctrl + K</kbd> to open the command palette.
+</Callout>
+```
+
+### Rich content
+
+```razor
+<Callout Variant="CalloutVariant.Warning" Title="Before you upgrade">
+    <p>Review the following before upgrading to v0.3.0-alpha.2:</p>
+    <ul class="mt-2 list-disc pl-4 text-sm space-y-1">
+        <li>Update <code>@bind-CurrentStep</code> → <code>@bind-Value</code> on Stepper</li>
+        <li>Replace <code>Trigger</code> render fragments with subcomponents</li>
+    </ul>
+</Callout>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `CalloutVariant` | `Info` | Visual style |
+| `Title` | `string?` | `null` | Bold heading above content |
+| `Icon` | `RenderFragment?` | `null` | Custom icon replacing the default |
+| `ChildContent` | `RenderFragment` | — | Callout body |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+### `CalloutVariant` enum
+
+| Value | Description |
+|-------|-------------|
+| `Info` | Blue — informational note |
+| `Tip` | Green — helpful suggestion |
+| `Warning` | Yellow/amber — caution |
+| `Danger` | Red — critical warning |
