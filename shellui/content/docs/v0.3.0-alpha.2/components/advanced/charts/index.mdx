@@ -1,0 +1,99 @@
+---
+title: Charts
+description: Data visualization components built on ApexCharts.Blazor with theme-aware styling
+icon: ChartBar
+---
+
+ShellUI includes **5 chart types** built on **ApexCharts.Blazor**, offering beautiful, responsive, and theme-aware data visualizations for your Blazor applications.
+
+## Overview
+
+Chart components are built with:
+- **ApexCharts.Blazor**: Professional charting library with rich interactivity
+- **Generic Type System**: `TItem` type parameter for strongly-typed data binding
+- **Theme-Aware Containers**: Charts use your CSS variables (`--border`, `--card`, `--radius`, `--shadow`)
+- **Three Built-in Themes**: Default, Colorful, and Monochrome color palettes
+
+## Chart Types
+
+<Cards>
+  <Card title="Bar Chart" href="/docs/v0.3.0-alpha.2/components/advanced/charts/bar-chart" description="Vertical bar charts for comparing values across categories" />
+  <Card title="Line Chart" href="/docs/v0.3.0-alpha.2/components/advanced/charts/line-chart" description="Smooth line charts for showing trends over time" />
+  <Card title="Area Chart" href="/docs/v0.3.0-alpha.2/components/advanced/charts/area-chart" description="Filled area charts for showing volume and trends" />
+  <Card title="Pie Chart" href="/docs/v0.3.0-alpha.2/components/advanced/charts/pie-chart" description="Pie charts with custom tooltips for proportions" />
+  <Card title="Multi-Series Chart" href="/docs/v0.3.0-alpha.2/components/advanced/charts/multi-series-chart" description="Multiple data series with mixed chart types" />
+</Cards>
+
+## Installation
+
+Install all chart components at once:
+
+```bash
+shellui add chart bar-chart line-chart pie-chart area-chart multi-series-chart
+dotnet add package Blazor-ApexCharts
+```
+
+Or install just the chart types you need — `chart` and `chart-variants` auto-install as dependencies:
+
+```bash
+# Just a bar chart
+shellui add chart bar-chart
+
+# Bar and line charts
+shellui add chart bar-chart line-chart
+
+# All chart types
+shellui add chart bar-chart line-chart pie-chart area-chart multi-series-chart
+```
+
+## Quick Start
+
+```razor
+<BarChart TItem="SalesData"
+    Data="@salesData"
+    Title="Revenue by Quarter"
+    XValue="@(e => e.Quarter)"
+    YValue="@(e => (decimal?)e.Revenue)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<SalesData> salesData = new()
+    {
+        new("Q1", 45000), new("Q2", 52000),
+        new("Q3", 48000), new("Q4", 61000)
+    };
+
+    record SalesData(string Quarter, decimal Revenue);
+}
+```
+
+## Themes
+
+All chart components support three themes via the `ChartTheme` enum:
+
+| Theme | Description |
+|-------|-------------|
+| `ChartTheme.Default` | Subtle blue/slate palette, works in light and dark mode |
+| `ChartTheme.Colorful` | Vibrant multi-color palette for distinguishing data series |
+| `ChartTheme.Monochrome` | Minimal slate gray variations for a clean, professional look |
+
+## NuGet Dependency
+
+All chart components require **Blazor-ApexCharts**:
+
+```bash
+dotnet add package Blazor-ApexCharts
+```
+
+Register the service and script in your app:
+
+```csharp
+// Program.cs
+builder.Services.AddApexCharts();
+```
+
+```html
+<!-- App.razor -->
+<script src="_content/Blazor-ApexCharts/js/apex-charts.min.js"></script>
+```

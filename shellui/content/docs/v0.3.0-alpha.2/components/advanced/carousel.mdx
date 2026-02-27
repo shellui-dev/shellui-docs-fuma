@@ -1,15 +1,17 @@
 ---
 title: Carousel
-description: Content carousel rebuilt with new CarouselList, CarouselSlide, CarouselDots, CarouselPrevious, and CarouselNext subcomponents.
+description: Content carousel using TotalSlides + CarouselItem. Subcomponents auto-installed as dependencies.
 ---
 
-v0.3.0-alpha.2 keeps the same `TotalSlides` + `<CarouselItem>` API. Items are passed as direct children via `<CarouselItem>` — each item must declare `TotalSlides` so it can calculate its own width.
+Carousel uses a `TotalSlides` + `<CarouselItem>` API. Items are passed as direct children via `<CarouselItem>` — each item must declare `TotalSlides` so it can calculate its own width.
 
 ## Installation
 
 ```bash
-shellui add carousel carousel-item
+shellui add carousel
 ```
+
+`carousel-item`, `carousel-content`, `carousel-previous`, `carousel-next`, and `carousel-dots` are auto-installed as dependencies.
 
 ## Usage
 

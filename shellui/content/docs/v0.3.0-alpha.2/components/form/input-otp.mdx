@@ -1,0 +1,116 @@
+---
+title: Input OTP
+description: One-time password input field with auto-focus and grouping.
+---
+
+The InputOTP component provides a multi-digit input for one-time passwords and verification codes with auto-focus navigation.
+
+## Installation
+
+```bash
+shellui add input-otp
+```
+
+## Usage
+
+### Basic
+
+```razor
+<InputOTP Value="@otpCode" ValueChanged="@HandleChanged" />
+
+@code {
+    private string otpCode = "";
+
+    private void HandleChanged(string value)
+    {
+        otpCode = value;
+    }
+}
+```
+
+### Two-way Binding
+
+```razor
+<InputOTP @bind-Value="otpCode" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+### Custom Length
+
+```razor
+<InputOTP @bind-Value="otpCode" Length="4" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+### With Grouping
+
+Groups digits with a separator. For example, `Length="6"` and `GroupBy="3"` displays as `[1][2][3] - [4][5][6]`.
+
+```razor
+<InputOTP @bind-Value="otpCode" Length="6" GroupBy="3" />
+
+@code {
+    private string otpCode = "";
+}
+```
+
+### With Completion Handler
+
+```razor
+<InputOTP @bind-Value="otpCode" OnComplete="HandleComplete" />
+
+@code {
+    private string otpCode = "";
+
+    private void HandleComplete(string value)
+    {
+        // All digits entered — verify the code
+    }
+}
+```
+
+### With Label
+
+```razor
+<div class="space-y-2">
+  <Label>Enter verification code</Label>
+  <InputOTP @bind-Value="code" Length="6" />
+  <p class="text-sm text-muted-foreground">We sent a code to your email</p>
+</div>
+
+@code {
+    private string code = "";
+}
+```
+
+### Disabled
+
+```razor
+<InputOTP Value="123456" Disabled="true" />
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Value` | `string` | `""` | Current OTP value |
+| `ValueChanged` | `EventCallback<string>` | — | Fires when value changes |
+| `OnComplete` | `EventCallback<string>` | — | Fires when all digits are entered |
+| `Length` | `int` | `6` | Number of input digits |
+| `GroupBy` | `int` | `3` | Group digits with separator (0 to disable) |
+| `Disabled` | `bool` | `false` | Disables the input |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+## Accessibility
+
+- Input attributes: `inputmode="numeric"`, `pattern="[0-9]*"`
+- Auto-focus advances to next input on digit entry
+- Backspace clears current and moves to previous
+- Arrow key navigation between inputs
+- Screen reader compatible

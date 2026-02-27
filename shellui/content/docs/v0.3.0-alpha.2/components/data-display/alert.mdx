@@ -1,0 +1,103 @@
+---
+title: Alert
+description: Status message component using the AlertVariant enum for Default and Destructive styles.
+---
+
+## Overview
+
+The Alert component displays important messages and status information. It uses the `AlertVariant` enum to control visual style and accepts an optional `Icon` render fragment. Classes are merged with `Shell.Cn()`.
+
+## Installation
+
+```bash
+shellui add alert
+```
+
+## Usage
+
+### Default Alert
+
+```razor
+<Alert Title="Heads up!">
+  This is a default informational alert message.
+</Alert>
+```
+
+### Destructive Alert
+
+```razor
+<Alert Variant="AlertVariant.Destructive" Title="Error">
+  This action cannot be undone. Please proceed with caution.
+</Alert>
+```
+
+### Alert with Custom Icon
+
+The `Icon` parameter accepts a `RenderFragment` for placing an icon:
+
+```razor
+<Alert Title="Success" Variant="AlertVariant.Default">
+  <Icon>
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+  </Icon>
+  <ChildContent>
+    Your changes have been saved successfully!
+  </ChildContent>
+</Alert>
+```
+
+### Without Title
+
+```razor
+<Alert>
+  A simple alert without a title.
+</Alert>
+```
+
+### Destructive with Icon
+
+```razor
+<Alert Variant="AlertVariant.Destructive" Title="Delete failed">
+  <Icon>
+    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </Icon>
+  <ChildContent>
+    There was a problem deleting this resource. Please try again.
+  </ChildContent>
+</Alert>
+```
+
+### Custom Styling
+
+```razor
+<Alert Class="border-blue-500 text-blue-700" Title="Note">
+  Custom-styled alert with class overrides.
+</Alert>
+```
+
+## API Reference
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `Variant` | `AlertVariant` | `AlertVariant.Default` | Visual style of the alert |
+| `Title` | `string` | `""` | Alert heading text |
+| `Icon` | `RenderFragment?` | `null` | Optional icon content |
+| `ChildContent` | `RenderFragment` | — | Alert body message |
+| `Class` | `string?` | `null` | Additional CSS classes merged via `Shell.Cn()` |
+
+### AlertVariant Enum
+
+| Value | Description |
+|-------|-------------|
+| `Default` | Standard informational style |
+| `Destructive` | Red / error style for warnings and errors |
+
+## Accessibility
+
+- Rendered with `role="alert"` so screen readers announce the content immediately.
+- The `Title` is displayed as a heading within the alert region.
+- Color is never the sole indicator — text and icons provide redundant meaning.

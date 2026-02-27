@@ -1,0 +1,136 @@
+---
+title: Alert Dialog
+description: Confirmation dialog requiring explicit user action
+---
+
+The AlertDialog component presents a modal dialog that interrupts the user to confirm a destructive or important action. Unlike a standard Dialog, it requires an explicit confirm or cancel — clicking outside does not dismiss it.
+
+## Installation
+
+```bash
+shellui add alert-dialog
+```
+
+## Basic Usage
+
+```razor
+<Button Variant="ButtonVariant.Destructive" OnClick="() => isOpen = true">Delete Account</Button>
+
+<AlertDialog IsOpen="@isOpen"
+             IsOpenChanged="@((v) => isOpen = v)"
+             Title="Are you absolutely sure?"
+             Description="This action cannot be undone. This will permanently delete your account and remove all data."
+             OnConfirm="HandleConfirm"
+             OnCancel="HandleCancel" />
+
+@code {
+    private bool isOpen = false;
+
+    private void HandleConfirm()
+    {
+        // Perform destructive action
+        isOpen = false;
+    }
+
+    private void HandleCancel()
+    {
+        isOpen = false;
+    }
+}
+```
+
+## Custom Button Text
+
+Customize the confirm and cancel button labels:
+
+```razor
+<AlertDialog IsOpen="@isOpen"
+             IsOpenChanged="@((v) => isOpen = v)"
+             Title="Discard changes?"
+             Description="You have unsaved changes that will be lost."
+             ConfirmText="Discard"
+             CancelText="Keep Editing"
+             OnConfirm="HandleDiscard"
+             OnCancel="() => isOpen = false" />
+```
+
+## Destructive Confirm Variant
+
+Style the confirm button as destructive:
+
+```razor
+<AlertDialog IsOpen="@isOpen"
+             IsOpenChanged="@((v) => isOpen = v)"
+             Title="Delete project?"
+             Description="This will permanently delete the project and all associated files."
+             ConfirmText="Delete Project"
+             ConfirmVariant="ButtonVariant.Destructive"
+             OnConfirm="HandleDelete"
+             OnCancel="() => isOpen = false" />
+```
+
+## Non-Destructive Confirmation
+
+Use for important but non-destructive actions:
+
+```razor
+<AlertDialog IsOpen="@isOpen"
+             IsOpenChanged="@((v) => isOpen = v)"
+             Title="Publish article?"
+             Description="This will make the article visible to all users."
+             ConfirmText="Publish"
+             ConfirmVariant="ButtonVariant.Default"
+             CancelText="Not Yet"
+             OnConfirm="HandlePublish"
+             OnCancel="() => isOpen = false" />
+```
+
+## Async Confirm
+
+Handle async operations on confirm:
+
+```razor
+<AlertDialog IsOpen="@isOpen"
+             IsOpenChanged="@((v) => isOpen = v)"
+             Title="Remove member?"
+             Description="@($"Remove {memberName} from the team?")"
+             ConfirmText="Remove"
+             ConfirmVariant="ButtonVariant.Destructive"
+             OnConfirm="HandleRemoveAsync"
+             OnCancel="() => isOpen = false" />
+
+@code {
+    private bool isOpen = false;
+    private string memberName = "John Doe";
+
+    private async Task HandleRemoveAsync()
+    {
+        await TeamService.RemoveMemberAsync(memberName);
+        isOpen = false;
+    }
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `IsOpen` | `bool` | `false` | Controls dialog visibility |
+| `IsOpenChanged` | `EventCallback<bool>` | — | Callback when open state changes |
+| `Title` | `string` | — | Dialog title (required) |
+| `Description` | `string` | — | Dialog description (required) |
+| `ConfirmText` | `string` | `"Continue"` | Confirm button label |
+| `CancelText` | `string?` | `"Cancel"` | Cancel button label |
+| `ConfirmVariant` | `ButtonVariant` | `ButtonVariant.Default` | Confirm button style variant |
+| `OnConfirm` | `EventCallback` | — | Callback when user confirms |
+| `OnCancel` | `EventCallback` | — | Callback when user cancels |
+
+## Accessibility
+
+The AlertDialog component includes:
+- `role="alertdialog"` with `aria-modal="true"`
+- Focus trap — Tab cycles within the dialog
+- Escape key triggers cancel (not dismiss)
+- Focus moves to cancel button on open (safer default)
+- Focus returns to trigger on close
+- Screen reader announces title and description

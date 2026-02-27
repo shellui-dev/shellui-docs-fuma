@@ -1,0 +1,108 @@
+---
+title: Pie Chart
+description: Pie charts with custom HTML tooltips for showing proportions
+---
+
+The `PieChart` component renders pie charts with custom HTML tooltips, ideal for showing proportions, distributions, and part-to-whole relationships. Built on **ApexCharts.Blazor** with ShellUI's shadcn-inspired tooltip styling.
+
+## Installation
+
+```bash
+shellui add chart pie-chart
+dotnet add package Blazor-ApexCharts
+```
+
+`chart` and `chart-variants` are auto-installed as dependencies.
+
+## Basic Usage
+
+```razor
+<PieChart TItem="BrowserShare"
+    Data="@browserData"
+    Title="Browser Market Share"
+    Name="Share"
+    XValue="@(e => e.Browser)"
+    YValue="@(e => (decimal?)e.Percentage)"
+    Theme="ChartTheme.Default"
+    Height="350px" />
+
+@code {
+    private List<BrowserShare> browserData = new()
+    {
+        new("Chrome", 65), new("Firefox", 12),
+        new("Safari", 15), new("Edge", 8)
+    };
+
+    record BrowserShare(string Browser, double Percentage);
+}
+```
+
+## Team Allocation
+
+```razor
+<PieChart TItem="TeamAllocation"
+    Data="@teamData"
+    Title="Team Size by Department"
+    Name="Headcount"
+    XValue="@(e => e.Department)"
+    YValue="@(e => (decimal?)e.Count)"
+    Theme="ChartTheme.Colorful"
+    Height="400px" />
+
+@code {
+    private List<TeamAllocation> teamData = new()
+    {
+        new("Engineering", 42), new("Product", 12),
+        new("Design", 8), new("Marketing", 15),
+        new("Sales", 20), new("Support", 10)
+    };
+
+    record TeamAllocation(string Department, int Count);
+}
+```
+
+## Budget Breakdown
+
+```razor
+<PieChart TItem="BudgetCategory"
+    Data="@budgetData"
+    Title="Monthly Budget Breakdown"
+    Name="Amount"
+    XValue="@(e => e.Category)"
+    YValue="@(e => (decimal?)e.Amount)"
+    Theme="ChartTheme.Monochrome"
+    Height="350px" />
+
+@code {
+    private List<BudgetCategory> budgetData = new()
+    {
+        new("Infrastructure", 4500),
+        new("Salaries", 35000),
+        new("Marketing", 8000),
+        new("Tools & Software", 2500),
+        new("Office", 3000)
+    };
+
+    record BudgetCategory(string Category, decimal Amount);
+}
+```
+
+## Custom Tooltips
+
+The `PieChart` component includes custom HTML tooltips styled to match ShellUI's design system. Tooltips automatically show category label, value, percentage of total, and color-coded indicators — no additional configuration needed.
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | Generic type | — | The data item type |
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Data"` | Series name shown in tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Function to extract category label |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Function to extract numeric value |
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `Class` | `string?` | `null` | Additional CSS classes |
