@@ -141,7 +141,7 @@ This uses standalone Tailwind with default options — no prompts.
 # Add individual components
 shellui add button input card dialog
 
-# Add chart components (new in v0.2.0)
+# Add chart components
 shellui add chart bar-chart line-chart pie-chart area-chart
 
 # Add multiple components at once
@@ -158,7 +158,7 @@ shellui list
 # Add individual components
 dotnet shellui add button input card dialog
 
-# Add chart components (new in v0.2.0)
+# Add chart components
 dotnet shellui add chart bar-chart line-chart pie-chart area-chart
 
 # Add multiple components at once
@@ -173,7 +173,7 @@ dotnet shellui list
 
 ### Chart Components Dependency
 
-Chart components (new in v0.2.0) require the ApexCharts NuGet package:
+Chart components require the ApexCharts NuGet package:
 
 ```bash
 dotnet add package Blazor-ApexCharts
@@ -192,8 +192,8 @@ YourProject/
 │       ├── Button.razor
 │       ├── Input.razor
 │       ├── Card.razor
-│       ├── Chart.razor        # New in v0.2.0
-│       ├── BarChart.razor     # New in v0.2.0
+│       ├── Chart.razor
+│       ├── BarChart.razor
 │       └── ...
 ├── Variants/                  # CVA variant definitions
 │   ├── ButtonVariants.cs
