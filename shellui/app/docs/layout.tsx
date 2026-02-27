@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       links={linkItems.filter((item) => item.type === "icon")}
       sidebar={{
         tabs: {
-          transform(option, node) {
+          transform(option, _node) {
             return {
               ...option,
               icon: undefined,
