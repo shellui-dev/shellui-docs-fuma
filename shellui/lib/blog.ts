@@ -3,6 +3,15 @@
  */
 export const blogPosts = [
   {
+    slug: "release-v0.3.0-rc.1",
+    title:
+      "ShellUI v0.3.0-rc.1 – Template-compile, CSP, and CLI install fixes",
+    excerpt:
+      "Release candidate for v0.3.0. Five branches of integration-tested fixes: template-compile bugs, no more eval(), idempotent shellui init, and data-table install repairs.",
+    date: "2026-06-18",
+    author: "ShellUI",
+  },
+  {
     slug: "release-v0.3.0-alpha.2",
     title: "ShellUI v0.3.0-alpha.2 – Drawer/Sheet subcomponents & CLI registry fix",
     excerpt:
