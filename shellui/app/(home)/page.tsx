@@ -65,16 +65,25 @@ export default function HomePage() {
             </h1>
 
             {/* Version Badge */}
-            <div className="flex items-center justify-center gap-2 mb-4 max-md:justify-center">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border">
-                v0.3.0-alpha.2 &mdash; Latest
-              </span>
+            <div className="flex items-center justify-center gap-2 mb-4 max-md:justify-center flex-wrap">
+              <Link
+                href="https://github.com/shellui-dev/shellui/releases/tag/v0.3.0-rc.1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/15 transition-colors"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                v0.3.0-rc.1 &mdash; Release Candidate
+              </Link>
             </div>
             <p className="text-lg text-muted-foreground max-w-2xl mb-8 max-md:mx-auto">
-              CLI-first Blazor component library inspired by shadcn/ui. Now with
-              charts &amp; data visualization, type-safe variants, and CVA patterns. Copy
-              components directly into your project, customize everything, and
-              build beautiful applications with Tailwind CSS v4.1.18.
+              CLI-first Blazor component library inspired by shadcn/ui. The v0.3.0
+              release candidate ships template-compile, CSP, and CLI install fixes
+              from real-world Blazor Server use — now in internal testing ahead of
+              the v0.3.0 final.
             </p>
 
             {/* CTA Buttons */}
@@ -200,7 +209,7 @@ export default function HomePage() {
             <div className="relative">
               <Suspense fallback={<CodeBlockFallback />}>
                 <CodeBlock
-                code={`dotnet tool install -g ShellUI.CLI
+                code={`dotnet tool install -g ShellUI.CLI --version 0.3.0-rc.1
 
 # Installing ShellUI CLI...
 
@@ -226,22 +235,38 @@ shellui add button card input
       <section className="container mx-auto px-4 py-20 max-w-7xl bg-muted/30">
         <div className="text-center space-y-8">
           <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Release Candidate 1
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold">
-              What&apos;s New in v0.3.0-alpha.2
+              What&apos;s Fixed in v0.3.0-rc.1
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Compositional subcomponents, CLI registry fixes, new utility components, and more.
+              Five branches of integration-tested fixes against the alpha series,
+              surfaced from real-world Blazor Server consumer use. Under internal
+              testing — v0.3.0 final ships from this RC if no blockers surface.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <BoxesIcon className="h-6 w-6 text-primary" />
+                <Code2Icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Compositional Patterns</h3>
+              <h3 className="font-semibold">Template Compilation</h3>
               <p className="text-sm text-muted-foreground text-center">
-                DrawerTrigger, SheetTrigger, and more subcomponents — no external open state required
+                ChartVariants, PieChart, and DashboardLayout02 templates now compile — verbatim-string escapes fixed
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                <ShieldCheckIcon className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold">CSP-Safe Runtime</h3>
+              <p className="text-sm text-muted-foreground text-center">
+                ThemeToggle, InputOTP, and ThemeService no longer use eval() — strict CSP policies just work
               </p>
             </div>
 
@@ -249,31 +274,33 @@ shellui add button card input
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <TerminalIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">CLI Registry Fixed</h3>
+              <h3 className="font-semibold">Idempotent shellui init</h3>
               <p className="text-sm text-muted-foreground text-center">
-                shellui add drawer and shellui add sheet now correctly install all subcomponent files
+                Patches App.razor with render modes, theme bootstrap, and shellui.js — safe to re-run
               </p>
             </div>
 
             <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Code2Icon className="h-6 w-6 text-primary" />
+                <BoxesIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">New Components</h3>
+              <h3 className="font-semibold">CLI Install Fixes</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Callout, CopyButton, LinkCard, PrevNextNav, Sonner, and Stepper — all CLI-installable
+                shellui add data-table now installs DataTableModels.cs and auto-pulls NuGet deps; chart tooltips render
               </p>
             </div>
+          </div>
 
-            <div className="flex flex-col items-center space-y-3 p-6 rounded-lg border bg-card">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <ZapIcon className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">Chart Fixes</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Tooltip generation fixed, chart-styles auto-installs to wwwroot and injects the link tag
-              </p>
-            </div>
+          <div className="pt-2">
+            <Link
+              href="https://github.com/shellui-dev/shellui/releases/tag/v0.3.0-rc.1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+            >
+              Read the full release notes
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -684,8 +711,8 @@ shellui add button card input
                 Build production-ready Blazor components with a few clicks
               </p>
               <div className="mt-2">
-                <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-                  v0.3.0-alpha.2
+                <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                  v0.3.0-rc.1
                 </span>
               </div>
               <div className="flex gap-4">
