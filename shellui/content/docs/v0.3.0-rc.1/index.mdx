@@ -4,13 +4,16 @@ description: CLI-first Blazor component library inspired by shadcn/ui
 icon: Book
 ---
 
-Welcome to ShellUI v0.3.0-alpha.2, the latest pre-release of the CLI-first Blazor component library inspired by shadcn/ui. Includes new compositional components, chart improvements, and CLI registry fixes.
+Welcome to ShellUI v0.3.0-rc.1, the **release candidate** for v0.3.0 of the CLI-first Blazor component library inspired by shadcn/ui. This RC bundles five branches of integration-tested fixes against the alpha series, surfaced from real-world Blazor Server consumer use.
 
-<div className="flex gap-2 my-4">
-  <span className="bg-amber-500 text-white px-3 py-1 rounded-md text-sm font-medium">v0.3.0-alpha.2 — Pre-release</span>
-  <span className="bg-violet-500 text-white px-3 py-1 rounded-md text-sm font-medium">New Components</span>
-  <span className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm font-medium">CLI Registry Fixed</span>
+<div className="flex gap-2 my-4 flex-wrap">
+  <span className="bg-emerald-500 text-white px-3 py-1 rounded-md text-sm font-medium">v0.3.0-rc.1 — Release Candidate</span>
+  <span className="bg-violet-500 text-white px-3 py-1 rounded-md text-sm font-medium">Template Compilation Fixed</span>
+  <span className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm font-medium">CSP-safe (no eval)</span>
+  <span className="bg-amber-500 text-white px-3 py-1 rounded-md text-sm font-medium">Idempotent `shellui init`</span>
 </div>
+
+> **Heads up:** rc.1 is feature-frozen for the v0.3.0 line. If no blocking issues surface during internal testing, v0.3.0 final ships from this RC unchanged.
 
 ## Getting Started
 
@@ -20,13 +23,13 @@ Choose your preferred installation method:
 
 **CLI Installation (Recommended)**
 ```bash
-# Install alpha CLI
-dotnet tool install -g ShellUI.CLI --version 0.3.0-alpha.2
+# Install the release candidate CLI
+dotnet tool install -g ShellUI.CLI --version 0.3.0-rc.1
 
-# Or upgrade from alpha.1
-dotnet tool update -g ShellUI.CLI --version 0.3.0-alpha.2
+# Or upgrade from alpha.2
+dotnet tool update -g ShellUI.CLI --version 0.3.0-rc.1
 
-# Initialize in your Blazor project
+# Initialize in your Blazor project (now idempotent — re-runs safely)
 shellui init
 
 # Add components
@@ -35,7 +38,8 @@ shellui add button input card table chart drawer sheet
 
 **NuGet Package**
 ```bash
-dotnet add package ShellUI.Components
+dotnet add package ShellUI.Core --version 0.3.0-rc.1 --prerelease
+dotnet add package ShellUI.Components --version 0.3.0-rc.1 --prerelease
 ```
 
 ### Quick Example
@@ -57,20 +61,30 @@ dotnet add package ShellUI.Components
 Explore our comprehensive component library, organized by category:
 
 <Cards>
-  <Card title="Form Components" href="/docs/v0.3.0-alpha.2/components/form" description="Buttons, inputs, selects, and form controls" />
-  <Card title="Layout Components" href="/docs/v0.3.0-alpha.2/components/layout" description="Cards, dialogs, sheets, and structural elements" />
-  <Card title="Navigation Components" href="/docs/v0.3.0-alpha.2/components/navigation" description="Menus, breadcrumbs, tabs, and navigation elements" />
-  <Card title="Interactive Components" href="/docs/v0.3.0-alpha.2/components/interactive" description="Dropdowns, tooltips, and interactive elements" />
-  <Card title="Advanced Components" href="/docs/v0.3.0-alpha.2/components/advanced" description="Calendars, charts, carousels, steppers, and complex UI elements" />
+  <Card title="Form Components" href="/docs/v0.3.0-rc.1/components/form" description="Buttons, inputs, selects, and form controls" />
+  <Card title="Layout Components" href="/docs/v0.3.0-rc.1/components/layout" description="Cards, dialogs, sheets, and structural elements" />
+  <Card title="Navigation Components" href="/docs/v0.3.0-rc.1/components/navigation" description="Menus, breadcrumbs, tabs, and navigation elements" />
+  <Card title="Interactive Components" href="/docs/v0.3.0-rc.1/components/interactive" description="Dropdowns, tooltips, and interactive elements" />
+  <Card title="Advanced Components" href="/docs/v0.3.0-rc.1/components/advanced" description="Calendars, charts, carousels, steppers, and complex UI elements" />
 </Cards>
 
-## What's New in v0.3.0-alpha.2
+## What's Fixed in v0.3.0-rc.1
 
-- **Drawer/Sheet compositional pattern**: `DrawerTrigger`, `DrawerContent`, `SheetTrigger`, `SheetContent` — no external open state required
-- **CLI registry fix**: `shellui add drawer` and `shellui add sheet` now auto-install all subcomponent files
-- **New components**: Callout, CopyButton, LinkCard, PrevNextNav, Sonner, Stepper — all installable via CLI
-- **Chart fixes**: tooltip generation, `ChartVariants` namespace, and `chart-styles` auto-install (v0.2.1 backport)
-- **Compositional APIs**: NavigationMenu, Tabs, Dropdown, Popover, Collapsible, Accordion all have new subcomponent patterns
+Everything from the alpha.2 feature surface is here, plus integration fixes:
+
+- **Template compilation**: `ChartVariants`, `PieChart`, and `DashboardLayout02` templates had uncompilable C# with improperly escaped quotes in verbatim strings — fixed. Same backslash-escaping bug fixed in the live `PieChart.razor`.
+- **CSP-safe runtime**: `ThemeToggle`, `InputOTP`, and `ThemeService` no longer use `eval()`. localStorage reads moved to proper Blazor lifecycle methods.
+- **Idempotent `shellui init`**: patches `App.razor` with render modes, theme bootstrap scripts, and `shellui.js` references. Writes the full default theme to `input.css` instead of just the Tailwind import. Re-running is safe.
+- **Component install fixes**: `shellui add data-table` now properly installs `DataTableModels.cs` and auto-installs NuGet dependencies (`System.Linq.Dynamic.Core`, `Blazor-ApexCharts`). Chart tooltips render readable text instead of invisible white-on-white.
+- **CLI ergonomics**: typo suggestions added (e.g. *"Did you mean 'data-table'?"*).
+- **SidebarTrigger**: now uses inline SVG instead of FontAwesome dependency for the mobile hamburger menu.
+- **Component count clarified**: 68 installable top-level components (corrected from earlier claims of 100).
+
+Carries forward from alpha.1/alpha.2:
+
+- Drawer/Sheet compositional pattern: `DrawerTrigger`, `DrawerContent`, `SheetTrigger`, `SheetContent` — no external open state required
+- Compositional APIs across NavigationMenu, Tabs, Dropdown, Popover, Collapsible, and Accordion
+- Components added during alphas: Callout, CopyButton, LinkCard, PrevNextNav, Sonner, Stepper
 
 ## Key Features
 
@@ -111,7 +125,7 @@ Customize your theme instantly with [tweakcn](https://tweakcn.com) or modify CSS
 ## Learn More
 
 - [GitHub Repository](https://github.com/shellui-dev/shellui)
-- [Installation Guide](/docs/v0.3.0-alpha.2/installation)
-- [Component API](/docs/v0.3.0-alpha.2/components)
+- [Installation Guide](/docs/v0.3.0-rc.1/installation)
+- [Component API](/docs/v0.3.0-rc.1/components)
 - [Theming Guide](/docs/v0.2.1/theming)
-- [Contributing](/docs/v0.3.0-alpha.2/contributing)
+- [Contributing](/docs/v0.3.0-rc.1/contributing)

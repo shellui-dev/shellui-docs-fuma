@@ -1,6 +1,6 @@
 {
-  "title": "v0.3.0-alpha.2",
-  "description": "Latest alpha — new components and compositional trigger pattern",
+  "title": "v0.3.0-rc.1",
+  "description": "Release candidate for v0.3.0 — template-compile, CSP, and CLI install fixes against alpha.2",
   "root": true,
   "pages": [
     "---Introduction---",
