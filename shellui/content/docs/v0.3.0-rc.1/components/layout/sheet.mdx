@@ -3,11 +3,11 @@ title: Sheet
 description: Slide-out panel with new SheetTrigger and SheetContent subcomponents.
 ---
 
-v0.3.0-alpha.2 adds `SheetTrigger` and `SheetContent` subcomponents. `Side` is set on `<Sheet>` itself. Use `@bind-Open` when you need to control open state externally (e.g. a close button inside the content).
+v0.3.0-rc.1 adds `SheetTrigger` and `SheetContent` subcomponents. `Side` is set on `<Sheet>` itself. Use `@bind-Open` when you need to control open state externally (e.g. a close button inside the content).
 
 ## What changed from v0.2.x
 
-| v0.2.1 | v0.3.0-alpha.2 |
+| v0.2.1 | v0.3.0-rc.1 |
 |--------|-------------|
 | `<Button OnClick="() => isOpen = true">` + `<Sheet IsOpen="@isOpen" ...>` | `<Sheet Side="..."><SheetTrigger>Open</SheetTrigger><SheetContent>...</SheetContent></Sheet>` |
 | Requires external open state field | No external state needed (or opt-in via `@bind-Open`) |

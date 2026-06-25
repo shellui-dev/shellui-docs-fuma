@@ -3,11 +3,11 @@ title: Tabs
 description: Tabbed content with the new compositional TabsList, TabsTrigger, and TabsContent subcomponents.
 ---
 
-v0.3.0-alpha.2 adds `TabsList`, `TabsTrigger`, and `TabsContent` subcomponents. The old `Items` / `TabItems` data-driven API still works, but the compositional pattern is now recommended for full markup control.
+v0.3.0-rc.1 adds `TabsList`, `TabsTrigger`, and `TabsContent` subcomponents. The old `Items` / `TabItems` data-driven API still works, but the compositional pattern is now recommended for full markup control.
 
 ## What changed from v0.2.x
 
-| v0.2.1 | v0.3.0-alpha.2 |
+| v0.2.1 | v0.3.0-rc.1 |
 |--------|-------------|
 | `<Tabs Items="@tabs" ActiveTab="@tab" ActiveTabChanged="..." />` | `<Tabs @bind-Value="tab"><TabsList>...</TabsList><TabsContent ...>` |
 | Tab content via `TabItem.Content` | `<TabsContent Value="...">` children |

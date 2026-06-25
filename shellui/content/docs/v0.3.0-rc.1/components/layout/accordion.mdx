@@ -3,11 +3,11 @@ title: Accordion
 description: Expandable content sections with the new compositional Trigger + Content pattern.
 ---
 
-v0.3.0-alpha.2 refactors Accordion to a fully compositional subcomponent model. The old `Title` parameter on `AccordionItem` still works, but the new `AccordionTrigger` / `AccordionContent` pattern is recommended. A new `AccordionType` enum controls single vs multiple open mode.
+v0.3.0-rc.1 refactors Accordion to a fully compositional subcomponent model. The old `Title` parameter on `AccordionItem` still works, but the new `AccordionTrigger` / `AccordionContent` pattern is recommended. A new `AccordionType` enum controls single vs multiple open mode.
 
 ## What changed from v0.2.x
 
-| v0.2.1 | v0.3.0-alpha.2 |
+| v0.2.1 | v0.3.0-rc.1 |
 |--------|-------------|
 | `<AccordionItem Title="...">content</AccordionItem>` | `<AccordionItem><AccordionTrigger>...</AccordionTrigger><AccordionContent>...</AccordionContent></AccordionItem>` |
 | No mode control | `Type="AccordionType.Single"` or `AccordionType.Multiple` |

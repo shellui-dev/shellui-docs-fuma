@@ -3,18 +3,18 @@ title: Stepper
 description: Multi-step wizard with a new compositional StepperList, StepperStep, and StepperContent API.
 ---
 
-v0.3.0-alpha.2 overhauled the Stepper. `@bind-CurrentStep` is now `@bind-Value`, and a new **compositional mode** lets you place step headers and content manually. The old data-driven `StepItems` mode still works.
+v0.3.0-rc.1 overhauled the Stepper. `@bind-CurrentStep` is now `@bind-Value`, and a new **compositional mode** lets you place step headers and content manually. The old data-driven `StepItems` mode still works.
 
 ## What changed from v0.2.x
 
-| v0.2.1 | v0.3.0-alpha.2 |
+| v0.2.1 | v0.3.0-rc.1 |
 |--------|-------------|
 | `@bind-CurrentStep` | `@bind-Value` |
 | Data-driven only | Data-driven **or** compositional mode |
 | No sub-components | `StepperList`, `StepperStep`, `StepperContent` |
 
 <Callout type="warn" title="Known issue">
-Active-state highlighting may not always reflect the current step in some edge cases. This is a known issue shipped as-is in v0.3.0-alpha.2.
+Active-state highlighting may not always reflect the current step in some edge cases. This is a known issue shipped as-is in v0.3.0-rc.1.
 </Callout>
 
 ## Installation
