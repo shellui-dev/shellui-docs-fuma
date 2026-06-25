@@ -9,7 +9,7 @@ const config = {
     return [
       {
         source: "/docs",
-        destination: "/docs/v0.3.0-alpha.2",
+        destination: "/docs/v0.3.0-rc.1",
         permanent: false,
       },
       {
@@ -19,32 +19,37 @@ const config = {
       },
       {
         source: "/docs/v0.3.0-alpha.1/:path*",
-        destination: "/docs/v0.3.0-alpha.2/:path*",
+        destination: "/docs/v0.3.0-rc.1/:path*",
+        permanent: true,
+      },
+      {
+        source: "/docs/v0.3.0-alpha.2/:path*",
+        destination: "/docs/v0.3.0-rc.1/:path*",
         permanent: true,
       },
       {
         source: "/docs/installation/:path*",
-        destination: "/docs/v0.3.0-alpha.2/installation/:path*",
+        destination: "/docs/v0.3.0-rc.1/installation/:path*",
         permanent: false,
       },
       {
         source: "/docs/quickstart",
-        destination: "/docs/v0.3.0-alpha.2/quickstart",
+        destination: "/docs/v0.3.0-rc.1/quickstart",
         permanent: false,
       },
       {
         source: "/docs/components/:path*",
-        destination: "/docs/v0.3.0-alpha.2/components/:path*",
+        destination: "/docs/v0.3.0-rc.1/components/:path*",
         permanent: false,
       },
       {
         source: "/docs/theming",
-        destination: "/docs/v0.3.0-alpha.2/theming",
+        destination: "/docs/v0.3.0-rc.1/theming",
         permanent: false,
       },
       {
         source: "/docs/contributing",
-        destination: "/docs/v0.3.0-alpha.2/contributing",
+        destination: "/docs/v0.3.0-rc.1/contributing",
         permanent: false,
       },
     ];
