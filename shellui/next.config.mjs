@@ -9,7 +9,7 @@ const config = {
     return [
       {
         source: "/docs",
-        destination: "/docs/v0.3.0-rc.1",
+        destination: "/docs/v0.3.0",
         permanent: false,
       },
       {
@@ -18,38 +18,43 @@ const config = {
         permanent: true,
       },
       {
+        source: "/docs/v0.3.0-rc.1/:path*",
+        destination: "/docs/v0.3.0/:path*",
+        permanent: true,
+      },
+      {
         source: "/docs/v0.3.0-alpha.1/:path*",
-        destination: "/docs/v0.3.0-rc.1/:path*",
+        destination: "/docs/v0.3.0/:path*",
         permanent: true,
       },
       {
         source: "/docs/v0.3.0-alpha.2/:path*",
-        destination: "/docs/v0.3.0-rc.1/:path*",
+        destination: "/docs/v0.3.0/:path*",
         permanent: true,
       },
       {
         source: "/docs/installation/:path*",
-        destination: "/docs/v0.3.0-rc.1/installation/:path*",
+        destination: "/docs/v0.3.0/installation/:path*",
         permanent: false,
       },
       {
         source: "/docs/quickstart",
-        destination: "/docs/v0.3.0-rc.1/quickstart",
+        destination: "/docs/v0.3.0/quickstart",
         permanent: false,
       },
       {
         source: "/docs/components/:path*",
-        destination: "/docs/v0.3.0-rc.1/components/:path*",
+        destination: "/docs/v0.3.0/components/:path*",
         permanent: false,
       },
       {
         source: "/docs/theming",
-        destination: "/docs/v0.3.0-rc.1/theming",
+        destination: "/docs/v0.3.0/theming",
         permanent: false,
       },
       {
         source: "/docs/contributing",
-        destination: "/docs/v0.3.0-rc.1/contributing",
+        destination: "/docs/v0.3.0/contributing",
         permanent: false,
       },
     ];

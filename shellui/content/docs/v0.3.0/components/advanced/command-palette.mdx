@@ -1,0 +1,76 @@
+---
+title: Command Palette
+description: "Keyboard-launched command menu (Ctrl+K or Cmd+K)"
+new: true
+---
+
+`CommandPalette` opens a searchable command menu with a keyboard shortcut, **Ctrl+K** or **⌘K** by default. Commands can be grouped and can show a description and a shortcut hint.
+
+## Installation
+
+```bash
+shellui add command-palette
+```
+
+The CLI also installs `command`, `dialog`, the `CommandItem` model and `shellui.js`, and adds the models `@using` to `_Imports.razor`. With the NuGet package, add `@using ShellUI.Components.Models`.
+
+## Usage
+
+```razor
+@inject NavigationManager Nav
+
+<CommandPalette Commands="_commands" />
+
+@code {
+    private List<CommandItem> _commands = new();
+
+    protected override void OnInitialized()
+    {
+        _commands = new()
+        {
+            new() { Title = "Dashboard", Group = "Navigation", Action = () => Go("/") },
+            new() { Title = "Settings", Group = "Navigation", Shortcut = "G S", Action = () => Go("/settings") },
+            new() { Title = "New project", Description = "Create an empty project", Group = "Actions" },
+        };
+    }
+
+    private Task Go(string url)
+    {
+        Nav.NavigateTo(url);
+        return Task.CompletedTask;
+    }
+}
+```
+
+## Custom shortcut
+
+```razor
+@* Ctrl+Shift+P, like VS Code *@
+<CommandPalette Commands="_commands" HotkeyChar="p" UseMeta="false" UseShift="true" />
+```
+
+`UseCtrl` and `UseMeta` are alternatives: with both on (the default), either Ctrl or ⌘ opens the palette.
+
+## CommandItem
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Title` | `string` | `""` | Command text |
+| `Description` | `string?` | `null` | Secondary text |
+| `Icon` | `string?` | `null` | Icon markup |
+| `Shortcut` | `string?` | `null` | Shortcut hint shown on the right |
+| `Group` | `string?` | `null` | Group heading |
+| `Action` | `Func<Task>?` | `null` | Runs when the command is chosen |
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Commands` | `List<CommandItem>` | empty list | The commands |
+| `CommandSelected` | `EventCallback<CommandItem>` | — | Raised when a command is chosen |
+| `Placeholder` | `string` | `"Type a command or search..."` | Search box placeholder |
+| `HotkeyChar` | `string` | `"k"` | Key that opens the palette |
+| `UseCtrl` | `bool` | `true` | Ctrl + key opens it |
+| `UseMeta` | `bool` | `true` | ⌘ + key opens it |
+| `UseShift` | `bool` | `false` | Also require Shift |
+| `UseAlt` | `bool` | `false` | Also require Alt |

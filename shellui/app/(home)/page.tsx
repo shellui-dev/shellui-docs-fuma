@@ -64,26 +64,10 @@ export default function HomePage() {
               production-ready Blazor components with a few clicks
             </h1>
 
-            {/* Version Badge */}
-            <div className="flex items-center justify-center gap-2 mb-4 max-md:justify-center flex-wrap">
-              <Link
-                href="https://github.com/shellui-dev/shellui/releases/tag/v0.3.0-rc.1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/15 transition-colors"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                </span>
-                v0.3.0-rc.1 &mdash; Release Candidate
-              </Link>
-            </div>
             <p className="text-lg text-muted-foreground max-w-2xl mb-8 max-md:mx-auto">
-              CLI-first Blazor component library inspired by shadcn/ui. The v0.3.0
-              release candidate ships template-compile, CSP, and CLI install fixes
-              from real-world Blazor Server use — now in internal testing ahead of
-              the v0.3.0 final.
+              CLI-first Blazor component library inspired by shadcn/ui. v0.3.0 is
+              stable: 76 components, dependencies installed for you, tweakcn
+              themes, and a CLI that works in Blazor projects on .NET 8, 9 and 10.
             </p>
 
             {/* CTA Buttons */}
@@ -209,7 +193,7 @@ export default function HomePage() {
             <div className="relative">
               <Suspense fallback={<CodeBlockFallback />}>
                 <CodeBlock
-                code={`dotnet tool install -g ShellUI.CLI --version 0.3.0-rc.1
+                code={`dotnet tool install -g ShellUI.CLI
 
 # Installing ShellUI CLI...
 
@@ -237,15 +221,15 @@ shellui add button card input
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              Release Candidate 1
+              Stable release
             </div>
             <h2 className="text-3xl md:text-4xl font-bold">
-              What&apos;s Fixed in v0.3.0-rc.1
+              What&apos;s New in v0.3.0
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Five branches of integration-tested fixes against the alpha series,
-              surfaced from real-world Blazor Server consumer use. Under internal
-              testing — v0.3.0 final ships from this RC if no blockers surface.
+              Everything from the 0.3.0 alphas and release candidates. Every
+              component is installed and built on its own in a fresh app before
+              release.
             </p>
           </div>
 
@@ -254,9 +238,9 @@ shellui add button card input
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <Code2Icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Template Compilation</h3>
+              <h3 className="font-semibold">Composable Components</h3>
               <p className="text-sm text-muted-foreground text-center">
-                ChartVariants, PieChart, and DashboardLayout02 templates now compile — verbatim-string escapes fixed
+                Select, Dropdown, Popover, ContextMenu, NavigationMenu, Carousel, Tabs and more, with their parts installed together
               </p>
             </div>
 
@@ -264,9 +248,9 @@ shellui add button card input
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <ShieldCheckIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">CSP-Safe Runtime</h3>
+              <h3 className="font-semibold">.NET 8, 9 &amp; 10</h3>
               <p className="text-sm text-muted-foreground text-center">
-                ThemeToggle, InputOTP, and ThemeService no longer use eval() — strict CSP policies just work
+                The CLI runs on the .NET 10 SDK and its components build in Blazor projects on .NET 8, 9 and 10
               </p>
             </div>
 
@@ -274,9 +258,9 @@ shellui add button card input
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <TerminalIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">Idempotent shellui init</h3>
+              <h3 className="font-semibold">shellui init that just works</h3>
               <p className="text-sm text-muted-foreground text-center">
-                Patches App.razor with render modes, theme bootstrap, and shellui.js — safe to re-run
+                Sets up Tailwind 4.3.2, the theme and App.razor, and removes the template's Bootstrap — safe to re-run
               </p>
             </div>
 
@@ -284,16 +268,16 @@ shellui add button card input
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
                 <BoxesIcon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold">CLI Install Fixes</h3>
+              <h3 className="font-semibold">Dependencies Handled</h3>
               <p className="text-sm text-muted-foreground text-center">
-                shellui add data-table now installs DataTableModels.cs and auto-pulls NuGet deps; chart tooltips render
+                shellui add installs sub-components, models, NuGet packages and _Imports usings; tweakcn themes via shellui theme
               </p>
             </div>
           </div>
 
           <div className="pt-2">
             <Link
-              href="https://github.com/shellui-dev/shellui/releases/tag/v0.3.0-rc.1"
+              href="https://github.com/shellui-dev/shellui/releases/tag/v0.3.0"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
@@ -712,7 +696,7 @@ shellui add button card input
               </p>
               <div className="mt-2">
                 <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                  v0.3.0-rc.1
+                  v0.3.0
                 </span>
               </div>
               <div className="flex gap-4">

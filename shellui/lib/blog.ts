@@ -3,6 +3,14 @@
  */
 export const blogPosts = [
   {
+    slug: "release-v0.3.0",
+    title: "ShellUI v0.3.0 – Stable release",
+    excerpt:
+      "The first stable 0.3 release: 76 components, composable APIs, dependencies installed for you, tweakcn themes, and a CLI that works in Blazor projects on .NET 8, 9 and 10.",
+    date: "2026-09-29",
+    author: "ShellUI",
+  },
+  {
     slug: "release-v0.3.0-rc.1",
     title:
       "ShellUI v0.3.0-rc.1 – Template-compile, CSP, and CLI install fixes",

@@ -1,0 +1,76 @@
+---
+title: Data Picker
+description: "Searchable single-select for objects, with custom templates"
+new: true
+---
+
+`DataPicker<TItem, TKey>` picks one object from a list, with a search box. Unlike `Select`, the value is the item itself, not a string.
+
+## Installation
+
+```bash
+shellui add data-picker
+```
+
+## Usage
+
+```razor
+<DataPicker TItem="Person" TKey="int"
+    Items="_people"
+    @bind-Value="_selected"
+    KeySelector="p => p.Id"
+    DisplaySelector="p => p.Name"
+    Placeholder="Choose a person" />
+
+<p>Selected: @_selected?.Name</p>
+
+@code {
+    private Person? _selected;
+}
+@code {
+    private List<Person> _people = new()
+    {
+        new(1, "Ada Lovelace", "Engineering"),
+        new(2, "Grace Hopper", "Engineering"),
+        new(3, "Katherine Johnson", "Research"),
+    };
+
+    record Person(int Id, string Name, string Team);
+}
+```
+
+## Custom templates
+
+```razor
+<DataPicker TItem="Person" TKey="int" Items="_people" @bind-Value="_selected"
+    KeySelector="p => p.Id" DisplaySelector="p => p.Name"
+    SearchPredicate="(p, q) => p.Name.Contains(q, StringComparison.OrdinalIgnoreCase) || p.Team.Contains(q, StringComparison.OrdinalIgnoreCase)">
+    <OptionTemplate>
+        <div class="flex flex-col">
+            <span>@context.Name</span>
+            <span class="text-xs text-muted-foreground">@context.Team</span>
+        </div>
+    </OptionTemplate>
+</DataPicker>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | `Generic type` | — | The item type |
+| `TKey` | `Generic type` | — | The key type returned by `KeySelector` |
+| `Items` | `IEnumerable<TItem>` | required | Items to choose from |
+| `Value` | `TItem?` | `default` | Selected item (supports `@bind-Value`) |
+| `ValueChanged` | `EventCallback<TItem?>` | — | Raised when the selection changes |
+| `KeySelector` | `Func<TItem, TKey>` | required | Unique key for each item |
+| `DisplaySelector` | `Func<TItem, string>?` | `null` | Text shown for an item (defaults to `ToString()`) |
+| `SearchPredicate` | `Func<TItem, string, bool>?` | `null` | Custom search match (defaults to a case-insensitive match on the display text) |
+| `SelectedTemplate` | `RenderFragment<TItem>?` | `null` | Custom rendering of the selected item in the trigger |
+| `OptionTemplate` | `RenderFragment<TItem>?` | `null` | Custom rendering for each option in the list |
+| `Placeholder` | `string` | `"Select..."` | Text shown when nothing is selected |
+| `SearchPlaceholder` | `string` | `"Search..."` | Placeholder of the search box |
+| `EmptyText` | `string` | `"No results found."` | Text shown when the search matches nothing |
+| `Disabled` | `bool` | `false` | Disables the control |
+| `CloseOnScroll` | `bool` | `false` | Close the list when the page scrolls |
+| `Class` | `string?` | `null` | Additional CSS classes |

@@ -1,0 +1,124 @@
+---
+title: Dashboard Layout
+description: "Add the ShellUI dashboard (sidebar, header, breadcrumb, theme toggle) and make it your app's layout"
+icon: LayoutDashboard
+new: true
+---
+
+ShellUI ships two dashboard layouts, each a sidebar plus a content area with a header, breadcrumb and theme toggle:
+
+| Block | Header | Install |
+|-------|--------|---------|
+| `dashboard-02` | Sticky: stays at the top while the page scrolls | `shellui add dashboard-02` |
+| `dashboard-01` | Scrolls with the content | `shellui add dashboard-01` |
+
+In v0.3.0, `shellui add` installs the files. You then make the dashboard your app's layout, which takes a few steps, all below. The examples use `dashboard-02`; for `dashboard-01`, use `DashboardLayout01` instead.
+
+## 1. Install
+
+From your project root, after `shellui init`:
+
+```bash
+shellui add dashboard-02
+```
+
+This adds:
+
+| File | What it is |
+|------|------------|
+| `Components/Layout/DashboardLayout02.razor` | The layout: sidebar, header, breadcrumb, theme toggle |
+| `Components/UI/AppSidebar.razor` | Your app's sidebar: brand, navigation links, user menu |
+| `Components/UI/Sidebar*.razor`, `SidebarProvider.razor` | The sidebar building blocks |
+| `Components/UI/Breadcrumb*.razor`, `Separator.razor`, `ThemeToggle.razor`, `Avatar.razor` | Header and sidebar parts |
+
+The sidebar needs an interactive render mode and `shellui.js`; `shellui init` already set up both in `App.razor`.
+
+## 2. Make it the default layout
+
+Open `Components/Routes.razor` and change `DefaultLayout`:
+
+```razor title="Components/Routes.razor"
+<RouteView RouteData="routeData" DefaultLayout="typeof(Layout.DashboardLayout02)" />
+```
+
+With ASP.NET Core Identity (`--auth Individual`), the element is `<AuthorizeRouteView ...>`; change its `DefaultLayout` the same way.
+
+<Callout type="info" title="Only some pages?">
+Leave `Routes.razor` alone and add a `@layout` directive to the pages that should use the dashboard:
+
+```razor
+@page "/reports"
+@layout Layout.DashboardLayout02
+```
+</Callout>
+
+## 3. Point the sidebar at your pages
+
+`AppSidebar.razor` ships with placeholder links (`/`, `/dashboard`, `/settings`), a placeholder brand ("My App") and a placeholder user. Edit them to match your app. For the pages in a new Blazor project:
+
+```razor title="Components/UI/AppSidebar.razor"
+<SidebarMenuItem>
+    <SidebarMenuButton Href="/" IsActive="@IsCurrentPath("/")" Tooltip="Home">
+        <span>Home</span>
+    </SidebarMenuButton>
+</SidebarMenuItem>
+<SidebarMenuItem>
+    <SidebarMenuButton Href="/counter" IsActive="@IsCurrentPath("/counter")" Tooltip="Counter">
+        <span>Counter</span>
+    </SidebarMenuButton>
+</SidebarMenuItem>
+<SidebarMenuItem>
+    <SidebarMenuButton Href="/weather" IsActive="@IsCurrentPath("/weather")" Tooltip="Weather">
+        <span>Weather</span>
+    </SidebarMenuButton>
+</SidebarMenuItem>
+```
+
+Keep an icon inside each button if you want one; the placeholders show inline SVGs. `IsCurrentPath` highlights the link of the current page. Remove the Settings entry if you have no settings page.
+
+## 4. Remove the old layout (optional)
+
+After step 2, the template's `MainLayout` is no longer used. You can delete these from `Components/Layout/`:
+
+- `MainLayout.razor` and `MainLayout.razor.css`
+- `NavMenu.razor` and `NavMenu.razor.css`
+
+Keep `ReconnectModal.*` (.NET 10). Before deleting, do these two things, or the build or the error bar will break.
+
+**Pages that name `MainLayout`.** The .NET 10 template's `Components/Pages/NotFound.razor` has `@layout MainLayout`, and Identity's `Components/Account/Shared/ManageLayout.razor` does too. Change them to the dashboard:
+
+```razor
+@layout DashboardLayout02
+```
+
+**The error bar.** `MainLayout.razor` contains Blazor's error bar (`<div id="blazor-error-ui">`). Move it into `Components/App.razor`, just before `</body>`. Its old styles were in `MainLayout.razor.css`, so use this Tailwind-styled version:
+
+```html title="Components/App.razor"
+<div id="blazor-error-ui" data-nosnippet class="fixed inset-x-0 bottom-0 z-[1000] hidden border-t border-border bg-background px-5 py-3 text-sm text-foreground shadow-lg">
+    An unhandled error has occurred.
+    <a href="." class="reload font-medium underline underline-offset-4">Reload</a>
+    <span class="dismiss absolute right-4 top-3 cursor-pointer">🗙</span>
+</div>
+```
+
+It stays hidden until Blazor shows it after an error.
+
+## 5. Run it
+
+```bash
+dotnet watch
+```
+
+Your pages now render inside the dashboard. On desktop, **Ctrl+B** (**⌘B** on macOS) collapses and expands the sidebar; on small screens, the menu button in the header opens it.
+
+<Callout type="info" title="Template sample pages">
+`shellui init` removes Bootstrap, so the template's Counter, Weather and Error pages lose their Bootstrap styling. Style them with Tailwind or ShellUI components, for example `<Button>` in place of `class="btn btn-primary"`.
+</Callout>
+
+## Switching between 01 and 02
+
+Install the other block and change the layout name in `Routes.razor` and in any `@layout` directives. Both layouts use the same `AppSidebar.razor`, so your links carry over.
+
+<Callout type="info" title="Coming in 0.4">
+ShellUI 0.4 does all of this for you: `shellui init --dashboard 02` or `shellui add dashboard-02` switches the default layout, builds the sidebar links from your pages, moves the error bar, and removes the template's layout files if you haven't changed them.
+</Callout>
