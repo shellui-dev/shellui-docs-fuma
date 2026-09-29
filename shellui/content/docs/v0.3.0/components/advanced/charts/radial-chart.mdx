@@ -1,0 +1,53 @@
+---
+title: Radial Chart
+description: "Radial bar charts for progress and percentages"
+new: true
+---
+
+`RadialChart` shows values as radial bars, which suits progress and percentages from 0 to 100. Built on ApexCharts, with the same custom tooltips and themes as the other ShellUI charts.
+
+## Installation
+
+```bash
+shellui add radial-chart
+```
+
+`shellui add` also installs `chart` and its styles, and adds the `Blazor-ApexCharts` NuGet package to your project.
+
+## Usage
+
+```razor
+<RadialChart TItem="Goal"
+    Data="@_goals"
+    Title="Quarterly goals"
+    XValue="@(g => g.Name)"
+    YValue="@(g => (decimal?)g.Percent)"
+    Height="350px" />
+
+@code {
+    private List<Goal> _goals = new()
+    {
+        new("Revenue", 72), new("Signups", 88), new("Retention", 64)
+    };
+
+    record Goal(string Name, int Percent);
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | `Generic type` | — | The data item type |
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Progress"` | Series name shown in the tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Category label for each item |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Numeric value for each item |
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `ShowLegend` | `bool` | `true` | Show the legend |
+| `ShowToolbar` | `bool` | `false` | Show the ApexCharts toolbar |
+| `Class` | `string?` | `null` | Additional CSS classes |

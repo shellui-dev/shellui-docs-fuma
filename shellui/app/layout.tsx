@@ -19,7 +19,7 @@ export const metadata: Metadata = createMetadata({
       "ShellUI – ShellUI components: Blazor UI library, shadcn-inspired, Tailwind CSS",
   },
   description:
-    "CLI-first Blazor UI library inspired by shadcn/ui. 80+ components, Tailwind CSS, copy-paste. Get started at shellui.dev.",
+    "CLI-first Blazor UI library inspired by shadcn/ui. 76 components, Tailwind CSS, copy-paste. Get started at shellui.dev.",
   metadataBase: baseUrl,
   openGraph: {
     type: "website",

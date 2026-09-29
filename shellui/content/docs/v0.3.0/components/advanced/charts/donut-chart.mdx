@@ -1,0 +1,55 @@
+---
+title: Donut Chart
+description: "Donut charts for part-to-whole data"
+new: true
+---
+
+`DonutChart` renders a donut chart for part-to-whole data. Built on ApexCharts, with the same custom tooltips and themes as the other ShellUI charts.
+
+## Installation
+
+```bash
+shellui add donut-chart
+```
+
+`shellui add` also installs `chart` and its styles, and adds the `Blazor-ApexCharts` NuGet package to your project.
+
+## Usage
+
+```razor
+<DonutChart TItem="Traffic"
+    Data="@_traffic"
+    Title="Traffic by source"
+    Name="Visits"
+    XValue="@(t => t.Source)"
+    YValue="@(t => (decimal?)t.Visits)"
+    Height="350px" />
+
+@code {
+    private List<Traffic> _traffic = new()
+    {
+        new("Search", 4200), new("Direct", 2100),
+        new("Social", 1300), new("Referral", 800)
+    };
+
+    record Traffic(string Source, int Visits);
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | `Generic type` | — | The data item type |
+| `Data` | `IEnumerable<TItem>?` | `null` | Data collection to visualize |
+| `Name` | `string` | `"Data"` | Series name shown in the tooltip |
+| `XValue` | `Func<TItem, object>?` | `null` | Category label for each item |
+| `YValue` | `Func<TItem, decimal?>?` | `null` | Numeric value for each item |
+| `Theme` | `ChartTheme` | `Default` | Color theme (Default, Colorful, Monochrome) |
+| `Title` | `string?` | `null` | Chart title |
+| `Subtitle` | `string?` | `null` | Chart subtitle |
+| `Height` | `string?` | `"400px"` | Chart height |
+| `Width` | `string?` | `"100%"` | Chart width |
+| `ShowLegend` | `bool` | `true` | Show the legend |
+| `ShowToolbar` | `bool` | `false` | Show the ApexCharts toolbar |
+| `Class` | `string?` | `null` | Additional CSS classes |

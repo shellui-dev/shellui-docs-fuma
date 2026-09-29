@@ -1,0 +1,49 @@
+---
+title: Tag Input
+description: "Free-text tags with keyboard and paste support"
+new: true
+---
+
+`TagInput` lets users type free-text tags. Press **Enter** or type a separator (`,` `;` tab or newline) to add a tag, and **Backspace** in an empty field to remove the last one. Pasting text splits it on the separators. Duplicates are ignored (case-insensitive) unless `AllowDuplicates` is set.
+
+## Installation
+
+```bash
+shellui add tag-input
+```
+
+## Usage
+
+```razor
+<TagInput @bind-Tags="_tags" Placeholder="Add a skill..." />
+
+<p>@string.Join(", ", _tags)</p>
+
+@code {
+    private List<string> _tags = new() { "blazor", "tailwind" };
+}
+```
+
+## Limits and separators
+
+```razor
+<TagInput @bind-Tags="_emails" MaxTags="5" Separators='new[] { ",", " " }'
+    Placeholder="Up to 5 emails" />
+
+@code {
+    private List<string> _emails = new();
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `Tags` | `List<string>` | empty list | The tags (supports `@bind-Tags`) |
+| `TagsChanged` | `EventCallback<List<string>>` | — | Raised when a tag is added or removed |
+| `Placeholder` | `string` | `"Add tag..."` | Input placeholder |
+| `MaxTags` | `int?` | `null` | Maximum number of tags |
+| `AllowDuplicates` | `bool` | `false` | Allow the same tag more than once |
+| `Separators` | `string[]` | `, ; \t \n` | Strings that complete a tag while typing or pasting |
+| `Disabled` | `bool` | `false` | Disables the input |
+| `Class` | `string?` | `null` | Additional CSS classes |

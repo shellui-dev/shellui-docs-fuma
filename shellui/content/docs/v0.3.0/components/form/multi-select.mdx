@@ -1,0 +1,70 @@
+---
+title: Multi Select
+description: "Searchable multi-select for objects, shown as chips"
+new: true
+---
+
+`MultiSelect<TItem, TKey>` picks several objects from a list, with a search box. Selected items appear as removable chips.
+
+## Installation
+
+```bash
+shellui add multi-select
+```
+
+## Usage
+
+```razor
+<MultiSelect TItem="Person" TKey="int"
+    Items="_people"
+    @bind-Values="_selected"
+    KeySelector="p => p.Id"
+    DisplaySelector="p => p.Name"
+    Placeholder="Add people" />
+
+<p>@_selected.Count selected</p>
+
+@code {
+    private List<Person> _selected = new();
+}
+@code {
+    private List<Person> _people = new()
+    {
+        new(1, "Ada Lovelace", "Engineering"),
+        new(2, "Grace Hopper", "Engineering"),
+        new(3, "Katherine Johnson", "Research"),
+    };
+
+    record Person(int Id, string Name, string Team);
+}
+```
+
+## Custom chips
+
+```razor
+<MultiSelect TItem="Person" TKey="int" Items="_people" @bind-Values="_selected"
+    KeySelector="p => p.Id" DisplaySelector="p => p.Name">
+    <ChipTemplate>@context.Name (@context.Team)</ChipTemplate>
+</MultiSelect>
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TItem` | `Generic type` | — | The item type |
+| `TKey` | `Generic type` | — | The key type returned by `KeySelector` |
+| `Items` | `IEnumerable<TItem>` | required | Items to choose from |
+| `Values` | `List<TItem>` | empty list | Selected items (supports `@bind-Values`) |
+| `ValuesChanged` | `EventCallback<List<TItem>>` | — | Raised when the selection changes |
+| `KeySelector` | `Func<TItem, TKey>` | required | Unique key for each item |
+| `DisplaySelector` | `Func<TItem, string>?` | `null` | Text shown for an item (defaults to `ToString()`) |
+| `SearchPredicate` | `Func<TItem, string, bool>?` | `null` | Custom search match (defaults to a case-insensitive match on the display text) |
+| `ChipTemplate` | `RenderFragment<TItem>?` | `null` | Custom rendering of each selected chip |
+| `OptionTemplate` | `RenderFragment<TItem>?` | `null` | Custom rendering for each option in the list |
+| `Placeholder` | `string` | `"Select..."` | Text shown when nothing is selected |
+| `SearchPlaceholder` | `string` | `"Search..."` | Placeholder of the search box |
+| `EmptyText` | `string` | `"No results found."` | Text shown when the search matches nothing |
+| `Disabled` | `bool` | `false` | Disables the control |
+| `CloseOnScroll` | `bool` | `false` | Close the list when the page scrolls |
+| `Class` | `string?` | `null` | Additional CSS classes |

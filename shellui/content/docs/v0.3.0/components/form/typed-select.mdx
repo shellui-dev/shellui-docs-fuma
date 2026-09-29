@@ -1,0 +1,61 @@
+---
+title: Typed Select
+description: "Native select bound to a typed value: enums, numbers, Guids, bools or strings"
+new: true
+---
+
+`TypedSelect<TValue>` is a styled native `<select>` whose value is a real type instead of a string. The selected `<option value="...">` is parsed into `TValue`: enums, `int` and other numbers, `Guid`, `bool`, and `string` are supported, including nullable versions.
+
+## Installation
+
+```bash
+shellui add typed-select
+```
+
+## Usage
+
+```razor
+<TypedSelect TValue="Priority?" @bind-Value="_priority">
+    <option value="">Choose a priority</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+</TypedSelect>
+
+<p>Selected: @_priority</p>
+
+@code {
+    private Priority? _priority;
+
+    enum Priority { Low, Medium, High }
+}
+```
+
+An empty `value=""` option maps to `null` for nullable types.
+
+## Numeric values
+
+```razor
+<TypedSelect TValue="int" @bind-Value="_pageSize">
+    <option value="10">10 per page</option>
+    <option value="25">25 per page</option>
+    <option value="50">50 per page</option>
+</TypedSelect>
+
+@code {
+    private int _pageSize = 25;
+}
+```
+
+## API Reference
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `TValue` | `Generic type` | — | The value type |
+| `Value` | `TValue?` | `default` | Selected value (supports `@bind-Value`) |
+| `ValueChanged` | `EventCallback<TValue?>` | — | Raised when the selection changes |
+| `ChildContent` | `RenderFragment?` | `null` | The `<option>` elements |
+| `Disabled` | `bool` | `false` | Disables the select |
+| `Class` | `string?` | `null` | Additional CSS classes |
+
+Other attributes are passed to the `<select>` element.
